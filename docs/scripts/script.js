@@ -16,18 +16,19 @@ const INDEX_HTML = `<h1>Welcome to Alpha Omega United's homepage</h1>
 							-itsOiK 06/08/20</li>
 					</ul>`;
 
-const ASSETS_HTML = `<div class="assets-container">
+const ASSETS_HTML = `<h3>Click on an image to save it</h3>
+					<div class="assets-container">
 						<div class="assets-img-container">
 							<div>logo</div>
-							<img src="assets/logo.png">
+							<a href="assets/logo.png" target="_blank"><img src="assets/logo.png"></a>
 						</div>
 						<div class="assets-img-container">
 							<div>logo_large</div>
-							<img src="assets/logo_large.png">
+							<a href="assets/logo_large.png" target="_blank"><img src="assets/logo_large.png"></a>
 						</div>
 						<div class="assets-img-container">
 							<div>Panel</div>
-							<img src="assets/Panel.png">
+							<a href="assets/Panel.png" target="_blank"><img src="assets/Panel.png"></a>
 						</div>
 					</div>`
 
@@ -50,10 +51,9 @@ function hamburgerMenuHandler(event){
 
 
 function menuButtonHandler(event){
-	console.log(event)
-	if (event.value == "HOME"){
+	if (event == "HOME"){
 		contentContainer.innerHTML = INDEX_HTML
-	} else if (event.value == "ASSETS") {
+	} else if (event == "ASSETS") {
 		contentContainer.innerHTML = ASSETS_HTML
 
 	}

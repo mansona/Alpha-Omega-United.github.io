@@ -17,21 +17,18 @@
 	<div class="contentArea" id="contentArea">
 	</div>
 	<!-- <canvas id="gameArea" width="1920" height="1080" style="border: 0px solid black"></canvas> -->
-
-
-
 	<div id="main" class="main">
 		<button class="hamburger-menu" id="hamburger-menu" onclick="hamburgerMenuHandler(this)">☰</button>
 		<div id="header" class="header">
 			<div class="header-left">
-				<img src="assets/logo.png">
+				<img src="assets/logo.png" style="cursor: pointer;" onclick="menuButtonHandler('HOME')">
 			</div>
 			<div class="header-top">
-				<h1>ALPHA OMEGA UNITED</h1>
+				<h1 style="cursor: pointer;" onclick="menuButtonHandler('HOME')">ALPHA OMEGA UNITED</h1>
 			</div>
 			<div class="header-bottom">
-				<button onclick="menuButtonHandler(this)" value="HOME">HOME</button>
-				<button onclick="menuButtonHandler(this)" value="ASSETS">ASSETS</button>
+				<button onclick="menuButtonHandler('HOME')" value="HOME">HOME</button>
+				<button onclick="menuButtonHandler('ASSETS')" value="ASSETS">ASSETS</button>
 			</div>
 			<div class="header-right">
 				<p>
