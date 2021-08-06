@@ -1,11 +1,11 @@
 html {
 	background-image: url("/assets/background.jpeg");
-	background-position: center; /* Center the image */
-	background-repeat: no-repeat; /* Do not repeat the image */
-	background-size: cover; /* Resize the background image to cover the entire container */
-	/* background: linear-gradient(-200deg, #e66465, #9198e5); */
+	background-position: fixed;
+	background-repeat: repeat;
+	background-size: 120%;
 	font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	font-size: larger;
+	overflow: hidden;
 
 }
 body {
@@ -19,43 +19,39 @@ a:link {
 a:visited {
 	color:rgb(147, 124, 250)
 }
-
+h1 {
+	line-height: 0;
+}
+h1 {
+	font-size: 40px;
+}
 *, *:before, *:after {
 	box-sizing: inherit;
 }
 /* ------------- CLASSES ------------- */
 .main {
-	min-height: 100vh;
-
+	height: 98.2vh;
 	display: grid;
-	/* grid-template-columns: 10vw 5vw auto 15vw; */
-	grid-template-rows: auto;
+	grid-template-rows: max-content;
 	grid-template-areas:
 	"header header header header header"
-	"menu . content . ."
-	"footer footer footer footer footer";
+	"menu . content . .";
 }
 
 /* ------------- HEADER ------------- */
 .header{
-	overflow: hidden;
-	position: sticky;
 	color: white;
 	text-align: center;
 	display: grid;
-	grid-template-columns: 15% auto 15%;
-	grid-template-rows: auto;
+	grid-template-columns: 15% auto 20%;
 	grid-template-areas:
 	"header-left header-top header-right"
 	"header-left header-bottom header-right";
-	min-height: 15vh;
 	grid-area: header;
-	border-bottom: outset 2px black;
-
 }
+
 .header h1 {
 	margin-block: 0;
-	line-height: 0;
 	font: bold 100px arial, sans-serif;
 	background-color: #F8BE2B;
 	color: transparent;
@@ -68,27 +64,28 @@ a:visited {
 
 .header-left{
 	grid-area: header-left;
-
+	height: fit-content;
 }
 .header-top{
 	grid-area: header-top;
-
+	height: fit-content;
 }
 .header-bottom{
+	height: fit-content;
 	display: flex;
 	justify-content: center;
 	grid-area: header-bottom;
-
 }
-.header-bottom button{
-}
-
 .header-right{
+	height: fit-content;
 	grid-area: header-right;
 	padding: 10px;
-
 }
 
+
+
+.header-bottom button{
+}
 .header img{
 	margin: 5%;
 	z-index: -10;
@@ -99,10 +96,10 @@ a:visited {
 .menu{
 	border-radius: 15px;
 	position: absolute;
-	min-height: 35vh;
-	max-height: 55vh;
-	min-width: 15vw;
-	max-width: 15vw;
+	min-height: 350px;
+	max-height: 550px;
+	min-width: 300px;
+	max-width: 300px;
 	left: 1%;
 	top: 25%;
 	grid-area: menu;
@@ -114,22 +111,32 @@ a:visited {
 }
 
 .hamburger-menu{
+	height: 30px;
+	width: 30px;
 	border-radius: 15px;
 	z-index: 20;
 	position: absolute;
 	top: 20vh;
 	left: 1vw;
 }
-
+.header button{
+	height: fit-content;
+}
 
 /* ------------- CONTENT ------------- */
-.content{
-	text-align: center;
+.content-container{
+	display: flex;
 	grid-area: content;
+	width: 75vw;
+	overflow: auto;
+}
+.content{
+	border-radius: 5px;
+	width: 75vw;
+	padding: 25px;
+	height: fit-content;
+	text-align: center;
 	background-color: rgba(105, 105, 105, 0.8);
-	min-height: 80vh;
-	min-width: 50vw;
-	max-width: 70vw;
 }
 .content ul{
 	text-align: start;
@@ -137,14 +144,15 @@ a:visited {
 
 .assets-container {
 	display: flex;
-	width: 100%;
-	height: 100%;
 	justify-content: space-around;
 }
 .assets-img-container img{
 	height: 300px;
 }
 .assets-img-container{
+	border-radius: 5px;
+	border: black solid;
+	height: fit-content;
 }
 /* ------------- FOOTER ------------- */
 .footer{
@@ -152,14 +160,73 @@ a:visited {
 	color: white;
 	height: 25px;
 	position: sticky;
-	bottom: auto;
+	width: 100%;
+	bottom: 0;
 	left: 0;
 	grid-area: footer;
 	background-color: rgba(20, 20, 20, 0.9);
-
 }
 
 
 .hide{
 	display: none;
+}
+
+
+/* ------------ SCROLLBAR ------------ */
+::-webkit-scrollbar {
+	/* width */
+	width: 16px;
+}
+::-webkit-scrollbar-track {
+	/* Track */
+	background: #f1f1f1;
+	border-radius: 15px;
+	box-shadow: inset 0 0 5px black;
+}
+::-webkit-scrollbar-thumb {
+	/* Handle */
+	width: 15px;
+	border-radius: 15px;
+	background: #888;
+	box-shadow: inset 0 0 7px black;
+}
+::-webkit-scrollbar-thumb:hover {
+	/* Handle on hover */
+	background: #555;
+}
+/* ------------- @MEDIA ------------- */
+@media screen and (max-width: 1800px) {
+	.header h1 {
+		font: bold 50px arial, sans-serif;
+	}
+	h1 {
+		font-size: 30px;
+	}
+	.header-right {
+		display: none;
+	}
+	.main {
+		grid-template-areas:
+		"header header header header "
+		"menu . content . ";
+	}
+	.content-container{
+		width: 75vw;
+	}
+	.content{
+		width: 75vw;
+	}
+	.assets-container {
+		justify-content: unset;
+		flex-direction: column;
+	}
+}
+@media screen and (max-width: 900px) {
+	.header h1 {
+		font: bold 25px arial, sans-serif;
+	}
+	h1 {
+		font-size: 15px;
+	}
 }
