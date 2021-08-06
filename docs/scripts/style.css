@@ -1,43 +1,56 @@
 html {
-	background-color: brown;
+	background: linear-gradient(-200deg, #e66465, #9198e5);
+
 }
 body {
-	background-color: brown;
+	box-sizing: border-box;
+	margin: 0;
 }
 
-
-.container {
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+.main {
+	display: grid;
+	grid-template-columns: 10vw 5vw auto 15vw;
+	grid-template-rows: auto;
 	grid-template-areas:
-	"header header header"
-	"menu content ."
-	"footer footer footer";
+	"header header header header header"
+	"menu . content . ."
+	"footer footer footer footer footer";
 }
 
 .header{
+	min-height: 15vh;
 	grid-area: header;
-	background-color: green;
-	width: auto;
-	height: auto;
+	border-bottom: outset 2px black;
 
 }
 .menu{
+	display: none;
+	position: absolute;
+	min-height: 85vh;
+	max-height: 85vh;
+	min-width: 45vh;
+	max-width: 45vh;
+	left: 0;
+	top: 15vh;
 	grid-area: menu;
 	background-color: yellow;
-	width: auto;
-	height: auto;
 
 }
 .content{
 	grid-area: content;
-	background-color: black;
-	width: auto;
-	height: auto;
+	background-color: grey;
+	min-height: 80vh;
 
 }
 .footer{
+	min-height: 5vh;
+	position: sticky;
+	bottom: 0;
+	left: 0;
 	grid-area: footer;
 	background-color: orange;
-	width: auto;
-	height: auto;
 
 }
