@@ -1,11 +1,13 @@
 html {
 	background-image: url("/assets/background.jpeg");
-	background-position: fixed;
-	background-repeat: repeat;
-	background-size: 120%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size:cover;
 	font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	font-size: larger;
 	overflow: hidden;
+	-webkit-box-shadow:0px 0px 5px #fff inset,5px 5px 15px #333 inset;
+
 
 }
 body {
@@ -21,12 +23,13 @@ a:visited {
 }
 h1 {
 	line-height: 0;
-}
-h1 {
 	font-size: 40px;
+	text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
+	-webkit-text-stroke: 0.5px  rgba(141, 141, 141, 0.25);
+
 }
 *, *:before, *:after {
-	box-sizing: inherit;
+	box-sizing: border-box;
 }
 /* ------------- CLASSES ------------- */
 .main {
@@ -82,15 +85,25 @@ h1 {
 	padding: 10px;
 }
 
-
-
-.header-bottom button{
+.header button{
+	margin: 5px;
+	width: 150px;
+	height: 35px;
+	border-radius: 5px;
+	-webkit-box-shadow:0px 0px 5px #fff inset,5px 5px 15px #333 inset;
+	background-color: rgb(59, 59, 59);
+	color: rgb(255, 181, 44);
+}
+.header-bottom button:hover{
+	-webkit-box-shadow:0px 0px 5px #fff inset,5px 5px 15px #333 inset;
+	background-color: rgb(87, 87, 87);
 }
 .header img{
 	margin: 5%;
 	z-index: -10;
 	/* position: absolute; */
 	width: 5vw;
+
 }
 /* ------------- MENU ------------- */
 .menu{
@@ -119,9 +132,7 @@ h1 {
 	top: 20vh;
 	left: 1vw;
 }
-.header button{
-	height: fit-content;
-}
+
 
 /* ------------- CONTENT ------------- */
 .content-container{
@@ -131,6 +142,7 @@ h1 {
 	overflow: auto;
 }
 .content{
+	-webkit-box-shadow:0px 0px 5px #fff inset,5px 5px 15px #333 inset;
 	border-radius: 5px;
 	width: 75vw;
 	padding: 25px;
@@ -139,6 +151,9 @@ h1 {
 	background-color: rgba(105, 105, 105, 0.8);
 }
 .content ul{
+	text-align: start;
+}
+.content li{
 	text-align: start;
 }
 
@@ -165,6 +180,8 @@ h1 {
 	left: 0;
 	grid-area: footer;
 	background-color: rgba(20, 20, 20, 0.9);
+	-webkit-box-shadow: 0px -1px 9px 0px #fff, 0px 5px 15px #333 inset;
+
 }
 
 
