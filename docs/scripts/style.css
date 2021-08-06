@@ -4,3 +4,32 @@ html {
 body {
 	background-color: brown;
 }
+
+
+.container {
+	grid-template-areas:
+	"header header header"
+	"menu content ."
+	"footer footer footer";
+}
+
+.header{
+	grid-area: header;
+	background-color: green;
+
+}
+.menu{
+	grid-area: menu;
+	background-color: yellow;
+
+}
+.content{
+	grid-area: content;
+	background-color: black;
+
+}
+.footer{
+	grid-area: footer;
+	background-color: orange;
+
+}
