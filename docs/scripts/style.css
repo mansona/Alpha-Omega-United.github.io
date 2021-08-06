@@ -16,20 +16,28 @@ body {
 .header{
 	grid-area: header;
 	background-color: green;
+	width: auto;
+	height: auto;
 
 }
 .menu{
 	grid-area: menu;
 	background-color: yellow;
+	width: auto;
+	height: auto;
 
 }
 .content{
 	grid-area: content;
 	background-color: black;
+	width: auto;
+	height: auto;
 
 }
 .footer{
 	grid-area: footer;
 	background-color: orange;
+	width: auto;
+	height: auto;
 
 }
