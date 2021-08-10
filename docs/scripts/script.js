@@ -63,6 +63,8 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 
 // const COUNTER_HTML = `${counter}`
 
+const EMBEDDED_HTML = `embed twithc player/chat here`
+
 const hamburgerMenuButton = document.querySelector("#hamburger-menu")
 const sidebarMenu = document.querySelector("#menu")
 const contentContainer = document.querySelector("#content")
@@ -86,5 +88,7 @@ function menuButtonHandler(event){
 		contentContainer.innerHTML = RECRUITMENT_HTML
 	} else if (event == "COUNTER") {
 		contentContainer.innerHTML = counter
+	} else if (event == "EMBEDDED") {
+		contentContainer.innerHTML = EMBEDDED_HTML
 	}
 }
