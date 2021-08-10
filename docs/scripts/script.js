@@ -2,7 +2,7 @@
 // Author: ItsOiK
 // Date: 06/08-2021
 
-
+let counter = 0
 
 const INDEX_HTML = `<h1>Welcome to Alpha Omega United's homepage</h1>
 					<hr>
@@ -61,6 +61,8 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 					<hr>
 					To apply for these roles, please join the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a> and message any one in the admin team, say which role you want to be, the reason why and how you can bring the community to reach new levels. This will go on for a week and then the week after, if there are 2 or more members competing, then we will let you all vote! 😃					</div>`
 
+// const COUNTER_HTML = `${counter}`
+
 const hamburgerMenuButton = document.querySelector("#hamburger-menu")
 const sidebarMenu = document.querySelector("#menu")
 const contentContainer = document.querySelector("#content")
@@ -75,13 +77,14 @@ function hamburgerMenuHandler(event){
 }
 
 function menuButtonHandler(event){
+	counter++;
 	if (event == "HOME"){
 		contentContainer.innerHTML = INDEX_HTML
 	} else if (event == "ASSETS") {
 		contentContainer.innerHTML = ASSETS_HTML
-
 	} else if (event == "RECRUITMENT") {
 		contentContainer.innerHTML = RECRUITMENT_HTML
-
+	} else if (event == "COUNTER") {
+		contentContainer.innerHTML = counter
 	}
 }
