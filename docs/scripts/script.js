@@ -148,7 +148,7 @@ function getTokenFromHash() {
 	} else if (document.location.search && document.location.search != '') {
 		var parsedParams = new URLSearchParams(window.location.search);
 		if (parsedParams.get('error_description')) {
-			console.error(parsedParams.get('error') + ' - ' + parsedParams.get('error_description');)
+			console.error(parsedParams.get('error') + ' - ' + parsedParams.get('error_description'))
 		}
 	}
 }
