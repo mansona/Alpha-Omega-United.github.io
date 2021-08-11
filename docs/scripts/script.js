@@ -106,17 +106,27 @@ function menuButtonHandler(event){
 
 
 //* ---------------------- TWITCH STUFF ---------------------- *//
-
-document.getElementById('authorize_public').setAttribute('href', 'https://id.twitch.tv/oauth2/authorize?client_id=' + client_id + '&redirect_uri=' + encodeURIComponent(redirect) + '&response_type=token' + scope);
-
 let client_id = "oijx3i1zco4074rk6vu0yxqjkbticz",
 	redirect = "https://alpha-omega-united.github.io/",
 	scopes = "user:read:follows",
 	scope = "&scope=" + scopes;
 
 let gottenUserVar, gottenFollowsVar, user_token;
-const USER_ENDPOINT = "https://api.twitch.tv/helix/users"
-const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id="
+const USER_ENDPOINT = "https://api.twitch.tv/helix/users";
+const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id=";
+
+
+document.getElementById('authorize_public')
+	.setAttribute('href',
+	'https://id.twitch.tv/oauth2/authorize?client_id='
+		+ client_id
+		+ '&redirect_uri='
+		+ encodeURIComponent(redirect)
+		+ '&response_type=token'
+		+ scope
+	);
+
+
 
 
 async function twitchApi(endpoint) {
