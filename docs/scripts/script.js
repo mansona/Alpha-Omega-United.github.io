@@ -154,3 +154,4 @@ function getTokenFromHash() {
 }
 getTokenFromHash()
 console.log(user_token)
+console.log("asdasd")
