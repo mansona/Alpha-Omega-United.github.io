@@ -13,31 +13,24 @@
 	</div>
 	<div id="access_token"></div>
 	<div id="user_data"></div>
-
 	<script type="text/javascript">
-		// These are set for the GitHub Pages Example
-		// Substitute as needed
-		console.log("updated: 12231231")
+		console.log("updated: asdasdas")
 		var client_id = "oijx3i1zco4074rk6vu0yxqjkbticz"
+		// var redirect = "https://alpha-omega-united.github.io/"
 		var redirect = "https://alpha-omega-united.github.io/auth.html"
-		// var redirect = "https://alpha-omega-united.github.io/auth.html"
 		var scopes = "user:read:follows"
 		var scope = "&scope=" + scopes
 		// var scope = ""
 		let user_data = document.getElementById('user_data')
-
 		document.getElementById('authorize_public').setAttribute('href', 'https://id.twitch.tv/oauth2/authorize?client_id=' + client_id + '&redirect_uri=' + encodeURIComponent(redirect) + '&response_type=token' + scope);
 		document.getElementById('access_token').textContent = '';
-
 		if (document.location.hash && document.location.hash != '') {
 			var parsedHash = new URLSearchParams(window.location.hash.substr(1));
 			if (parsedHash.get('access_token')) {
 				var access_token = parsedHash.get('access_token');
-
 				user_data.textContent = 'Loading';
-
 				// call API
-				let get_user = async function () {
+				async function getUser() {
 					await fetch(
 						'https://api.twitch.tv/helix/users',
 						{
@@ -62,9 +55,9 @@
 							user_data.textContent = 'Something went wrong';
 						});
 				};
-				console.log(get_user())
-				console.log(get_user)
-				let get_follows = async function () {
+				let gottenUser = getUser()
+				console.log(gottenUser)
+				async function getFollows() {
 					await fetch(
 						"https://api.twitch.tv/helix/users/follows?from_id=" + get_user["id"],
 						{
@@ -83,6 +76,8 @@
 							user_data.textContent = 'Something went wrong';
 						});
 				}
+				let gottenFollows = getFollows()
+				console.log(gottenFollows)
 			}
 		} else if (document.location.search && document.location.search != '') {
 			var parsedParams = new URLSearchParams(window.location.search);
@@ -90,7 +85,6 @@
 				document.getElementById('access_token').textContent = parsedParams.get('error') + ' - ' + parsedParams.get('error_description');
 			}
 		}
-
 	</script>
 </body>
 
