@@ -17,7 +17,7 @@
 	<script type="text/javascript">
 		// These are set for the GitHub Pages Example
 		// Substitute as needed
-		console.log("updated: 12312312321")
+		console.log("updated: asdasdas")
 		var client_id = "oijx3i1zco4074rk6vu0yxqjkbticz"
 		var redirect = "https://alpha-omega-united.github.io/auth.html"
 		// var redirect = "https://alpha-omega-united.github.io/auth.html"
@@ -37,7 +37,7 @@
 				user_data.textContent = 'Loading';
 
 				// call API
-				let get_user = fetch(
+				let get_user = await fetch(
 					'https://api.twitch.tv/helix/users',
 					{
 						"headers": {
@@ -61,7 +61,7 @@
 						user_data.textContent = 'Something went wrong';
 					});
 				console.log(get_user)
-				fetch(
+				await fetch(
 					"https://api.twitch.tv/helix/users/follows?from_id=" + get_user["id"],
 					{
 						"headers": {
