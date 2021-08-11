@@ -200,4 +200,4 @@ async function getFollows(token) {
 
 
 getTokenFromHash()
-console.log("asdasdasds")
+console.log("12312321")
