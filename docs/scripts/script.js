@@ -182,62 +182,21 @@ async function getTokenFromHash() {
 
 
 
-const request = ( url, params = {}, method = 'GET' ) => {
-    let options = {
-        method
-    };
-    if ( 'GET' === method ) {
-        url += '?' + ( new URLSearchParams( params ) ).toString();
-    } else {
-        options.body = JSON.stringify( params );
-    }
-    return fetch( url, options ).then( response => response.json() );
-};
-const get = ( url, params ) => request( url, params, 'GET' );
-const post = ( url, params ) => request( url, params, 'POST' );
-
-
-
-
-
 async function getFollows(token) {
-	let userData = get(USER_ENDPOINT, {
-		"headers": {
-		"Content-Type": "application/json",
-		"Client-ID": client_id,
-		"Authorization": "Bearer " + token
-		}
-	}).then(response => {
-		// return response
-		let followData = get(FOLLOW_ENDPOINT, {
-			"headers": {
-			"Content-Type": "application/json",
-			"Client-ID": client_id,
-			"Authorization": "Bearer " + token
-			},
-			"from_id": response["data"][0].id,
-			"first": 100
-		})
-		console.log(followData)
-	});
+	let userData = await twitchApiGet(USER_ENDPOINT, token)
+		.then(async (response) => {
+			console.log(follow_params)
+			endpoint = FOLLOW_ENDPOINT + response["data"][0].id + "?first=100"
+			let followData = await twitchApiGet(FOLLOW_ENDPOINT, token)
+			console.log(followData)
+			// TODO make pagination
+			return followData
+	})
 	console.log(userData)
-
-
-
-
-	// let userData = await twitchApiGet(USER_ENDPOINT, token)
-	// 	.then(async (response) => {
-	// 		console.log(follow_params)
-	// 		let followData = await twitchApiPost(FOLLOW_ENDPOINT + response["data"][0].id, follow_params, token)
-	// 		console.log(followData)
-	// 		// TODO make pagination
-	// 		return followData
-	// })
-	// console.log(userData)
 }
 
 
 
 
 getTokenFromHash()
-console.log("asdasdasds")
+console.log("123123123")
