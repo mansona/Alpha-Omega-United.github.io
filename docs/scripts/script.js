@@ -184,13 +184,13 @@ async function getTokenFromHash() {
 
 
 async function getFollows(token) {
-	let userData = await twitchApiGet(USER_ENDPOINT, token).then(async (response) => {
-		let json_response = response.json()
-		follow_params["from_id"] = json_response.id
-		let followData = await twitchApiPost(FOLLOW_ENDPOINT, follow_params, token)
-		console.log(followData)
-		// TODO make pagination
-		return followData
+	let userData = await twitchApiGet(USER_ENDPOINT, token)
+		.then(async (response) => {
+			follow_params["from_id"] = response.id
+			let followData = await twitchApiPost(FOLLOW_ENDPOINT, follow_params, token)
+			console.log(followData)
+			// TODO make pagination
+			return followData
 	})
 	console.log(userData)
 }
