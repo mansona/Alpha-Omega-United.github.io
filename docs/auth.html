@@ -55,6 +55,8 @@
 						console.log(err);
 						user_data.textContent = 'Something went wrong';
 					});
+				console.log(gottenUserVar)
+
 				fetch(
 					"https://api.twitch.tv/helix/users/follows?from_id=" + gottenUserVar["id"],
 					{
