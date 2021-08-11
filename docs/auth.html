@@ -47,6 +47,7 @@
 					.then(resp => resp.json())
 					.then(resp => {
 						console.log(resp.data[0])
+						window.location.hash = ""
 						user_data.innerHTML = '';
 						var table = document.createElement('table');
 						user_data.append(table);
