@@ -113,7 +113,7 @@ let client_id = "oijx3i1zco4074rk6vu0yxqjkbticz",
 
 let gottenUserVar, gottenFollowsVar, user_token = null;
 const USER_ENDPOINT = "https://api.twitch.tv/helix/users";
-const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?";
+const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id=";
 
 
 document.getElementById('authorize_public')
@@ -187,9 +187,8 @@ async function getTokenFromHash() {
 async function getFollows(token) {
 	let userData = await twitchApiGet(USER_ENDPOINT, token)
 		.then(async (response) => {
-			follow_params["from_id"] = `${response["data"][0].id}`
 			console.log(follow_params)
-			let followData = await twitchApiPost(FOLLOW_ENDPOINT, follow_params, token)
+			let followData = await twitchApiPost(FOLLOW_ENDPOINT + response["data"][0].id, follow_params, token)
 			console.log(followData)
 			// TODO make pagination
 			return followData
@@ -201,4 +200,4 @@ async function getFollows(token) {
 
 
 getTokenFromHash()
-console.log("asdasdasds")
+console.log("12312312")
