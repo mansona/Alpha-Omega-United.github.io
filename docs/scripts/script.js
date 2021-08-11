@@ -2,6 +2,12 @@
 // Author: ItsOiK
 // Date: 06/08-2021
 
+
+AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
+AOU_WEB_SECRET
+AOU_WEB_REDIRECT
+
+
 let counter = 0
 
 const INDEX_HTML = `<h1>Welcome to Alpha Omega United's homepage</h1>
