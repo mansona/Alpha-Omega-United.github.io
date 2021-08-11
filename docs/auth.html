@@ -14,7 +14,7 @@
 	<div id="access_token"></div>
 	<div id="user_data"></div>
 	<script type="text/javascript">
-		console.log("updated: asdasdas")
+		console.log("updated: 1231232")
 		var client_id = "oijx3i1zco4074rk6vu0yxqjkbticz"
 		// var redirect = "https://alpha-omega-united.github.io/"
 		var redirect = "https://alpha-omega-united.github.io/auth.html"
@@ -55,11 +55,11 @@
 							user_data.textContent = 'Something went wrong';
 						});
 				};
-				let gottenUser = getUser()
+				let gottenUser = await getUser()
 				console.log(gottenUser)
 				async function getFollows() {
 					await fetch(
-						"https://api.twitch.tv/helix/users/follows?from_id=" + get_user["id"],
+						"https://api.twitch.tv/helix/users/follows?from_id=" + gottenUser["id"],
 						{
 							"headers": {
 								"Client-ID": client_id,
@@ -76,7 +76,7 @@
 							user_data.textContent = 'Something went wrong';
 						});
 				}
-				let gottenFollows = getFollows()
+				let gottenFollows = await getFollows()
 				console.log(gottenFollows)
 			}
 		} else if (document.location.search && document.location.search != '') {
