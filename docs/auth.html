@@ -49,7 +49,24 @@
 						user_data.innerHTML = result;
 						document.getElementById('page1').innerHTML = '';
 						gottenUserVar = resp.data[0]
-						return resp.data[0]
+						fetch(
+							"https://api.twitch.tv/helix/users/follows?from_id=" + resp.data[0]['id'],
+							{
+								"headers": {
+									"Client-ID": client_id,
+									"Authorization": "Bearer " + access_token
+								}
+							}
+						)
+							.then(resp => resp.json())
+							.then(resp => {
+								console.log(resp.data)
+								gottenFollowsVar = resp.data
+							})
+							.catch(err => {
+								console.log(err);
+								user_data.textContent = 'Something went wrong';
+							});
 					})
 					.catch(err => {
 						console.log(err);
@@ -57,24 +74,7 @@
 					});
 				console.log(gottenUserVar)
 
-				fetch(
-					"https://api.twitch.tv/helix/users/follows?from_id=" + gottenUserVar["id"],
-					{
-						"headers": {
-							"Client-ID": client_id,
-							"Authorization": "Bearer " + access_token
-						}
-					}
-				)
-					.then(resp => resp.json())
-					.then(resp => {
-						console.log(resp.data)
-						gottenFollowsVar = resp.data
-					})
-					.catch(err => {
-						console.log(err);
-						user_data.textContent = 'Something went wrong';
-					});
+
 				console.log(gottenUserVar)
 				console.log(gottenFollowsVar)
 			}
