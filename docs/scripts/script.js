@@ -116,6 +116,7 @@ const USER_ENDPOINT = "https://api.twitch.tv/helix/users";
 const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id=";
 
 
+
 document.getElementById('authorize_public')
 	.setAttribute('href',
 	'https://id.twitch.tv/oauth2/authorize?client_id='
@@ -146,11 +147,7 @@ async function twitchApiGet(endpoint, token) {
 
 async function twitchApiPost(endpoint, params, token) {
 	const options = {
-		"headers": {
-			"Content-Type": "application/json",
-			"Client-ID": client_id,
-			"Authorization": "Bearer " + token
-		},
+,
 		method: "POST",
 		body: JSON.stringify(params)
 	}
@@ -184,20 +181,64 @@ async function getTokenFromHash() {
 
 
 
+
+
+const request = ( url, params = {}, method = 'GET' ) => {
+    let options = {
+        method
+    };
+    if ( 'GET' === method ) {
+        url += '?' + ( new URLSearchParams( params ) ).toString();
+    } else {
+        options.body = JSON.stringify( params );
+    }
+    return fetch( url, options ).then( response => response.json() );
+};
+const get = ( url, params ) => request( url, params, 'GET' );
+const post = ( url, params ) => request( url, params, 'POST' );
+
+
+
+
+
 async function getFollows(token) {
-	let userData = await twitchApiGet(USER_ENDPOINT, token)
-		.then(async (response) => {
-			console.log(follow_params)
-			let followData = await twitchApiPost(FOLLOW_ENDPOINT + response["data"][0].id, follow_params, token)
-			console.log(followData)
-			// TODO make pagination
-			return followData
-	})
+	let userData = get(USER_ENDPOINT, {
+		"headers": {
+		"Content-Type": "application/json",
+		"Client-ID": client_id,
+		"Authorization": "Bearer " + token
+		}
+	}).then(response => {
+		// return response
+		let followData = get(FOLLOW_ENDPOINT, {
+			"headers": {
+			"Content-Type": "application/json",
+			"Client-ID": client_id,
+			"Authorization": "Bearer " + token
+			},
+			"from_id": response["data"][0].id,
+			"first": 100
+		})
+		console.log(followData)
+	});
 	console.log(userData)
+
+
+
+
+	// let userData = await twitchApiGet(USER_ENDPOINT, token)
+	// 	.then(async (response) => {
+	// 		console.log(follow_params)
+	// 		let followData = await twitchApiPost(FOLLOW_ENDPOINT + response["data"][0].id, follow_params, token)
+	// 		console.log(followData)
+	// 		// TODO make pagination
+	// 		return followData
+	// })
+	// console.log(userData)
 }
 
 
 
 
 getTokenFromHash()
-console.log("12312312")
+console.log("asdasdasds")
