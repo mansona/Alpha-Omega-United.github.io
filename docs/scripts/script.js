@@ -111,9 +111,9 @@ let client_id = "oijx3i1zco4074rk6vu0yxqjkbticz",
 	scopes = "user:read:follows",
 	scope = "&scope=" + scopes;
 
-let gottenUserVar, gottenFollowsVar, user_token;
+let gottenUserVar, gottenFollowsVar, user_token = null;
 const USER_ENDPOINT = "https://api.twitch.tv/helix/users";
-const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id=";
+const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?";
 
 
 document.getElementById('authorize_public')
@@ -129,7 +129,7 @@ document.getElementById('authorize_public')
 
 
 
-async function twitchApi(endpoint) {
+async function twitchApiGet(endpoint) {
 	const response = await fetch(
 		endpoint,
 		{
@@ -144,24 +144,51 @@ async function twitchApi(endpoint) {
 	return response_json
 }
 
+async function twitchApiPost(endpoint, params) {
+	const options = {
+		"headers": {
+			"Client-ID": client_id,
+			"Authorization": "Bearer " + user_token
+		},
+		method: "POST",
+		body: JSON.stringify(params)
+	}
+	const response = await fetch(endpoint, options)
+	const response_json = await response.json()
+	console.log(response_json)
+	return response_json
+}
+
+let follow_params = {
+	first: 100
+}
 
 
-
-function getTokenFromHash() {
-	console.log("getting hash")
-	if (document.location.hash && document.location.hash != '') {
-		var parsedHash = new URLSearchParams(window.location.hash.substr(1));
-		if (parsedHash.get('access_token')) {
-			user_token = parsedHash.get('access_token');
-			window.location.hash = ""
+async function getTokenFromHash() {
+	if (!user_token){
+		console.log("getting hash")
+		if (document.location.hash && document.location.hash != '') {
+			var parsedHash = new URLSearchParams(window.location.hash.substr(1));
+			if (parsedHash.get('access_token')) {
+				user_token = parsedHash.get('access_token');
+				window.location.hash = ""
+			}
+		} else if (document.location.search && document.location.search != '') {
+			var parsedParams = new URLSearchParams(window.location.search);
+			if (parsedParams.get('error_description')) {
+				console.error(parsedParams.get('error') + ' - ' + parsedParams.get('error_description'))
+			}
 		}
-	} else if (document.location.search && document.location.search != '') {
-		var parsedParams = new URLSearchParams(window.location.search);
-		if (parsedParams.get('error_description')) {
-			console.error(parsedParams.get('error') + ' - ' + parsedParams.get('error_description'))
-		}
+	} else {
+		let userData = await twitchApiGet(USER_ENDPOINT).then((response) => {
+			follow_params["from_id"] = response.id
+			let followData = twitchApiPost(FOLLOW_ENDPOINT, follow_params)
+			console.log(followData)
+			// TODO make pagination
+			return followData
+		})
+		console.log(userData)
 	}
 }
 getTokenFromHash()
-console.log(user_token)
 console.log("asdasd")
