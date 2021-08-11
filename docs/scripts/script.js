@@ -129,13 +129,13 @@ document.getElementById('authorize_public')
 
 
 
-async function twitchApiGet(endpoint) {
+async function twitchApiGet(endpoint, token) {
 	const response = await fetch(
 		endpoint,
 		{
 			"headers": {
 				"Client-ID": client_id,
-				"Authorization": "Bearer " + user_token
+				"Authorization": "Bearer " + token
 			}
 		}
 	)
@@ -144,11 +144,11 @@ async function twitchApiGet(endpoint) {
 	return response_json
 }
 
-async function twitchApiPost(endpoint, params) {
+async function twitchApiPost(endpoint, params, token) {
 	const options = {
 		"headers": {
 			"Client-ID": client_id,
-			"Authorization": "Bearer " + user_token
+			"Authorization": "Bearer " + token
 		},
 		method: "POST",
 		body: JSON.stringify(params)
@@ -165,30 +165,40 @@ let follow_params = {
 
 
 async function getTokenFromHash() {
-	if (!user_token){
-		console.log("getting hash")
-		if (document.location.hash && document.location.hash != '') {
-			var parsedHash = new URLSearchParams(window.location.hash.substr(1));
-			if (parsedHash.get('access_token')) {
-				user_token = parsedHash.get('access_token');
-				window.location.hash = ""
-			}
-		} else if (document.location.search && document.location.search != '') {
-			var parsedParams = new URLSearchParams(window.location.search);
-			if (parsedParams.get('error_description')) {
-				console.error(parsedParams.get('error') + ' - ' + parsedParams.get('error_description'))
-			}
+	console.log("getting hash")
+	if (document.location.hash && document.location.hash != '') {
+		var parsedHash = new URLSearchParams(window.location.hash.substr(1));
+		if (parsedHash.get('access_token')) {
+			user_token = parsedHash.get('access_token');
+			window.location.hash = ""
+			await getFollows(user_token)
 		}
-	} else {
-		let userData = await twitchApiGet(USER_ENDPOINT).then((response) => {
-			follow_params["from_id"] = response.id
-			let followData = twitchApiPost(FOLLOW_ENDPOINT, follow_params)
-			console.log(followData)
-			// TODO make pagination
-			return followData
-		})
-		console.log(userData)
+	} else if (document.location.search && document.location.search != '') {
+		var parsedParams = new URLSearchParams(window.location.search);
+		if (parsedParams.get('error_description')) {
+			console.error(parsedParams.get('error') + ' - ' + parsedParams.get('error_description'))
+		}
 	}
 }
+
+
+
+async function getFollows(token) {
+	let userData = await twitchApiGet(USER_ENDPOINT, token).then((response) => {
+		let json_response = response.json()
+		follow_params["from_id"] = json_response.id
+		let followData = await twitchApiPost(FOLLOW_ENDPOINT, follow_params, token)
+		console.log(followData)
+		// TODO make pagination
+		return followData
+	})
+	console.log(userData)
+
+
+}
+
+
+
+
 getTokenFromHash()
-console.log("123123")
+console.log("asdasdasds")
