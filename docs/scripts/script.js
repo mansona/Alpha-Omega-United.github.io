@@ -147,6 +147,7 @@ async function twitchApiGet(endpoint, token) {
 async function twitchApiPost(endpoint, params, token) {
 	const options = {
 		"headers": {
+			"Content-Type": "application/json",
 			"Client-ID": client_id,
 			"Authorization": "Bearer " + token
 		},
