@@ -191,4 +191,4 @@ async function getTokenFromHash() {
 	}
 }
 getTokenFromHash()
-console.log("asdasd")
+console.log("123123")
