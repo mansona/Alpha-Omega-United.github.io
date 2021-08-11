@@ -64,23 +64,25 @@
 				};
 				console.log(get_user())
 				console.log(get_user)
-				await fetch(
-					"https://api.twitch.tv/helix/users/follows?from_id=" + get_user["id"],
-					{
-						"headers": {
-							"Client-ID": client_id,
-							"Authorization": "Bearer " + access_token
+				let get_follows = async function () {
+					await fetch(
+						"https://api.twitch.tv/helix/users/follows?from_id=" + get_user["id"],
+						{
+							"headers": {
+								"Client-ID": client_id,
+								"Authorization": "Bearer " + access_token
+							}
 						}
-					}
-				)
-					.then(resp => resp.json())
-					.then(resp => {
-						console.log(resp.data)
-					})
-					.catch(err => {
-						console.log(err);
-						user_data.textContent = 'Something went wrong';
-					});
+					)
+						.then(resp => resp.json())
+						.then(resp => {
+							console.log(resp.data)
+						})
+						.catch(err => {
+							console.log(err);
+							user_data.textContent = 'Something went wrong';
+						});
+				}
 			}
 		} else if (document.location.search && document.location.search != '') {
 			var parsedParams = new URLSearchParams(window.location.search);
