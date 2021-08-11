@@ -8,7 +8,15 @@ AOU_WEB_SECRET = ""
 AOU_WEB_REDIRECT = ""
 
 
-let counter = 0
+let counter = 0,
+	client_id = "oijx3i1zco4074rk6vu0yxqjkbticz",
+	redirect = "https://alpha-omega-united.github.io/",
+	scopes = "user:read:follows",
+	scope = "&scope=" + scopes;
+
+let gottenUserVar, gottenFollowsVar, user_token;
+
+
 
 const INDEX_HTML = `<h1>Welcome to Alpha Omega United's homepage</h1>
 					<hr>
@@ -96,5 +104,88 @@ function menuButtonHandler(event){
 		contentContainer.innerHTML = counter
 	} else if (event == "EMBEDDED") {
 		contentContainer.innerHTML = EMBEDDED_HTML
+	} else if (event == "LOGIN") {
+		contentContainer.innerHTML = ""
 	}
 }
+
+
+
+//* ---------------------- TWITCH STUFF ---------------------- *//
+
+document.getElementById('authorize_public').setAttribute('href', 'https://id.twitch.tv/oauth2/authorize?client_id=' + client_id + '&redirect_uri=' + encodeURIComponent(redirect) + '&response_type=token' + scope);
+
+const USER_ENDPOINT = "https://api.twitch.tv/helix/users"
+const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id="
+
+
+async function twitchApi(endpoint) {
+	const response = await fetch(
+		endpoint,
+		{
+			"headers": {
+				"Client-ID": client_id,
+				"Authorization": "Bearer " + user_token
+			}
+		}
+	)
+	const response_json = await response.json()
+	console.log(response_json)
+	return response_json
+}
+
+
+
+
+function getTokenFromHash() {
+	if (document.location.hash && document.location.hash != '') {
+		var parsedHash = new URLSearchParams(window.location.hash.substr(1));
+		if (parsedHash.get('access_token')) {
+			user_token = parsedHash.get('access_token');
+			window.location.hash = ""
+		}
+	}
+}
+
+
+
+// 		call API
+
+// 			.then(resp => resp.json())
+// 			.then(resp => {
+// 				console.log(resp.data[0])
+//
+// 				user_data.innerHTML = '';
+// 				let result = "user: " + resp.data[0]['display_name'] + " id: " + resp.data[0]['id']
+// 				user_data.innerHTML = result;
+// 				document.getElementById('page1').innerHTML = '';
+// 				gottenUserVar = resp.data[0]
+// 				fetch(
+// 					"https://api.twitch.tv/helix/users/follows?from_id=" + resp.data[0]['id'],
+// 					{
+// 						"headers": {
+// 							"Client-ID": client_id,
+// 							"Authorization": "Bearer " + access_token
+// 						}
+// 					}
+// 				)
+// 					.then(resp => resp.json())
+// 					.then(resp => {
+// 						console.log(resp.data)
+// 						gottenFollowsVar = resp.data
+// 					})
+// 					.catch(err => {
+// 						console.log(err);
+// 						user_data.textContent = 'Something went wrong';
+// 					});
+// 			})
+// 			.catch(err => {
+// 				console.log(err);
+// 				user_data.textContent = 'Something went wrong';
+// 			});
+// 	}
+// } else if (document.location.search && document.location.search != '') {
+// 	var parsedParams = new URLSearchParams(window.location.search);
+// 	if (parsedParams.get('error_description')) {
+// 		document.getElementById('access_token').textContent = parsedParams.get('error') + ' - ' + parsedParams.get('error_description');
+//

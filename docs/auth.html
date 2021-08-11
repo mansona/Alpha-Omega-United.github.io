@@ -6,85 +6,11 @@
 
 <body>
 	<div id="page1">
-		<p>
-			Implicit Auth is a way to get a User Access Token in a pure front end environment, it needs only a ClientID
-		</p>
 		<a href="" id="authorize_public">Authorize and get Public data</a>
 	</div>
 	<div id="access_token"></div>
 	<div id="user_data"></div>
-	<script type="text/javascript">
-		console.log("updated: 1231232")
-		var client_id = "oijx3i1zco4074rk6vu0yxqjkbticz"
-		// var redirect = "https://alpha-omega-united.github.io/"
-		var redirect = "https://alpha-omega-united.github.io/auth.html"
-		var scopes = "user:read:follows"
-		var scope = "&scope=" + scopes
-		let gottenUserVar, gottenFollowsVar;
-		// var scope = ""
-		let user_data = document.getElementById('user_data')
-		document.getElementById('authorize_public').setAttribute('href', 'https://id.twitch.tv/oauth2/authorize?client_id=' + client_id + '&redirect_uri=' + encodeURIComponent(redirect) + '&response_type=token' + scope);
-		document.getElementById('access_token').textContent = '';
-		if (document.location.hash && document.location.hash != '') {
-			var parsedHash = new URLSearchParams(window.location.hash.substr(1));
-			if (parsedHash.get('access_token')) {
-				var access_token = parsedHash.get('access_token');
-				user_data.textContent = 'Loading';
-				// call API
-				fetch(
-					'https://api.twitch.tv/helix/users',
-					{
-						"headers": {
-							"Client-ID": client_id,
-							"Authorization": "Bearer " + access_token
-						}
-					}
-				)
-					.then(resp => resp.json())
-					.then(resp => {
-						console.log(resp.data[0])
-						window.location.hash = ""
-						user_data.innerHTML = '';
-						let result = "user: " + resp.data[0]['display_name'] + " id: " + resp.data[0]['id']
-						user_data.innerHTML = result;
-						document.getElementById('page1').innerHTML = '';
-						gottenUserVar = resp.data[0]
-						fetch(
-							"https://api.twitch.tv/helix/users/follows?from_id=" + resp.data[0]['id'],
-							{
-								"headers": {
-									"Client-ID": client_id,
-									"Authorization": "Bearer " + access_token
-								}
-							}
-						)
-							.then(resp => resp.json())
-							.then(resp => {
-								console.log(resp.data)
-								gottenFollowsVar = resp.data
-							})
-							.catch(err => {
-								console.log(err);
-								user_data.textContent = 'Something went wrong';
-							});
-					})
-					.catch(err => {
-						console.log(err);
-						user_data.textContent = 'Something went wrong';
-					});
-				console.log(gottenUserVar)
-
-
-				console.log(gottenUserVar)
-				console.log(gottenFollowsVar)
-			}
-		} else if (document.location.search && document.location.search != '') {
-			var parsedParams = new URLSearchParams(window.location.search);
-			if (parsedParams.get('error_description')) {
-				document.getElementById('access_token').textContent = parsedParams.get('error') + ' - ' + parsedParams.get('error_description');
-			}
-		}
-	</script>
+	
 </body>
 
 </html>
