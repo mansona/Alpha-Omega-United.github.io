@@ -147,7 +147,6 @@ async function twitchApiGet(endpoint, token) {
 
 async function twitchApiPost(endpoint, params, token) {
 	const options = {
-,
 		method: "POST",
 		body: JSON.stringify(params)
 	}
