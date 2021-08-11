@@ -4,8 +4,8 @@
 
 
 AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
-AOU_WEB_SECRET
-AOU_WEB_REDIRECT
+AOU_WEB_SECRET = ""
+AOU_WEB_REDIRECT = ""
 
 
 let counter = 0
