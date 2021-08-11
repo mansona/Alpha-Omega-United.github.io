@@ -156,10 +156,6 @@ async function twitchApiPost(endpoint, params, token) {
 	return response_json
 }
 
-let follow_params = {
-	"first": 100
-}
-
 
 async function getTokenFromHash() {
 	console.log("getting hash")
@@ -185,9 +181,8 @@ async function getTokenFromHash() {
 async function getFollows(token) {
 	let userData = await twitchApiGet(USER_ENDPOINT, token)
 		.then(async (response) => {
-			console.log(follow_params)
-			endpoint = FOLLOW_ENDPOINT + response["data"][0].id + "?first=100"
-			let followData = await twitchApiGet(FOLLOW_ENDPOINT, token)
+			endpoint = FOLLOW_ENDPOINT + `${response["data"][0].id}` + "?first=100"
+			let followData = await twitchApiGet(endpoint, token)
 			console.log(followData)
 			// TODO make pagination
 			return followData
