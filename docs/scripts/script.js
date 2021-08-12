@@ -1,4 +1,4 @@
-console.log("192834091273097273")
+console.log("asdasdasdasd")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -7,10 +7,12 @@ console.log("192834091273097273")
 
 
 let isLoggedIn = false,
-	loggedInAs = "";
+	loggedInAs = "",
+	loggedInId = "";
 
 
 
+const loginButton = document.getElementById('login-button')
 
 
 function setCookies(variable, deleteCookie = false){
@@ -28,11 +30,14 @@ if (document.cookie) {
 	document.cookie.split("; ").forEach((element) => {
 		cookies[element.split("=")[0]] = element.split("=")[1]
 	})
-	console.log(cookies)
-
 	isLoggedIn = cookies["isLoggedIn"]
 	loggedInAs = cookies["loggedInAs"]
-
+	loggedInId = cookies["loggedInId"]
+	user_token = cookies["user_token"]
+	if (isLoggedIn) {
+		getFollowsAndAddHtml(loggedInId, user_token)
+		loginButton.innerText = loggedInAs
+	}
 }
 
 const AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
@@ -216,17 +221,10 @@ async function getTokenFromHash() {
 					loginName = response["data"][0].login;
 				userLoggedIn(displayName)
 				setCookies(`loggedInAs=${displayName}`)
-				setCookies(`isLoggedIn=true`)
-				await getFollowsPaginated(userId, user_token)
-				memberData = await parseMemberData()
-				if (memberData.admins.includes(loginName)){
-					toggleAdminButtonVisibility()
-				}
-				let notFollowMembers = checkFollowMember(memberData.users, loginName)
-				LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers, false)
-				contentContainer.innerHTML = ""
-				addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-				addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
+				setCookies(`isLoggedIn=${isLoggedIn}`)
+				setCookies(`loggedInId=${userId}`)
+				setCookies(`user_token=${user_token}`)
+				getFollowsAndAddHtml(userId, user_token)
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
@@ -236,6 +234,25 @@ async function getTokenFromHash() {
 		}
 	}
 }
+
+
+
+async function getFollowsAndAddHtml(userId, user_token) {
+	await getFollowsPaginated(userId, user_token)
+	memberData = await parseMemberData()
+	if (memberData.admins.includes(loginName)){
+		toggleAdminButtonVisibility()
+	}
+	let notFollowMembers = checkFollowMember(memberData.users, loginName)
+	LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers, false)
+	contentContainer.innerHTML = ""
+	addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
+	addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
+}
+
+
+
+
 
 async function getUserId(token) {
 	let userData = await twitchApiGet(USER_ENDPOINT, token)
@@ -338,7 +355,6 @@ loginLink.setAttribute('href',
 );
 
 function userLoggedIn(user){
-	let loginButton = document.getElementById('login-button')
 	if (isLoggedIn) {
 		unwrap(loginLink)
 		loginButton.innerText = user
