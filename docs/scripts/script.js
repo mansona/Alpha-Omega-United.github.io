@@ -1,4 +1,4 @@
-console.log("235469782567984392586725938467")
+console.log("afoshohfauaofhbn")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -202,7 +202,7 @@ async function twitchApiGet(endpoint, token) {
 				setCookies(`user_token=`, true)
 				loginButton.remove()
 				headerBottom.appendChild(makeLoginButtonLink())
-				result = false
+				resultJson = false
 				throw "api failed"
 			} else {
 				resultJson = response.json()
