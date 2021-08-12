@@ -1,4 +1,4 @@
-console.log("oapoxkoc+axc9ai0xc9809a8xc080ax8c")
+console.log("1092381273912873712937921")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -82,13 +82,6 @@ const LOGGED_IN_HTML_MENU = `<div>
 								<button onclick="menuButtonHandler('PLACEHOLDER6')" value="PLACEHOLDER6">PLACEHOLDER6</button>
 							</div><hr>`
 
-let loggedInSubMenuBackButton = `<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">BACK</button>
-					<h1>Your points</h1>
-					<hr>`;
-
-
-
-
 const hamburgerMenuButton = document.querySelector("#hamburger-menu")
 const sidebarMenu = document.querySelector("#menu")
 const contentContainer = document.querySelector("#content")
@@ -117,7 +110,9 @@ async function menuButtonHandler(buttonEvent){
 		contentContainer.innerHTML = EMBEDDED_HTML
 	} else if (buttonEvent == "LOGIN") {
 		if (isLoggedIn){
-			addFollowHtml(LOGGED_IN_HTML_MENU + LOGGED_IN_HTML.html)
+
+			addFollowHtml(LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
+			addFollowHtml(LOGGED_IN_HTML.html, "follow-container", "follow-container")
 		} else {
 			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
 		}
@@ -200,7 +195,8 @@ async function getTokenFromHash() {
 				}
 				let notFollowMembers = checkFollowMember(memberData.users, loginName)
 				LOGGED_IN_HTML["html"] = buildUserHtml(notFollowMembers)
-				addFollowHtml(LOGGED_IN_HTML_MENU + LOGGED_IN_HTML.html)
+				addFollowHtml(LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
+				addFollowHtml(LOGGED_IN_HTML.html, "follow-container", "follow-container")
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
@@ -252,10 +248,10 @@ function buildUserHtml(membersObject){
 	return followHtml
 }
 
-function addFollowHtml(html){
+function addFollowHtml(html, htmlId, htmlClass){
 	const element = document.createElement("div")
-	element.id = "follow-container"
-	element.classList.add("follow-container")
+	element.id = htmlId
+	element.classList.add(htmlClass)
 	element.innerHTML = html
 	contentContainer.innerHTML = ""
 	contentContainer.appendChild(element)
