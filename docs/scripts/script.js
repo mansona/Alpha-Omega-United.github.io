@@ -186,15 +186,19 @@ async function getFollowsPaginated(userId, token){
 	endpoint = FOLLOW_ENDPOINT + `${userId}` + "&first=100"
 	let followData = await twitchApiGet(endpoint, token)
 	let followCount = followData["data"].length
+	console.log("followCount " + followCount)
+	console.log("followData.total " + followData.total)
 	parseFollowData(followData["data"])
 	while (followCount < parseInt(followData.total)){
-		let pageCursor = followData["pagination"]["cursor"]
-		endpoint += "&pagination=" + pageCursor
+		let pageCursor = ""
+		pageCursor = followData["pagination"]["cursor"]
+		endpoint += "&after=" + pageCursor
 		var newData = await twitchApiGet(endpoint, token)
 		parseFollowData(newData["data"])
 		followCount += followData["data"].length
-		console.log(allFollows)
-		console.log(followCount)
+		console.log(newData)
+		console.log("followCount " + followCount)
+		console.log("followData.total " + followData.total)
 	}
 }
 
