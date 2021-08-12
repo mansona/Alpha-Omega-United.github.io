@@ -1,7 +1,14 @@
-console.log("1010010101001")
+console.log("lalallalalallala")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
+
+
+
+
+let isLoggedIn = false,
+	loggedInAs = "";
+
 
 if (document.cookie) {
 	console.log(document.cookie)
@@ -159,8 +166,7 @@ let allFollows = {},
 
 let pageinationCursor
 
-let isLoggedIn = false,
-	loggedInAs = "";
+
 
 getTokenFromHash()
 
@@ -190,7 +196,8 @@ async function getTokenFromHash() {
 					displayName = response["data"][0].display_name,
 					loginName = response["data"][0].login;
 				userLoggedIn(displayName)
-				document.cookie = `loggedInAs:${displayName};`
+				document.cookie = `loggedInAs:${displayName}`
+				document.cookie = `isLoggedIn = true`
 				await getFollowsPaginated(userId, user_token)
 				memberData = await parseMemberData()
 				if (memberData.admins.includes(loginName)){
