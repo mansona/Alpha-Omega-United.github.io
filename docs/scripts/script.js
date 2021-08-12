@@ -1,4 +1,4 @@
-console.log("sdgohijohgsirohgisu")
+console.log("1747171347")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -309,11 +309,11 @@ async function getFollowsPaginated(userId, token){
 				followCount += followData["data"].length
 				pageinationCursor = newData["pagination"]["cursor"]
 			} else {
-				logger.error("something bad happened")
+				console.error("something bad happened")
 			}
 		}
 	} else {
-		logger.error("something bad happened")
+		console.error("something bad happened")
 	}
 }
 
