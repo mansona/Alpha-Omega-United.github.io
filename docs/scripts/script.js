@@ -1,4 +1,4 @@
-console.log("123123123123")
+console.log("asdasdasdasd")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -74,6 +74,9 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 
 const EMBEDDED_HTML = `embed twithc player/chat here`
 
+const LOGGED_IN_HTML = {html: ""}
+
+
 const hamburgerMenuButton = document.querySelector("#hamburger-menu")
 const sidebarMenu = document.querySelector("#menu")
 const contentContainer = document.querySelector("#content")
@@ -100,8 +103,13 @@ function menuButtonHandler(event){
 	} else if (event == "EMBEDDED") {
 		contentContainer.innerHTML = EMBEDDED_HTML
 	} else if (event == "LOGIN") {
-		contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
+		if (isLoggedIn){
+			addFollowHtml(LOGGED_IN_HTML)
+		} else {
+			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
+		}
 	} else if (event == "ADMIN") {
+
 		contentContainer.innerHTML = "admin panel comes here"
 	}
 }
@@ -130,7 +138,7 @@ let isLoggedIn = false
 getTokenFromHash()
 
 
-
+// TODO  Store logged in html in variable
 
 
 
@@ -239,6 +247,7 @@ function addFollowHtml(html){
 	element.classList.add("follow-container")
 	element.innerHTML = html
 	contentContainer.innerHTML = ""
+	LOGGED_IN_HTML["html"] = html
 	contentContainer.appendChild(element)
 }
 
@@ -258,8 +267,8 @@ async function getMembers(){
 async function parseMemberData(){
 	console.log("parseMemberData")
 	await getMembers().then((data) => {
-		for (const mod in data["MODERATORS"]){
-			admins.push(mod)
+		for (const i in data["MODERATORS"]){
+			admins.push(data["MODERATORS"][i])
 		}
 		for (const [key, value] of Object.entries(data["users"])){
 			users[key] = value
@@ -280,8 +289,8 @@ function checkFollowMember(memberObject, user) {
 	let notFollowMembers = {}
 	for (const [memberKey, memberValue] of Object.entries(memberObject)){
 		if (!(memberKey in allFollows) && memberKey != user){
-			console.log(memberKey + " in allFollow:")
-			console.log((memberKey in allFollows))
+			// console.log(memberKey + " in allFollow:")
+			// console.log((memberKey in allFollows))
 			notFollowMembers[memberKey] = memberValue
 		}
 	}
