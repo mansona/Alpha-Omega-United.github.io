@@ -202,4 +202,4 @@ function parseFollowData(data) {
 }
 
 getTokenFromHash()
-console.log("asfsdasfasfas")
+console.log("123123123")
