@@ -127,13 +127,13 @@ async function menuButtonHandler(buttonEvent){
 		userPoints[loggedInAs.toLowerCase()] = members.users[loggedInAs.toLowerCase()];
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 		addHtmlChild(contentContainer, buildUserHtml(userPoints), "follow-container", "follow-container")
-	} else if (buttonEvent.includes("PLACEHOLDER")) {
-		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-		addHtmlChild(contentContainer, buttonEvent, "buttonEvent", "buttonEvent")
-	} else if (buttonEvent == "LIVE") {
+	}  else if (buttonEvent == "LIVE") {
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 
 		// TODO - make happen
+	} else if (buttonEvent.includes("PLACEHOLDER")) {
+		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
+		addHtmlChild(contentContainer, buttonEvent, "buttonEvent", "buttonEvent")
 	}
 }
 
@@ -159,13 +159,6 @@ let isLoggedIn = false,
 	loggedInAs = "";
 
 getTokenFromHash()
-
-
-// TODO  Store logged in html in variable
-
-
-
-
 
 async function twitchApiGet(endpoint, token) {
 	const response = await fetch(
@@ -199,7 +192,7 @@ async function getTokenFromHash() {
 					toggleAdminButtonVisibility()
 				}
 				let notFollowMembers = checkFollowMember(memberData.users, loginName)
-				LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers)
+				LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers, false)
 				contentContainer.innerHTML = ""
 				addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 				addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
@@ -212,7 +205,6 @@ async function getTokenFromHash() {
 		}
 	}
 }
-
 
 async function getUserId(token) {
 	let userData = await twitchApiGet(USER_ENDPOINT, token)
@@ -240,7 +232,7 @@ function parseFollowData(data) {
 	});
 }
 
-function buildUserHtml(membersObject, includePoints){
+function buildUserHtml(membersObject, includePoints = true){
 	let followHtml = ""
 	let pointString
 	for (const [key, value] of Object.entries(membersObject)){
@@ -268,8 +260,6 @@ function addHtmlChild(parent, html, htmlId, htmlClass){
 	parent.appendChild(element)
 }
 
-
-
 async function getMembers(){
 	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/twitch_bot/data/aou_members.json")
 		.then(res => res.json())
@@ -278,8 +268,6 @@ async function getMembers(){
 		})
 	return data
 }
-
-
 
 async function parseMemberData(){
 	await getMembers().then((data) => {
@@ -293,12 +281,10 @@ async function parseMemberData(){
 	return {admins, users}
 }
 
-
 function toggleAdminButtonVisibility() {
 	let adminButton = document.querySelector("#admin-button")
 	adminButton.classList.remove("admin-button-hide")
 }
-
 
 function checkFollowMember(memberObject, user) {
 	let notFollowMembers = {}
@@ -341,8 +327,6 @@ function unwrap(wrapper) {
 	wrapper.parentNode.replaceChild(docFrag, wrapper);
 }
 
-
-
 function adminPanel(){
 	contentContainer.innerHTML = INDEX_HTML
 }
@@ -355,7 +339,7 @@ function adminPanel(){
 
 
 
-
+//* ---------------- TODO WHEN GH ENV ---------------- *//
 
 
 
