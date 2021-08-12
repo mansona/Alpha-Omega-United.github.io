@@ -1,4 +1,4 @@
-console.log("1241241265133355132")
+console.log("sadfgadjfajsfpojsajfjas")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -115,37 +115,6 @@ const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 							</div><hr>`
 
 
-
-
-
-
-
-
-function replaceParentElement(element){
-	// `element` is the element you want to wrap
-	var parent = element.parentNode;
-	var wrapper = document.createElement('a');
-	wrapper.setAttribute('href',
-	'https://id.twitch.tv/oauth2/authorize?client_id='
-		+ AOU_WEB_CLIENT_ID
-		+ '&redirect_uri='
-		+ encodeURIComponent(redirect)
-		+ '&response_type=token'
-		+ scope
-	);
-	wrapper.id = "authorize_public"
-	// set the wrapper as child (instead of the element)
-	parent.replaceChild(wrapper, element);
-	// set element as child of wrapper
-	wrapper.appendChild(element);
-}
-
-
-
-
-
-
-
 function setCookies(variable, deleteCookie = false){
 	if (deleteCookie){
 		document.cookie = variable + "; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
@@ -228,10 +197,10 @@ async function twitchApiGet(endpoint, token) {
 	)
 		.then(response => {
 			if(!response.ok){
-				setCookies(`loggedInAs=${displayName}`, true)
-				setCookies(`isLoggedIn=${isLoggedIn}`, true)
-				setCookies(`loggedInId=${userId}`, true)
-				setCookies(`user_token=${user_token}`, true)
+				setCookies(`loggedInAs=`, true)
+				setCookies(`isLoggedIn=`, true)
+				setCookies(`loggedInId=`, true)
+				setCookies(`user_token=`, true)
 				loginButton.remove()
 				headerBottom.appendChild(makeLoginButtonLink())
 				result = false
