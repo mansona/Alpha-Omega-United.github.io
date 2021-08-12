@@ -1,4 +1,4 @@
-console.log("123093978145798139708")
+console.log("apsojfpaosfdpjsa")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -234,9 +234,7 @@ async function getTokenFromHash() {
 async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 	await getFollowsPaginated(userId, user_token)
 	memberData = await parseMemberData()
-	if (memberData.admins.includes(loggedInAs)){
-		toggleAdminButtonVisibility()
-	}
+	toggleAdminButtonVisibility(loggedInAs)
 	let notFollowMembers = checkFollowMember(memberData.users, loggedInAs)
 	LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers, false)
 	contentContainer.innerHTML = ""
@@ -319,9 +317,11 @@ async function parseMemberData(){
 	return {admins, users}
 }
 
-function toggleAdminButtonVisibility() {
-	let adminButton = document.querySelector("#admin-button")
-	adminButton.classList.remove("admin-button-hide")
+function toggleAdminButtonVisibility(user) {
+	if (memberData.admins.includes(user)){
+		let adminButton = document.querySelector("#admin-button")
+		adminButton.classList.remove("admin-button-hide")
+	}
 }
 
 function checkFollowMember(memberObject, user) {
