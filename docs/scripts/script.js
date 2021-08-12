@@ -6,7 +6,7 @@ console.log("lalalalalalal")
 
 
 const AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
-const AOU_WEB_SECRET = process.env.AOU_WEB_SECRET
+// const AOU_WEB_SECRET = process.env.AOU_WEB_SECRET
 
 
 const INDEX_HTML = `<h1>Welcome to Alpha Omega United's homepage</h1>
@@ -352,21 +352,21 @@ function adminPanel(){
 
 
 
-function checkLive(user){
-	// need token
-	endpoint = "https://api.twitch.tv/helix/search/channels?query=" + user.toLowerCase()
-	fetch(endpoint)
+// function checkLive(user){
+// 	// need token
+// 	endpoint = "https://api.twitch.tv/helix/search/channels?query=" + user.toLowerCase()
+// 	fetch(endpoint)
 
-}
+// }
 
 
-getAppToken()
-async function getAppToken(){
-	const endpoint = "https://id.twitch.tv/oauth2/token?client_id="
-					+ AOU_WEB_CLIENT_ID
-					+ "&client_secret="
-					+ AOU_WEB_SECRET
-					+ "&grant_type=client_credentials";
-	const result = await fetch(endpoint, {method: "POST"});
-	console.log(result.expires_in)
-}
+// getAppToken()
+// async function getAppToken(){
+// 	const endpoint = "https://id.twitch.tv/oauth2/token?client_id="
+// 					+ AOU_WEB_CLIENT_ID
+// 					+ "&client_secret="
+// 					+ AOU_WEB_SECRET
+// 					+ "&grant_type=client_credentials";
+// 	const result = await fetch(endpoint, {method: "POST"});
+// 	console.log(result.expires_in)
+// }
