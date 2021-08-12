@@ -247,3 +247,8 @@ h1 {
 		font-size: 15px;
 	}
 }
+
+/* ------------- TWITCH ------------- */
+.follow-container {
+	display: flex;
+}

@@ -145,18 +145,6 @@ async function twitchApiGet(endpoint, token) {
 	return response_json
 }
 
-async function twitchApiPost(endpoint, params, token) {
-	const options = {
-		method: "POST",
-		body: JSON.stringify(params)
-	}
-	const response = await fetch(endpoint, options)
-	const response_json = await response.json()
-	console.log(response_json)
-	return response_json
-}
-
-
 async function getTokenFromHash() {
 	console.log("getting hash")
 	if (document.location.hash && document.location.hash != '') {
@@ -181,13 +169,12 @@ async function getUserId(token) {
 	let userData = await twitchApiGet(USER_ENDPOINT, token)
 	return userData
 }
+
 let pageinationCursor
 async function getFollowsPaginated(userId, token){
 	let endpoint = FOLLOW_ENDPOINT + `${userId}` + "&first=100"
 	let followData = await twitchApiGet(endpoint, token)
 	let followCount = followData["data"].length
-	console.log("followCount " + followCount)
-	console.log("followData.total " + followData.total)
 	parseFollowData(followData["data"])
 	pageinationCursor = followData["pagination"]["cursor"]
 	while (followCount < parseInt(followData.total)){
@@ -197,11 +184,12 @@ async function getFollowsPaginated(userId, token){
 		followCount += followData["data"].length
 		pageinationCursor = newData["pagination"]["cursor"]
 	}
+	console.log(allFollows)
+	buildFollowHtml()
 }
 
 function parseFollowData(data) {
 	console.log("parsing data")
-	console.log(data)
 	data.forEach(follow => {
 		allFollows[follow["to_name"]] = follow["to_id"]
 	});
@@ -219,6 +207,11 @@ function buildFollowHtml(){
 			</div>
 			`
 	}
+	const element = document.createElement("div")
+	element.id = "follow-container"
+	element.classList.add("follow-container")
+	element.innerHTML = followHtml
+	contentContainer.appendChild(element)
 	return followHtml
 }
 
@@ -226,4 +219,4 @@ function buildFollowHtml(){
 
 
 getTokenFromHash()
-console.log("1233123123")
+console.log("asdasdsad")
