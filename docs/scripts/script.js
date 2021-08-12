@@ -161,9 +161,11 @@ async function getTokenFromHash() {
 			await getUserId(user_token).then(async (response) => {
 				await getFollowsPaginated(response["data"][0].id, user_token)
 				memberData = await parseMemberData()
-				if (memberData.admins.includes(response["data"][0].id)){
+				if (memberData.admins.includes(response["data"][0].from_name)){
 					toggleAdminButtonVisibility()
 				}
+				let notFollowMembers = checkFollowMember(memberData.users, response["data"][0].from_name)
+				buildFollowHtml(notFollowMembers)
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
@@ -203,9 +205,9 @@ function parseFollowData(data) {
 	});
 }
 
-function buildFollowHtml(){
+function buildFollowHtml(membersObject){
 	let followHtml = ""
-	for (let [key, value] of Object.entries(allFollows)){
+	for (let [key, value] of Object.entries(membersObject)){
 		followHtml += `
 			<div class="follow">
 				<a href="https://twitch.tv/${key}" target="_blank">user: ${key}</a>
@@ -214,16 +216,18 @@ function buildFollowHtml(){
 			</div>
 			`
 	}
-	const element = document.createElement("div")
-	element.id = "follow-container"
-	element.classList.add("follow-container")
-	element.innerHTML = followHtml
-	contentContainer.innerHTML = ""
-	contentContainer.appendChild(element)
+
 	return followHtml
 }
 
-
+function addFollowHtml(html){
+	const element = document.createElement("div")
+	element.id = "follow-container"
+	element.classList.add("follow-container")
+	element.innerHTML = html
+	contentContainer.innerHTML = ""
+	contentContainer.appendChild(element)
+}
 
 
 getTokenFromHash()
@@ -265,4 +269,15 @@ async function parseMemberData(){
 function toggleAdminButtonVisibility() {
 	let adminButton = document.querySelector("#admin-button")
 	adminButton.classList.remove("admin-button-hide")
+}
+
+
+function checkFollowMember(memberObject, user) {
+	let notFollowMembers = {}
+	for (const [key, value] of Object.entries(memberObject)){
+		if (!allFollows.includes(key) && key != user){
+			notFollowMembers[key] = value
+		}
+	}
+	return notFollowMembers
 }
