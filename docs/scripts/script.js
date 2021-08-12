@@ -244,7 +244,7 @@ async function getTokenFromHash() {
 				setCookies(`isLoggedIn=${isLoggedIn}`)
 				setCookies(`loggedInId=${userId}`)
 				setCookies(`user_token=${user_token}`)
-				getFollowsAndAddHtml(userId, user_token)
+				getFollowsAndAddHtml(userId, user_token, displayName)
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
