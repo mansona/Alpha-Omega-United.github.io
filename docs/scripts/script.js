@@ -72,7 +72,7 @@ const EMBEDDED_HTML = `embed twithc player/chat here`
 
 const ADMIN_HTML = {html: ""}
 
-const LOGGED_IN_HTML = {html: ""}
+const LOGGED_IN_HTML = {html: "<h1>Members you have not followed</h1><hr>"}
 const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('POINTS')" value="POINTS">POINTS</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
@@ -87,6 +87,8 @@ const sidebarMenu = document.querySelector("#menu")
 const contentContainer = document.querySelector("#content")
 
 function onLoad(){
+	console.log("document.referrer")
+	console.log(document.referrer)
 	if (document.referrer == "https://alpha-omega-united.github.io/"){
 		contentContainer.innerHTML = INDEX_HTML
 	} else {
@@ -196,7 +198,7 @@ async function getTokenFromHash() {
 					toggleAdminButtonVisibility()
 				}
 				let notFollowMembers = checkFollowMember(memberData.users, loginName)
-				LOGGED_IN_HTML["html"] = buildUserHtml(notFollowMembers)
+				LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers)
 				contentContainer.innerHTML = ""
 				addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 				addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
