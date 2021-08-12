@@ -1,4 +1,4 @@
-console.log("10910010101")
+console.log("lalalalla")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -79,7 +79,7 @@ const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('PLACEHOLDER4')" value="PLACEHOLDER4">PLACEHOLDER4</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER6')" value="PLACEHOLDER6">PLACEHOLDER6</button>
-								<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">Unfollowed AoU Members</button>
+								<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">AoU Members</button>
 							</div><hr>`
 
 const hamburgerMenuButton = document.querySelector("#hamburger-menu")
@@ -89,7 +89,7 @@ const contentContainer = document.querySelector("#content")
 function onLoad(){
 	console.log("document.referrer")
 	console.log(document.referrer)
-	if (document.referrer == "https://alpha-omega-united.github.io/"){
+	if (!document.location.hash){
 		contentContainer.innerHTML = INDEX_HTML
 	} else {
 		contentContainer.innerHTML = "<h1>LOADING...</h1>"
