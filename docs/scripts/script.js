@@ -1,4 +1,4 @@
-console.log("1231541515151515")
+console.log("aakakkakaakak")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -125,6 +125,9 @@ async function menuButtonHandler(buttonEvent){
 		const members = await getMembers();
 		let userName = members.users[loggedInAs];
 		let userPoints = {};
+		console.log(members.users[loggedInAs].points)
+		console.log(members.users[loggedInAs])
+		console.log(members.users)
 		userPoints[userName] = members.users[loggedInAs].points;
 		contentContainer.innerHTML = buildUserHtml(userPoints);
 	} else if ("PLACEHOLDER" in buttonEvent.value) {
@@ -178,7 +181,6 @@ async function twitchApiGet(endpoint, token) {
 }
 
 async function getTokenFromHash() {
-	console.log("getting hash")
 	if (document.location.hash && document.location.hash != '') {
 		var parsedHash = new URLSearchParams(window.location.hash.substr(1));
 		if (parsedHash.get('access_token')) {
@@ -196,10 +198,9 @@ async function getTokenFromHash() {
 					toggleAdminButtonVisibility()
 				}
 				let notFollowMembers = checkFollowMember(memberData.users, loginName)
-				console.log(notFollowMembers)
 				let followHtml = buildUserHtml(notFollowMembers)
-				addFollowHtml(followHtml)
 				LOGGED_IN_HTML["html"] += followHtml
+				addFollowHtml(LOGGED_IN_HTML.html)
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
@@ -232,15 +233,12 @@ async function getFollowsPaginated(userId, token){
 }
 
 function parseFollowData(data) {
-	console.log("parseFollowData()")
 	data.forEach(follow => {
 		allFollows[follow["to_name"].toLowerCase()] = follow["to_id"]
 	});
 }
 
 function buildUserHtml(membersObject){
-	console.log("buildUserHtml")
-	console.log(membersObject)
 	let followHtml = ""
 	for (const [key, value] of Object.entries(membersObject)){
 		followHtml += `
@@ -277,7 +275,6 @@ async function getMembers(){
 
 
 async function parseMemberData(){
-	console.log("parseMemberData")
 	await getMembers().then((data) => {
 		for (const i in data["MODERATORS"]){
 			admins.push(data["MODERATORS"][i])
@@ -291,7 +288,6 @@ async function parseMemberData(){
 
 
 function toggleAdminButtonVisibility() {
-	console.log("toggleAdminButtonVisibility")
 	let adminButton = document.querySelector("#admin-button")
 	adminButton.classList.remove("admin-button-hide")
 }
@@ -301,8 +297,6 @@ function checkFollowMember(memberObject, user) {
 	let notFollowMembers = {}
 	for (const [memberKey, memberValue] of Object.entries(memberObject)){
 		if (!(memberKey in allFollows) && memberKey != user){
-			// console.log(memberKey + " in allFollow:")
-			// console.log((memberKey in allFollows))
 			notFollowMembers[memberKey] = memberValue
 		}
 	}
@@ -321,7 +315,6 @@ loginLink.setAttribute('href',
 
 function userLoggedIn(user){
 	let loginButton = document.getElementById('login-button')
-	console.log(user)
 	if (isLoggedIn) {
 		unwrap(loginLink)
 		loginButton.innerText = user
