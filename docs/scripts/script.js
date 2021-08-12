@@ -1,4 +1,4 @@
-console.log("17714714890")
+console.log("sdgohijohgsirohgisu")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -217,7 +217,7 @@ async function menuButtonHandler(buttonEvent){
 async function twitchApiGet(endpoint, token) {
 	let result
 	try {
-		await fetch(
+		fetch(
 			endpoint,
 			{
 				"headers": {
