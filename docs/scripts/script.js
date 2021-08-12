@@ -2,7 +2,7 @@
 // Author: ItsOiK
 // Date: 06/08-2021
 
-console.log("asdasdasdasdsads")
+console.log("123123123123")
 
 
 AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
@@ -288,7 +288,18 @@ function checkFollowMember(memberObject, user) {
 	console.log(memberObject)
 	console.log("------------")
 	let notFollowMembers = {}
-	for (const [key, value] of Object.entries(memberObject)){
+	for (const [memberKey, memberValue] of Object.entries(memberObject)){
+		// for (const [followKey, followValue] of Object.entries(allFollows)){
+		// 	if (key == followKey){
+		// 		console.log(memberKey)
+		// 		console.log(allFollows[memberKey])
+		// 		console.log(memberObject[memberKey])
+		// 		break;
+		// 	}
+		// }
+		console.log(key + " in allFollow")
+		console.log((key in allFollows))
+		notFollowMembers[memberKey] = memberValue
 		if (!(key in allFollows) && key != user){
 			console.log(allFollows[key])
 			notFollowMembers[key] = value
