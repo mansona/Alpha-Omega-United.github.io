@@ -165,7 +165,7 @@ async function getTokenFromHash() {
 			user_token = parsedHash.get('access_token');
 			window.location.hash = ""
 			await getUserId(user_token).then(async (response) => {
-				await getFollowsPaginated(response["data"][0].id)
+				await getFollowsPaginated(response["data"][0].id, user_token)
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
@@ -182,7 +182,7 @@ async function getUserId(token) {
 	return userData
 }
 
-async function getFollowsPaginated(userId){
+async function getFollowsPaginated(userId, token){
 	endpoint = FOLLOW_ENDPOINT + `${userId}` + "&first=100"
 	let followData = await twitchApiGet(endpoint, token)
 	let followCount = followData["data"].length
