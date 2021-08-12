@@ -227,9 +227,21 @@ function buildFollowHtml(){
 
 
 getTokenFromHash()
-console.log("asdasdasdsas")
+console.log("12312312321")
 
 //  TODO: parse member.json
 //  TODO: only show follow that is in member.json()
 //  TODO:
 //  TODO: toggle admin-button-hide
+
+
+
+async function getMembers(){
+	fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/bot/data/aou_members.json")
+	.then(res => res.json())
+	.then(json => {
+		console.log(json)
+	  //json vaiable contains object with data
+	})
+
+}
