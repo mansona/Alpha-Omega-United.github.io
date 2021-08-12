@@ -1,4 +1,4 @@
-console.log("123123123123")
+console.log("asdasdasdasd")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -8,10 +8,6 @@ console.log("123123123123")
 AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
 AOU_WEB_SECRET = ""
 AOU_WEB_REDIRECT = ""
-
-
-let counter = 0;
-
 
 
 const INDEX_HTML = `<h1>Welcome to Alpha Omega United's homepage</h1>
@@ -74,7 +70,20 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 
 const EMBEDDED_HTML = `embed twithc player/chat here`
 
+const ADMIN_HTML = {html: ""}
+
 const LOGGED_IN_HTML = {html: ""}
+
+
+<button onclick="menuButtonHandler('POINTS')" value="POINTS">POINTS1</button>
+<button onclick="menuButtonHandler('PLACEHOLDER2')" value="PLACEHOLDER2">PLACEHOLDER2</button>
+<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
+<button onclick="menuButtonHandler('PLACEHOLDER4')" value="PLACEHOLDER4">PLACEHOLDER4</button>
+<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
+<button onclick="menuButtonHandler('PLACEHOLDER6')" value="PLACEHOLDER6">PLACEHOLDER6</button>
+
+
+
 
 
 const hamburgerMenuButton = document.querySelector("#hamburger-menu")
@@ -90,7 +99,7 @@ function hamburgerMenuHandler(event){
 	sidebarMenu.classList.toggle("menu-hide")
 }
 
-function menuButtonHandler(event){
+async function menuButtonHandler(event){
 	counter++;
 	if (event == "HOME"){
 		contentContainer.innerHTML = INDEX_HTML
@@ -98,8 +107,6 @@ function menuButtonHandler(event){
 		contentContainer.innerHTML = ASSETS_HTML
 	} else if (event == "RECRUITMENT") {
 		contentContainer.innerHTML = RECRUITMENT_HTML
-	} else if (event == "COUNTER") {
-		contentContainer.innerHTML = counter
 	} else if (event == "EMBEDDED") {
 		contentContainer.innerHTML = EMBEDDED_HTML
 	} else if (event == "LOGIN") {
@@ -109,8 +116,16 @@ function menuButtonHandler(event){
 			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
 		}
 	} else if (event == "ADMIN") {
-
-		contentContainer.innerHTML = "admin panel comes here"
+		if (ADMIN_HTML.html == ""){
+			const members = await getMembers();
+			ADMIN_HTML.html = buildUserHtml(members.users);
+		}
+		contentContainer.innerHTML = "<h1>All registered members are listed here</h1><hr>" + ADMIN_HTML.html
+	} else if (event == "POINTS") {
+		const members = await getMembers();
+		contentContainer.innerHTML = buildUserHtml(members.users[loggedInAs]);
+	} else if ("PLACEHOLDER" in event) {
+		contentContainer.innerHTML = event
 	}
 }
 
@@ -133,7 +148,8 @@ let allFollows = {},
 
 let pageinationCursor
 
-let isLoggedIn = false
+let isLoggedIn = false,
+	loggedInAs = "";
 
 getTokenFromHash()
 
@@ -169,22 +185,17 @@ async function getTokenFromHash() {
 			await getUserId(user_token).then(async (response) => {
 				let userId = response["data"][0].id,
 					displayName = response["data"][0].display_name,
+
 					loginName = response["data"][0].login;
 				userLoggedIn(displayName)
 				await getFollowsPaginated(userId, user_token)
 				memberData = await parseMemberData()
-
-				console.log("loginName in")
-				console.log(loginName)
-				console.log(memberData.admins.includes(loginName))
-				console.log(memberData.admins)
-
 				if (memberData.admins.includes(loginName)){
 					toggleAdminButtonVisibility()
 				}
 				let notFollowMembers = checkFollowMember(memberData.users, loginName)
 				console.log(notFollowMembers)
-				let followHtml = buildFollowHtml(notFollowMembers)
+				let followHtml = buildUserHtml(notFollowMembers)
 				addFollowHtml(followHtml)
 			})
 		}
@@ -224,8 +235,8 @@ function parseFollowData(data) {
 	});
 }
 
-function buildFollowHtml(membersObject){
-	console.log("buildFollowHtml")
+function buildUserHtml(membersObject){
+	console.log("buildUserHtml")
 	console.log(membersObject)
 	let followHtml = ""
 	for (const [key, value] of Object.entries(membersObject)){
@@ -237,7 +248,6 @@ function buildFollowHtml(membersObject){
 			</div>
 			`
 	}
-
 	return followHtml
 }
 
@@ -313,6 +323,7 @@ function userLoggedIn(user){
 	if (isLoggedIn) {
 		unwrap(loginLink)
 		loginButton.innerText = user
+		loggedInAs = user
 	}
 }
 
@@ -326,4 +337,10 @@ function unwrap(wrapper) {
 	}
 	// replace wrapper with document fragment
 	wrapper.parentNode.replaceChild(docFrag, wrapper);
+}
+
+
+
+function adminPanel(){
+	contentContainer.innerHTML = INDEX_HTML
 }
