@@ -1,4 +1,4 @@
-console.log("apsojfpaosfdpjsa")
+console.log("12312312321")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -21,7 +21,6 @@ const loginLink = document.getElementById('authorize_public')
 
 let pageinationCursor,
 	allFollows = {},
-	memberData,
 	admins = [],
 	users = {};
 
@@ -233,8 +232,9 @@ async function getTokenFromHash() {
 
 async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 	await getFollowsPaginated(userId, user_token)
-	memberData = await parseMemberData()
-	toggleAdminButtonVisibility(loggedInAs)
+	const memberData = await parseMemberData()
+	console.log(memberData)
+	toggleAdminButtonVisibility(memberData, loggedInAs)
 	let notFollowMembers = checkFollowMember(memberData.users, loggedInAs)
 	LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers, false)
 	contentContainer.innerHTML = ""
@@ -317,8 +317,8 @@ async function parseMemberData(){
 	return {admins, users}
 }
 
-function toggleAdminButtonVisibility(user) {
-	if (memberData.admins.includes(user)){
+function toggleAdminButtonVisibility(memberObject, user) {
+	if (memberObject.admins.includes(user)){
 		let adminButton = document.querySelector("#admin-button")
 		adminButton.classList.remove("admin-button-hide")
 	}
@@ -327,8 +327,8 @@ function toggleAdminButtonVisibility(user) {
 function checkFollowMember(memberObject, user) {
 	let notFollowMembers = {}
 	for (const [memberKey, memberValue] of Object.entries(memberObject)){
-		if (!(memberKey in allFollows) && memberKey != user){
-			notFollowMembers[memberKey] = memberValue
+		if (!(memberKey in allFollows) && memberKey.toLowerCase() != user.toLowerCase()){
+			notFollowMembers[memberKey.toLowerCase()] = memberValue
 		}
 	}
 	return notFollowMembers
