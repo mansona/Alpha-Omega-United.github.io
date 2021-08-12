@@ -227,7 +227,7 @@ function buildFollowHtml(){
 
 
 getTokenFromHash()
-console.log("12312")
+console.log("asdasdasdasds")
 
 //  TODO: parse member.json
 //  TODO: only show follow that is in member.json()
@@ -236,8 +236,8 @@ console.log("12312")
 
 let aouMemberList = {}
 
-async function getMembers(){
-	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/bot/data/aou_members.json")
+function getMembers(){
+	let data = fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/bot/data/aou_members.json")
 		.then(res => res.json())
 		.then(json => {
 			return json
@@ -245,6 +245,6 @@ async function getMembers(){
 		})
 	return data
 }
-aouMemberList = await getMembers()
+aouMemberList = getMembers()
 console.log(aouMemberList)
 console.log("aouMemberList")
