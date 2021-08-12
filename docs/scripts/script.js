@@ -260,6 +260,7 @@ async function getMembers(){
 
 
 async function parseMemberData(){
+	console.log("parseMemberData")
 	await getMembers().then((data) => {
 		for (const mod in data["MODERATORS"]){
 			admins.push(mod)
@@ -273,12 +274,15 @@ async function parseMemberData(){
 
 
 function toggleAdminButtonVisibility() {
+	console.log("toggleAdminButtonVisibility")
 	let adminButton = document.querySelector("#admin-button")
 	adminButton.classList.remove("admin-button-hide")
 }
 
 
 function checkFollowMember(memberObject, user) {
+	console.log("checkFollowMember")
+
 	let notFollowMembers = {}
 	for (const [key, value] of Object.entries(memberObject)){
 		if (!(key in allFollows) && key != user){
