@@ -1,4 +1,4 @@
-console.log("21312312312312312")
+console.log("asdasdasdascacacacacaca")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -101,7 +101,6 @@ function hamburgerMenuHandler(event){
 }
 
 async function menuButtonHandler(event){
-	counter++;
 	if (event == "HOME"){
 		contentContainer.innerHTML = INDEX_HTML
 	} else if (event == "ASSETS") {
