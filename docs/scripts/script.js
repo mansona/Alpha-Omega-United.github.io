@@ -1,4 +1,4 @@
-console.log("asdasdasdas")
+console.log("1231231231232123123")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -170,10 +170,12 @@ async function getTokenFromHash() {
 				userLoggedIn(displayName)
 				await getFollowsPaginated(userId, user_token)
 				memberData = await parseMemberData()
-				console.log("----------------------------------")
-				console.log(response["data"][0])
-				console.log("----------------------------------")
-				console.log(memberData)
+
+				console.log("loginName in")
+				console.log(loginName)
+				console.log(memberData.admins.includes(loginName))
+				console.log(memberData.admins)
+
 				if (memberData.admins.includes(loginName)){
 					toggleAdminButtonVisibility()
 				}
@@ -293,13 +295,13 @@ function checkFollowMember(memberObject, user) {
 
 
 function userLoggedIn(user){
+	let loginLink = document.getElementById('authorize_public')
 	let loginButton = document.getElementById('login-button')
 	if (isLoggedIn) {
-		let loginLink = document.getElementById('authorize_public')
 		unwrap(loginLink)
 		loginButton.innerText = user
 	} else {
-		loginButton.setAttribute('href',
+		loginLink.setAttribute('href',
 		'https://id.twitch.tv/oauth2/authorize?client_id='
 			+ client_id
 			+ '&redirect_uri='
