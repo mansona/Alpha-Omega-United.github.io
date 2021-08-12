@@ -225,4 +225,4 @@ function buildFollowHtml(){
 
 
 getTokenFromHash()
-console.log("12312321")
+console.log("asdasdasds")
