@@ -1,4 +1,4 @@
-console.log("asdasdasdasd")
+console.log("21312312312312312")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -72,15 +72,16 @@ const EMBEDDED_HTML = `embed twithc player/chat here`
 
 const ADMIN_HTML = {html: ""}
 
-const LOGGED_IN_HTML = {html: ""}
+const LOGGED_IN_HTML = {html: `<div>
+									<button onclick="menuButtonHandler('POINTS')" value="POINTS">POINTS</button>
+									<button onclick="menuButtonHandler('PLACEHOLDER2')" value="PLACEHOLDER2">PLACEHOLDER2</button>
+									<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
+									<button onclick="menuButtonHandler('PLACEHOLDER4')" value="PLACEHOLDER4">PLACEHOLDER4</button>
+									<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
+									<button onclick="menuButtonHandler('PLACEHOLDER6')" value="PLACEHOLDER6">PLACEHOLDER6</button>
+								</div>`
+						}
 
-
-<button onclick="menuButtonHandler('POINTS')" value="POINTS">POINTS1</button>
-<button onclick="menuButtonHandler('PLACEHOLDER2')" value="PLACEHOLDER2">PLACEHOLDER2</button>
-<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
-<button onclick="menuButtonHandler('PLACEHOLDER4')" value="PLACEHOLDER4">PLACEHOLDER4</button>
-<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
-<button onclick="menuButtonHandler('PLACEHOLDER6')" value="PLACEHOLDER6">PLACEHOLDER6</button>
 
 
 
@@ -185,7 +186,6 @@ async function getTokenFromHash() {
 			await getUserId(user_token).then(async (response) => {
 				let userId = response["data"][0].id,
 					displayName = response["data"][0].display_name,
-
 					loginName = response["data"][0].login;
 				userLoggedIn(displayName)
 				await getFollowsPaginated(userId, user_token)
@@ -197,6 +197,7 @@ async function getTokenFromHash() {
 				console.log(notFollowMembers)
 				let followHtml = buildUserHtml(notFollowMembers)
 				addFollowHtml(followHtml)
+				LOGGED_IN_HTML["html"] += followHtml
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
@@ -257,7 +258,6 @@ function addFollowHtml(html){
 	element.classList.add("follow-container")
 	element.innerHTML = html
 	contentContainer.innerHTML = ""
-	LOGGED_IN_HTML["html"] = html
 	contentContainer.appendChild(element)
 }
 
