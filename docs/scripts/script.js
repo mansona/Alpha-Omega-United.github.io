@@ -1,4 +1,4 @@
-console.log("asdasdasdsad")
+console.log("123123123123")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -129,21 +129,14 @@ let allFollows = {},
 
 let pageinationCursor
 
+let isLoggedIn = false
+
 getTokenFromHash()
+userLoggedIn()
 
 
 
 
-
-document.getElementById('authorize_public')
-	.setAttribute('href',
-	'https://id.twitch.tv/oauth2/authorize?client_id='
-		+ client_id
-		+ '&redirect_uri='
-		+ encodeURIComponent(redirect)
-		+ '&response_type=token'
-		+ scope
-	);
 
 
 
@@ -169,17 +162,22 @@ async function getTokenFromHash() {
 		if (parsedHash.get('access_token')) {
 			user_token = parsedHash.get('access_token');
 			window.location.hash = ""
+			isLoggedIn = true
 			await getUserId(user_token).then(async (response) => {
-				await getFollowsPaginated(response["data"][0].id, user_token)
+				let userId = response["data"][0].id,
+					displayName = response["data"][0].display_name,
+					loginName = response["data"][0].login;
+				userLoggedIn(displayName)
+				await getFollowsPaginated(userId, user_token)
 				memberData = await parseMemberData()
 				console.log("----------------------------------")
 				console.log(response["data"][0])
 				console.log("----------------------------------")
 				console.log(memberData)
-				if (memberData.admins.includes(response["data"][0].login)){
+				if (memberData.admins.includes(loginName)){
 					toggleAdminButtonVisibility()
 				}
-				let notFollowMembers = checkFollowMember(memberData.users, response["data"][0].login)
+				let notFollowMembers = checkFollowMember(memberData.users, loginName)
 				console.log(notFollowMembers)
 				let followHtml = buildFollowHtml(notFollowMembers)
 				addFollowHtml(followHtml)
@@ -230,7 +228,7 @@ function buildFollowHtml(membersObject){
 			<div class="follow">
 				<a href="https://twitch.tv/${key}" target="_blank">user: ${key}</a>
 				<br>
-				id: ${value}
+				points: ${value.points}
 			</div>
 			`
 	}
@@ -291,4 +289,21 @@ function checkFollowMember(memberObject, user) {
 		}
 	}
 	return notFollowMembers
+}
+
+
+function userLoggedIn(user){
+	let loginButton = document.getElementById('authorize_public')
+	if (isLoggedIn) {
+		loginButton.innerText = user
+	} else {
+		loginButton.setAttribute('href',
+		'https://id.twitch.tv/oauth2/authorize?client_id='
+			+ client_id
+			+ '&redirect_uri='
+			+ encodeURIComponent(redirect)
+			+ '&response_type=token'
+			+ scope
+		);
+	}
 }
