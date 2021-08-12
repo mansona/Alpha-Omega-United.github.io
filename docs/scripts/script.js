@@ -1,14 +1,32 @@
-console.log("asdasdasdasd")
+console.log("12093810297302170893")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
+
+
+let client_id = "oijx3i1zco4074rk6vu0yxqjkbticz",
+	redirect = "https://alpha-omega-united.github.io/",
+	scopes = "user:read:follows",
+	scope = "&scope=" + scopes;
+
+let gottenUserVar, gottenFollowsVar, user_token = null;
+const USER_ENDPOINT = "https://api.twitch.tv/helix/users";
+const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id=";
+
+let allFollows = {},
+	memberData,
+	admins = [],
+	users = {};
+
+let pageinationCursor
 
 
 
 
 let isLoggedIn = false,
 	loggedInAs = "",
-	loggedInId = "";
+	loggedInId = "",
+	user_token = "";
 
 
 
@@ -174,23 +192,6 @@ async function menuButtonHandler(buttonEvent){
 
 
 //* ---------------------- TWITCH STUFF ---------------------- *//
-let client_id = "oijx3i1zco4074rk6vu0yxqjkbticz",
-	redirect = "https://alpha-omega-united.github.io/",
-	scopes = "user:read:follows",
-	scope = "&scope=" + scopes;
-
-let gottenUserVar, gottenFollowsVar, user_token = null;
-const USER_ENDPOINT = "https://api.twitch.tv/helix/users";
-const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id=";
-
-let allFollows = {},
-	memberData,
-	admins = [],
-	users = {};
-
-let pageinationCursor
-
-
 
 getTokenFromHash()
 
