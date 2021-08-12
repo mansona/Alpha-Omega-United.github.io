@@ -1,4 +1,4 @@
-console.log("123123123123")
+console.log("asdasdasdsad")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -282,25 +282,11 @@ function toggleAdminButtonVisibility() {
 
 
 function checkFollowMember(memberObject, user) {
-	console.log("checkFollowMember")
-	console.log(user)
-	console.log(allFollows)
-	console.log(memberObject)
-	console.log("------------")
 	let notFollowMembers = {}
 	for (const [memberKey, memberValue] of Object.entries(memberObject)){
-		// for (const [followKey, followValue] of Object.entries(allFollows)){
-		// 	if (key == followKey){
-		// 		console.log(memberKey)
-		// 		console.log(allFollows[memberKey])
-		// 		console.log(memberObject[memberKey])
-		// 		break;
-		// 	}
-		// }
-		console.log(memberKey + " in allFollow:")
-		console.log((memberKey in allFollows))
-		notFollowMembers[memberKey] = memberValue
 		if (!(memberKey in allFollows) && memberKey != user){
+			console.log(memberKey + " in allFollow:")
+			console.log((memberKey in allFollows))
 			notFollowMembers[memberKey] = memberValue
 		}
 	}
