@@ -194,10 +194,13 @@ async function getFollowsPaginated(userId, token){
 		parseFollowData(newData["data"])
 		followCount += followData["data"].length
 		console.log(allFollows)
+		console.log(followCount)
 	}
 }
 
 function parseFollowData(data) {
+	console.log("parsing data")
+	console.log(data)
 	data.forEach(follow => {
 		allFollows[follow["to_name"]] = follow["to_id"]
 	});
@@ -208,7 +211,9 @@ function buildFollowHtml(){
 	for (let [key, value] of Object.entries(allFollows)){
 		followHtml += `
 			<div>
-				<p>user: ${key}</p>
+				<a href="https://twitch.tv/${key}" target="_blank">
+					<p>user: ${key}</p>
+				</a>
 				<p>id: ${value}</p>
 			</div>
 			`
