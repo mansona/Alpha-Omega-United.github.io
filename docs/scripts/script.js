@@ -1,8 +1,8 @@
+console.log("123123123123")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
 
-console.log("asdasddqdqdqdqdqd")
 
 
 AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
@@ -217,7 +217,7 @@ async function getFollowsPaginated(userId, token){
 function parseFollowData(data) {
 	console.log("parseFollowData()")
 	data.forEach(follow => {
-		allFollows[follow["to_name"]] = follow["to_id"]
+		allFollows[follow["to_name"].toLowerCase()] = follow["to_id"]
 	});
 }
 
