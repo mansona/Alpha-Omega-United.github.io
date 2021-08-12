@@ -199,7 +199,7 @@ function buildFollowHtml(){
 	let followHtml = ""
 	for (let [key, value] of Object.entries(allFollows)){
 		followHtml += `
-			<div>
+			<div class="follow">
 				<a href="https://twitch.tv/${key}" target="_blank">
 					<p>user: ${key}</p>
 				</a>
@@ -211,6 +211,7 @@ function buildFollowHtml(){
 	element.id = "follow-container"
 	element.classList.add("follow-container")
 	element.innerHTML = followHtml
+	contentContainer.innerHTML = ""
 	contentContainer.appendChild(element)
 	return followHtml
 }

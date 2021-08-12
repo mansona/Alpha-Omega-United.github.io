@@ -252,3 +252,7 @@ h1 {
 .follow-container {
 	display: flex;
 }
+.follow {
+
+	width: fit-content;
+}
