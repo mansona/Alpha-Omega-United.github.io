@@ -2,7 +2,7 @@
 // Author: ItsOiK
 // Date: 06/08-2021
 
-console.log("123123123123")
+console.log("asdasddqdqdqdqdqd")
 
 
 AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
@@ -297,12 +297,11 @@ function checkFollowMember(memberObject, user) {
 		// 		break;
 		// 	}
 		// }
-		console.log(key + " in allFollow")
-		console.log((key in allFollows))
+		console.log(memberKey + " in allFollow:")
+		console.log((memberKey in allFollows))
 		notFollowMembers[memberKey] = memberValue
-		if (!(key in allFollows) && key != user){
-			console.log(allFollows[key])
-			notFollowMembers[key] = value
+		if (!(memberKey in allFollows) && memberKey != user){
+			notFollowMembers[memberKey] = memberValue
 		}
 	}
 	return notFollowMembers
