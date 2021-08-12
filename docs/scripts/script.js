@@ -181,24 +181,21 @@ async function getUserId(token) {
 	let userData = await twitchApiGet(USER_ENDPOINT, token)
 	return userData
 }
-
+let pageinationCursor
 async function getFollowsPaginated(userId, token){
-	endpoint = FOLLOW_ENDPOINT + `${userId}` + "&first=100"
+	let endpoint = FOLLOW_ENDPOINT + `${userId}` + "&first=100"
 	let followData = await twitchApiGet(endpoint, token)
 	let followCount = followData["data"].length
 	console.log("followCount " + followCount)
 	console.log("followData.total " + followData.total)
 	parseFollowData(followData["data"])
+	pageinationCursor = followData["pagination"]["cursor"]
 	while (followCount < parseInt(followData.total)){
-		let pageCursor = ""
-		pageCursor = followData["pagination"]["cursor"]
-		endpoint += "&after=" + pageCursor
-		var newData = await twitchApiGet(endpoint, token)
+		pageEndpoint = endpoint + "&after=" + pageinationCursor
+		var newData = await twitchApiGet(pageEndpoint, token)
 		parseFollowData(newData["data"])
 		followCount += followData["data"].length
-		console.log(newData)
-		console.log("followCount " + followCount)
-		console.log("followData.total " + followData.total)
+		pageinationCursor = newData["pagination"]["cursor"]
 	}
 }
 
@@ -229,4 +226,4 @@ function buildFollowHtml(){
 
 
 getTokenFromHash()
-console.log("asdasdasds")
+console.log("1233123123")
