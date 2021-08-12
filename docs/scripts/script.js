@@ -245,6 +245,6 @@ function getMembers(){
 		})
 	return data
 }
-aouMemberList = getMembers()
+aouMemberList = (() => await getMembers())
 console.log(aouMemberList)
 console.log("aouMemberList")
