@@ -230,7 +230,7 @@ async function twitchApiGet(endpoint, token) {
 				if(!response.ok){
 					throw "api failed"
 				} else {
-					result = await response.json()
+					result = response.json()
 				}
 			});
 	}
