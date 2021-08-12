@@ -2,7 +2,7 @@
 // Author: ItsOiK
 // Date: 06/08-2021
 
-console.log("123123123123")
+console.log("asdasdasdasdas")
 
 
 AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
@@ -71,7 +71,6 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 					<hr>
 					To apply for these roles, please join the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a> and message any one in the admin team, say which role you want to be, the reason why and how you can bring the community to reach new levels. This will go on for a week and then the week after, if there are 2 or more members competing, then we will let you all vote! 😃					</div>`
 
-// const COUNTER_HTML = `${counter}`
 
 const EMBEDDED_HTML = `embed twithc player/chat here`
 
@@ -281,11 +280,14 @@ function toggleAdminButtonVisibility() {
 
 function checkFollowMember(memberObject, user) {
 	console.log("checkFollowMember")
+	console.log(user)
 	console.log(allFollows)
 	console.log(memberObject)
+	console.log("------------")
 	let notFollowMembers = {}
 	for (const [key, value] of Object.entries(memberObject)){
 		if (!(key in allFollows) && key != user){
+			console.log(allFollows[key])
 			notFollowMembers[key] = value
 		}
 	}
