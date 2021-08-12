@@ -1,4 +1,4 @@
-console.log("198389838383883")
+console.log("lolololollolololo")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -125,11 +125,14 @@ async function menuButtonHandler(buttonEvent){
 		const members = await getMembers();
 		let userPoints = {};
 		console.log(members.users[loggedInAs.toLowerCase()])
+		console.log(members.users[loggedInAs.toLowerCase()]["points"])
+		console.log(members.users[loggedInAs.toLowerCase()].points)
 		userPoints[loggedInAs.toLowerCase()] = members.users[loggedInAs.toLowerCase()].points;
+		console.log(userPoints)
 		let thisUserPoints = "<h1>Your points</h1><hr>";
 		thisUserPoints += buildUserHtml(userPoints);
 		contentContainer.innerHTML = thisUserPoints
-	} else if ("PLACEHOLDER" in String(buttonEvent)) {
+	} else if (buttonEvent.includes("PLACEHOLDER")) {
 		contentContainer.innerHTML = buttonEvent
 	}
 }
