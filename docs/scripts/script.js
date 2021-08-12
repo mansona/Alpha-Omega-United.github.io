@@ -1,13 +1,12 @@
-console.log("10101001")
+console.log("lalalalalalal")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
 
 
 
-AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
-AOU_WEB_SECRET = ""
-AOU_WEB_REDIRECT = ""
+const AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
+const AOU_WEB_SECRET = process.env.AOU_WEB_SECRET
 
 
 const INDEX_HTML = `<h1>Welcome to Alpha Omega United's homepage</h1>
@@ -74,11 +73,11 @@ const ADMIN_HTML = {html: ""}
 
 const LOGGED_IN_HTML = {html: "<div><h1>Members you have not followed</h1><hr></div>"}
 const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
-								<button onclick="menuButtonHandler('POINTS')" value="POINTS">POINTS</button>
+								<button onclick="menuButtonHandler('POINTS')" value="POINTS">Your Points</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER4')" value="PLACEHOLDER4">PLACEHOLDER4</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
-								<button onclick="menuButtonHandler('PLACEHOLDER6')" value="PLACEHOLDER6">PLACEHOLDER6</button>
+								<button onclick="menuButtonHandler('LIVE')" value="LIVE">Live Now</button>
 								<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">AoU Members</button>
 							</div><hr>`
 
@@ -131,6 +130,8 @@ async function menuButtonHandler(buttonEvent){
 	} else if (buttonEvent.includes("PLACEHOLDER")) {
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 		addHtmlChild(contentContainer, buttonEvent, "buttonEvent", "buttonEvent")
+	} else if (buttonEvent == "LIVE") {
+		// TODO - make happen
 	}
 }
 
@@ -336,4 +337,36 @@ function unwrap(wrapper) {
 
 function adminPanel(){
 	contentContainer.innerHTML = INDEX_HTML
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function checkLive(user){
+	// need token
+	endpoint = "https://api.twitch.tv/helix/search/channels?query=" + user.toLowerCase()
+	fetch(endpoint)
+
+}
+
+
+getAppToken()
+async function getAppToken(){
+	const endpoint = "https://id.twitch.tv/oauth2/token?client_id="
+					+ AOU_WEB_CLIENT_ID
+					+ "&client_secret="
+					+ AOU_WEB_SECRET
+					+ "&grant_type=client_credentials";
+	const result = await fetch(endpoint, {method: "POST"});
+	console.log(result.expires_in)
 }
