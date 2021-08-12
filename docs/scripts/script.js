@@ -1,4 +1,4 @@
-console.log("123123123123")
+console.log("asdfasdasdsa")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -216,37 +216,29 @@ async function menuButtonHandler(buttonEvent){
 //* ---------------------- TWITCH STUFF ---------------------- *//
 async function twitchApiGet(endpoint, token) {
 	let result
-	try {
-		fetch(
-			endpoint,
-			{
-				"headers": {
-					"Client-ID": AOU_WEB_CLIENT_ID,
-					"Authorization": "Bearer " + token
-				}
+	fetch(
+		endpoint,
+		{
+			"headers": {
+				"Client-ID": AOU_WEB_CLIENT_ID,
+				"Authorization": "Bearer " + token
 			}
-		)
-			.then(response => {
-				if(!response.ok){
-					throw "api failed"
-				} else {
-					result = response.json()
-				}
-			});
-	}
-	catch (err) {
-		console.log(err)
-		console.log("err")
-		setCookies(`loggedInAs=${displayName}`, true)
-		setCookies(`isLoggedIn=${isLoggedIn}`, true)
-		setCookies(`loggedInId=${userId}`, true)
-		setCookies(`user_token=${user_token}`, true)
-		replaceParentElement(loginButton)
-		result = false
-	}
-	finally {
-		return result
-	}
+		}
+	)
+		.then(response => {
+			if(!response.ok){
+				setCookies(`loggedInAs=${displayName}`, true)
+				setCookies(`isLoggedIn=${isLoggedIn}`, true)
+				setCookies(`loggedInId=${userId}`, true)
+				setCookies(`user_token=${user_token}`, true)
+				replaceParentElement(loginButton)
+				result = false
+				throw "api failed"
+			} else {
+				result = response.json()
+			}
+		});
+	return result
 }
 
 async function getTokenFromHash() {
