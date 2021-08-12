@@ -1,4 +1,4 @@
-console.log("lalalalla")
+console.log("10101001")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -87,8 +87,6 @@ const sidebarMenu = document.querySelector("#menu")
 const contentContainer = document.querySelector("#content")
 
 function onLoad(){
-	console.log("document.referrer")
-	console.log(document.referrer)
 	if (!document.location.hash){
 		contentContainer.innerHTML = INDEX_HTML
 	} else {
