@@ -2,7 +2,7 @@
 // Author: ItsOiK
 // Date: 06/08-2021
 
-console.log("asdasdasdasd")
+console.log("123123123123")
 
 
 AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
@@ -171,19 +171,15 @@ async function getTokenFromHash() {
 			user_token = parsedHash.get('access_token');
 			window.location.hash = ""
 			await getUserId(user_token).then(async (response) => {
-				console.log("sadas")
 				await getFollowsPaginated(response["data"][0].id, user_token)
-				console.log("sadas")
 				memberData = await parseMemberData()
 				console.log(memberData)
 				if (memberData.admins.includes(response["data"][0].from_name)){
 					toggleAdminButtonVisibility()
 				}
-				console.log("sadas")
 				let notFollowMembers = checkFollowMember(memberData.users, response["data"][0].from_name)
 				console.log(notFollowMembers)
 				let followHtml = buildFollowHtml(notFollowMembers)
-				console.log("sadas")
 				addFollowHtml(followHtml)
 			})
 		}
@@ -285,7 +281,8 @@ function toggleAdminButtonVisibility() {
 
 function checkFollowMember(memberObject, user) {
 	console.log("checkFollowMember")
-
+	console.log(allFollows)
+	console.log(memberObject)
 	let notFollowMembers = {}
 	for (const [key, value] of Object.entries(memberObject)){
 		if (!(key in allFollows) && key != user){
