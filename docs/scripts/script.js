@@ -1,4 +1,4 @@
-console.log("asdasdasdasd")
+console.log("123123123123")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -104,7 +104,7 @@ function menuButtonHandler(event){
 		contentContainer.innerHTML = EMBEDDED_HTML
 	} else if (event == "LOGIN") {
 		if (isLoggedIn){
-			addFollowHtml(LOGGED_IN_HTML)
+			addFollowHtml(LOGGED_IN_HTML.html)
 		} else {
 			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
 		}
