@@ -99,8 +99,17 @@ function menuButtonHandler(event){
 	} else if (event == "EMBEDDED") {
 		contentContainer.innerHTML = EMBEDDED_HTML
 	} else if (event == "LOGIN") {
-		contentContainer.innerHTML = ""
+		contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
+	} else if (event == "ADMIN") {
+		contentContainer.innerHTML = "admin panel comes here"
 	}
+
+
+
+
+
+	let adminButton = document.querySelector("#admin-button")
+	adminButton.classList.toggle("admin-button-hide")
 }
 
 
@@ -199,9 +208,8 @@ function buildFollowHtml(){
 	for (let [key, value] of Object.entries(allFollows)){
 		followHtml += `
 			<div class="follow">
-				<a href="https://twitch.tv/${key}" target="_blank">
-					user: ${key}
-				</a>
+				<a href="https://twitch.tv/${key}" target="_blank">user: ${key}</a>
+				<br>
 				id: ${value}
 			</div>
 			`
@@ -219,4 +227,9 @@ function buildFollowHtml(){
 
 
 getTokenFromHash()
-console.log("123123213123")
+console.log("asdasdasdsas")
+
+//  TODO: parse member.json
+//  TODO: only show follow that is in member.json()
+//  TODO:
+//  TODO: toggle admin-button-hide

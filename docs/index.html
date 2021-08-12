@@ -11,6 +11,7 @@
 	<title xmlns="http://www.w3.org/1999/html">Alpha Omega United</title>
 	<link rel="stylesheet" href="scripts/style.css">
 	<link rel="icon" type="image/png" href="assets/logo.png">
+
 </head>
 
 <body>
@@ -27,7 +28,8 @@
 				<button onclick="menuButtonHandler('HOME')" value="HOME">HOME</button>
 				<button onclick="menuButtonHandler('ASSETS')" value="ASSETS">ASSETS</button>
 				<button onclick="menuButtonHandler('RECRUITMENT')" value="RECRUITMENT">RECRUITMENT</button>
-				<button onclick="menuButtonHandler('COUNTER')" value="COUNTER">COUNTER</button>
+				<button id="admin-button" class="admin-button admin-button-hide" onclick="menuButtonHandler('ADMIN')"
+					value="ADMIN">ADMIN</button>
 				<button onclick="menuButtonHandler('EMBEDDED')" value="EMBEDDED">EMBEDDED</button>
 				<a href="" id="authorize_public">
 					<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">LOGIN</button>
@@ -63,7 +65,8 @@
 		</div>
 	</div>
 	<script src="scripts/script.js" type="text/javascript"></script>
-
+	<script src="https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/bot/data/aou_members.json"
+		type="text/javascript"></script>
 
 </body>
 

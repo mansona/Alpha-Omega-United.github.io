@@ -102,6 +102,15 @@ h1 {
 	-webkit-box-shadow:0px 0px 5px #fff inset,5px 5px 15px #333 inset;
 	background-color: rgb(87, 87, 87);
 }
+.admin-button {
+
+}
+.admin-button-hide {
+	display: none;
+}
+
+
+
 .header img{
 	margin: 5%;
 	z-index: -10;
