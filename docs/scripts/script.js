@@ -1,4 +1,4 @@
-console.log("asdfasdasdsa")
+console.log("1241241265133355132")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -18,6 +18,7 @@ const hamburgerMenuButton = document.querySelector("#hamburger-menu")
 const sidebarMenu = document.querySelector("#menu")
 const contentContainer = document.querySelector("#content")
 const loginLink = document.getElementById('authorize_public')
+const headerBottom = document.getElementById('header-bottom')
 
 let pageinationCursor,
 	allFollows = {},
@@ -231,7 +232,8 @@ async function twitchApiGet(endpoint, token) {
 				setCookies(`isLoggedIn=${isLoggedIn}`, true)
 				setCookies(`loggedInId=${userId}`, true)
 				setCookies(`user_token=${user_token}`, true)
-				replaceParentElement(loginButton)
+				loginButton.remove()
+				headerBottom.appendChild(makeLoginButtonLink())
 				result = false
 				throw "api failed"
 			} else {
@@ -239,6 +241,21 @@ async function twitchApiGet(endpoint, token) {
 			}
 		});
 	return result
+}
+
+function makeLoginButtonLink(){
+	const loginButtonLink = document.createElement("a")
+	loginButtonLink.id = "authorize_public"
+	loginButtonLink.setAttribute('href',
+		'https://id.twitch.tv/oauth2/authorize?client_id='
+		+ AOU_WEB_CLIENT_ID
+		+ '&redirect_uri='
+		+ encodeURIComponent(redirect)
+		+ '&response_type=token'
+		+ scope
+	);
+	loginButtonLink.innerHTML = `<button id="login-button" onclick="menuButtonHandler('LOGIN')" value="LOGIN">LOGIN</button>`
+	return loginButtonLink
 }
 
 async function getTokenFromHash() {
