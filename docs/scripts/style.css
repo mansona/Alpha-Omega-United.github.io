@@ -251,8 +251,11 @@ h1 {
 /* ------------- TWITCH ------------- */
 .follow-container {
 	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
 }
 .follow {
-
 	width: fit-content;
+	border-radius: 10px;
+	border-style: inset 1px black;
 }
