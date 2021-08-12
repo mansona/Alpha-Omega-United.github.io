@@ -175,13 +175,13 @@ async function getTokenFromHash() {
 				await getFollowsPaginated(response["data"][0].id, user_token)
 				console.log("sadas")
 				memberData = await parseMemberData()
-				console.log("sadas")
+				console.log(memberData)
 				if (memberData.admins.includes(response["data"][0].from_name)){
 					toggleAdminButtonVisibility()
 				}
 				console.log("sadas")
 				let notFollowMembers = checkFollowMember(memberData.users, response["data"][0].from_name)
-				console.log("sadas")
+				console.log(notFollowMembers)
 				buildFollowHtml(notFollowMembers)
 				console.log("sadas")
 			})
@@ -223,6 +223,8 @@ function parseFollowData(data) {
 }
 
 function buildFollowHtml(membersObject){
+	console.log("buildFollowHtml")
+	console.log(membersObject)
 	let followHtml = ""
 	for (let [key, value] of Object.entries(membersObject)){
 		followHtml += `
