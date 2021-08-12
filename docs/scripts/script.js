@@ -1,65 +1,46 @@
-console.log("12093810297302170893")
+console.log("asdlkjlknhgsfdålhipfdohipugd")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
 
+// const AOU_WEB_SECRET = process.env.AOU_WEB_SECRET
 
-let client_id = "oijx3i1zco4074rk6vu0yxqjkbticz",
-	redirect = "https://alpha-omega-united.github.io/",
-	scopes = "user:read:follows",
-	scope = "&scope=" + scopes;
+const AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz";
+const redirect = "https://alpha-omega-united.github.io/";
+const scopes = "user:read:follows";
+const scope = "&scope=" + scopes;
 
-let gottenUserVar, gottenFollowsVar, user_token = null;
 const USER_ENDPOINT = "https://api.twitch.tv/helix/users";
 const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id=";
 
-let allFollows = {},
+const loginButton = document.getElementById('login-button')
+const hamburgerMenuButton = document.querySelector("#hamburger-menu")
+const sidebarMenu = document.querySelector("#menu")
+const contentContainer = document.querySelector("#content")
+const loginLink = document.getElementById('authorize_public')
+
+let pageinationCursor,
+	allFollows = {},
 	memberData,
 	admins = [],
 	users = {};
 
-let pageinationCursor
-
-
-
-
-let isLoggedIn = false,
+let gottenUserVar,
+	gottenFollowsVar,
+	isLoggedIn = false,
 	loggedInAs = "",
 	loggedInId = "",
-	user_token = "";
+	user_token = null;
 
+loginLink.setAttribute('href',
+'https://id.twitch.tv/oauth2/authorize?client_id='
+	+ AOU_WEB_CLIENT_ID
+	+ '&redirect_uri='
+	+ encodeURIComponent(redirect)
+	+ '&response_type=token'
+	+ scope
+);
 
-
-const loginButton = document.getElementById('login-button')
-
-
-function setCookies(variable, deleteCookie = false){
-	if (deleteCookie){
-		document.cookie = variable + "; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-	} else {
-		let expireDateUtc = new Date(new Date().getTime()+86400000).toUTCString()
-		document.cookie = variable + `; expires=${expireDateUtc}`
-	}
-}
-
-
-if (document.cookie) {
-	let cookies = {}
-	document.cookie.split("; ").forEach((element) => {
-		cookies[element.split("=")[0]] = element.split("=")[1]
-	})
-	isLoggedIn = cookies["isLoggedIn"]
-	loggedInAs = cookies["loggedInAs"]
-	loggedInId = cookies["loggedInId"]
-	user_token = cookies["user_token"]
-	if (isLoggedIn) {
-		getFollowsAndAddHtml(loggedInId, user_token)
-		loginButton.innerText = loggedInAs
-	}
-}
-
-const AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
-// const AOU_WEB_SECRET = process.env.AOU_WEB_SECRET
 
 
 const INDEX_HTML = `<h1>Welcome to Alpha Omega United's homepage</h1>
@@ -119,7 +100,6 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 					<hr>
 					To apply for these roles, please join the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a> and message any one in the admin team, say which role you want to be, the reason why and how you can bring the community to reach new levels. This will go on for a week and then the week after, if there are 2 or more members competing, then we will let you all vote! 😃					</div>`
 
-
 const EMBEDDED_HTML = `embed twithc player/chat here`
 
 const ADMIN_HTML = {html: ""}
@@ -134,18 +114,33 @@ const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">AoU Members</button>
 							</div><hr>`
 
-const hamburgerMenuButton = document.querySelector("#hamburger-menu")
-const sidebarMenu = document.querySelector("#menu")
-const contentContainer = document.querySelector("#content")
 
-function onLoad(){
-	if (!document.location.hash){
-		contentContainer.innerHTML = INDEX_HTML
+
+
+function setCookies(variable, deleteCookie = false){
+	if (deleteCookie){
+		document.cookie = variable + "; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
 	} else {
-		contentContainer.innerHTML = "<h1>LOADING...</h1>"
+		let expireDateUtc = new Date(new Date().getTime()+86400000).toUTCString()
+		document.cookie = variable + `; expires=${expireDateUtc}`
 	}
 }
-onLoad()
+
+
+if (document.cookie) {
+	let cookies = {}
+	document.cookie.split("; ").forEach((element) => {
+		cookies[element.split("=")[0]] = element.split("=")[1]
+	})
+	isLoggedIn = cookies["isLoggedIn"]
+	loggedInAs = cookies["loggedInAs"]
+	loggedInId = cookies["loggedInId"]
+	user_token = cookies["user_token"]
+	if (isLoggedIn) {
+		getFollowsAndAddHtml(loggedInId, user_token)
+		loginButton.innerText = loggedInAs
+	}
+}
 
 function hamburgerMenuHandler(event){
 	sidebarMenu.classList.toggle("menu-hide")
@@ -192,15 +187,12 @@ async function menuButtonHandler(buttonEvent){
 
 
 //* ---------------------- TWITCH STUFF ---------------------- *//
-
-getTokenFromHash()
-
 async function twitchApiGet(endpoint, token) {
 	const response = await fetch(
 		endpoint,
 		{
 			"headers": {
-				"Client-ID": client_id,
+				"Client-ID": AOU_WEB_CLIENT_ID,
 				"Authorization": "Bearer " + token
 			}
 		}
@@ -236,8 +228,6 @@ async function getTokenFromHash() {
 	}
 }
 
-
-
 async function getFollowsAndAddHtml(userId, user_token) {
 	await getFollowsPaginated(userId, user_token)
 	memberData = await parseMemberData()
@@ -250,10 +240,6 @@ async function getFollowsAndAddHtml(userId, user_token) {
 	addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 	addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
 }
-
-
-
-
 
 async function getUserId(token) {
 	let userData = await twitchApiGet(USER_ENDPOINT, token)
@@ -345,16 +331,6 @@ function checkFollowMember(memberObject, user) {
 	return notFollowMembers
 }
 
-let loginLink = document.getElementById('authorize_public')
-loginLink.setAttribute('href',
-'https://id.twitch.tv/oauth2/authorize?client_id='
-	+ client_id
-	+ '&redirect_uri='
-	+ encodeURIComponent(redirect)
-	+ '&response_type=token'
-	+ scope
-);
-
 function userLoggedIn(user){
 	if (isLoggedIn) {
 		unwrap(loginLink)
@@ -410,3 +386,18 @@ function adminPanel(){
 // 	const result = await fetch(endpoint, {method: "POST"});
 // 	console.log(result.expires_in)
 // }
+
+
+
+
+
+//* ---------------- ON LOAD! ---------------- *//
+onLoad()
+function onLoad(){
+	if (!document.location.hash){
+		contentContainer.innerHTML = INDEX_HTML
+	} else {
+		contentContainer.innerHTML = "<h1>LOADING...</h1>"
+	}
+	getTokenFromHash()
+}
