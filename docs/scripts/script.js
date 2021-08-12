@@ -1,4 +1,4 @@
-console.log("12312312321")
+console.log("adfsjiåpoihjåpofagdwsoihåpfgeopiåuh")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -135,9 +135,6 @@ if (document.cookie) {
 	loggedInAs = cookies["loggedInAs"]
 	loggedInId = cookies["loggedInId"]
 	user_token = cookies["user_token"]
-	console.log(isLoggedIn)
-	console.log(loggedInAs)
-	console.log(loggedInId)
 	if (isLoggedIn) {
 		userLoggedIn(loggedInAs)
 		getFollowsAndAddHtml(loggedInId, user_token, loggedInAs)
@@ -318,7 +315,7 @@ async function parseMemberData(){
 }
 
 function toggleAdminButtonVisibility(memberObject, user) {
-	if (memberObject.admins.includes(user)){
+	if (memberObject.admins.includes(user.toLowerCase())){
 		let adminButton = document.querySelector("#admin-button")
 		adminButton.classList.remove("admin-button-hide")
 	}
