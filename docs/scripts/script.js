@@ -1,4 +1,4 @@
-console.log("alalalsllslsla")
+console.log("oapoxkoc+axc9ai0xc9809a8xc080ax8c")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -72,17 +72,17 @@ const EMBEDDED_HTML = `embed twithc player/chat here`
 
 const ADMIN_HTML = {html: ""}
 
-const LOGGED_IN_HTML = {html: `<div>
-									<button onclick="menuButtonHandler('POINTS')" value="POINTS">POINTS</button>
-									<button onclick="menuButtonHandler('PLACEHOLDER2')" value="PLACEHOLDER2">PLACEHOLDER2</button>
-									<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
-									<button onclick="menuButtonHandler('PLACEHOLDER4')" value="PLACEHOLDER4">PLACEHOLDER4</button>
-									<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
-									<button onclick="menuButtonHandler('PLACEHOLDER6')" value="PLACEHOLDER6">PLACEHOLDER6</button>
-								</div>`
-						}
+const LOGGED_IN_HTML = {html: ""}
+const LOGGED_IN_HTML_MENU = `<div>
+								<button onclick="menuButtonHandler('POINTS')" value="POINTS">POINTS</button>
+								<button onclick="menuButtonHandler('PLACEHOLDER2')" value="PLACEHOLDER2">PLACEHOLDER2</button>
+								<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
+								<button onclick="menuButtonHandler('PLACEHOLDER4')" value="PLACEHOLDER4">PLACEHOLDER4</button>
+								<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
+								<button onclick="menuButtonHandler('PLACEHOLDER6')" value="PLACEHOLDER6">PLACEHOLDER6</button>
+							</div><hr>`
 
-let loggedInSubMenuBack = `<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">BACK</button>
+let loggedInSubMenuBackButton = `<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">BACK</button>
 					<h1>Your points</h1>
 					<hr>`;
 
@@ -94,7 +94,11 @@ const sidebarMenu = document.querySelector("#menu")
 const contentContainer = document.querySelector("#content")
 
 function onLoad(){
-	contentContainer.innerHTML = INDEX_HTML
+	if (document.referrer != ""){
+		contentContainer.innerHTML = INDEX_HTML
+	} else {
+		contentContainer.innerHTML = "<h1>LOADING...</h1>"
+	}
 }
 onLoad()
 
@@ -113,7 +117,7 @@ async function menuButtonHandler(buttonEvent){
 		contentContainer.innerHTML = EMBEDDED_HTML
 	} else if (buttonEvent == "LOGIN") {
 		if (isLoggedIn){
-			addFollowHtml(LOGGED_IN_HTML.html)
+			addFollowHtml(LOGGED_IN_HTML_MENU + LOGGED_IN_HTML.html)
 		} else {
 			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
 		}
@@ -127,12 +131,11 @@ async function menuButtonHandler(buttonEvent){
 		const members = await getMembers();
 		let userPoints = {};
 		userPoints[loggedInAs.toLowerCase()] = members.users[loggedInAs.toLowerCase()];
-		contentContainer.innerHTML = loggedInSubMenuBack + buildUserHtml(userPoints);
+		contentContainer.innerHTML = LOGGED_IN_HTML_MENU + buildUserHtml(userPoints);
 	} else if (buttonEvent.includes("PLACEHOLDER")) {
-		contentContainer.innerHTML = loggedInSubMenuBack + buttonEvent
+		contentContainer.innerHTML = LOGGED_IN_HTML_MENU + buttonEvent
 	}
 }
-
 
 
 //* ---------------------- TWITCH STUFF ---------------------- *//
@@ -196,9 +199,8 @@ async function getTokenFromHash() {
 					toggleAdminButtonVisibility()
 				}
 				let notFollowMembers = checkFollowMember(memberData.users, loginName)
-				let followHtml = buildUserHtml(notFollowMembers)
-				LOGGED_IN_HTML["html"] += followHtml
-				addFollowHtml(LOGGED_IN_HTML.html)
+				LOGGED_IN_HTML["html"] = buildUserHtml(notFollowMembers)
+				addFollowHtml(LOGGED_IN_HTML_MENU + LOGGED_IN_HTML.html)
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
