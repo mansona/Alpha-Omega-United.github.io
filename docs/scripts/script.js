@@ -1,4 +1,4 @@
-console.log("25378257832578925987")
+console.log("asffadafdafsafsafsfs")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -205,8 +205,8 @@ async function twitchApiGet(endpoint, token) {
 				result = false
 				throw "api failed"
 			} else {
-				result = response.json()
-				return result
+				resultJson = response.json()
+				return resultJson
 			}
 		});
 	console.log(result)
