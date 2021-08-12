@@ -20,6 +20,10 @@ body {
 	margin: 0;
 	min-height: 100vh;
 }
+p {
+	margin-block: 0;
+	;
+}
 a:link {
 	color:burlywood
 }
@@ -255,7 +259,11 @@ h1 {
 	justify-content: space-evenly;
 }
 .follow {
-	width: fit-content;
-	border-radius: 10px;
-	border-style: inset 1px black;
+    width: 100%;
+    border-radius: 10px;
+    border-style: inset;
+    text-align: start;
+    border-color: #4A4A4A;
+    background: #434343;
+    padding: 5px;
 }

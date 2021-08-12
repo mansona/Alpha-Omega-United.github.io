@@ -184,7 +184,6 @@ async function getFollowsPaginated(userId, token){
 		followCount += followData["data"].length
 		pageinationCursor = newData["pagination"]["cursor"]
 	}
-	console.log(allFollows)
 	buildFollowHtml()
 }
 
@@ -201,9 +200,9 @@ function buildFollowHtml(){
 		followHtml += `
 			<div class="follow">
 				<a href="https://twitch.tv/${key}" target="_blank">
-					<p>user: ${key}</p>
+					user: ${key}
 				</a>
-				<p>id: ${value}</p>
+				id: ${value}
 			</div>
 			`
 	}
