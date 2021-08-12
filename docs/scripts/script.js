@@ -1,4 +1,4 @@
-console.log("124154151513312")
+console.log("asfasfasfasfsaf")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -185,8 +185,7 @@ async function menuButtonHandler(buttonEvent){
 
 //* ---------------------- TWITCH STUFF ---------------------- *//
 async function twitchApiGet(endpoint, token) {
-	let result
-	fetch(
+	let result = await fetch(
 		endpoint,
 		{
 			"headers": {
@@ -206,8 +205,8 @@ async function twitchApiGet(endpoint, token) {
 				result = false
 				throw "api failed"
 			} else {
-				// result = response.json()
-				return response.json()
+				result = await response.json()
+				return result
 			}
 		});
 	console.log(result)
@@ -234,7 +233,6 @@ async function getTokenFromHash() {
 		var parsedHash = new URLSearchParams(window.location.hash.substr(1));
 		if (parsedHash.get('access_token')) {
 			user_token = parsedHash.get('access_token');
-			console.log(user_token)
 			window.location.hash = ""
 			isLoggedIn = true
 			await getUserId(user_token).then(async (response) => {
