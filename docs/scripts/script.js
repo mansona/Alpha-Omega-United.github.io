@@ -1,4 +1,4 @@
-console.log("sadfgadjfajsfpojsajfjas")
+console.log("123197082379129783")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -235,6 +235,7 @@ async function getTokenFromHash() {
 			window.location.hash = ""
 			isLoggedIn = true
 			await getUserId(user_token).then(async (response) => {
+				console.log(response)
 				let userId = response["data"][0].id,
 					displayName = response["data"][0].display_name,
 					loginName = response["data"][0].login;
