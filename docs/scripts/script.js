@@ -2,6 +2,8 @@
 // Author: ItsOiK
 // Date: 06/08-2021
 
+console.log("sadfadasdsadsa")
+
 
 AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
 AOU_WEB_SECRET = ""
@@ -121,8 +123,18 @@ let gottenUserVar, gottenFollowsVar, user_token = null;
 const USER_ENDPOINT = "https://api.twitch.tv/helix/users";
 const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id=";
 
-let allFollows = {}
-let memberData
+let allFollows = {},
+	memberData,
+	admins = [],
+	users = {};
+
+let pageinationCursor
+
+getTokenFromHash()
+
+
+
+
 
 document.getElementById('authorize_public')
 	.setAttribute('href',
@@ -182,7 +194,6 @@ async function getUserId(token) {
 	return userData
 }
 
-let pageinationCursor
 async function getFollowsPaginated(userId, token){
 	let endpoint = FOLLOW_ENDPOINT + `${userId}` + "&first=100"
 	let followData = await twitchApiGet(endpoint, token)
@@ -230,14 +241,6 @@ function addFollowHtml(html){
 }
 
 
-getTokenFromHash()
-console.log("123123213")
-
-//  TODO: parse member.json
-//  TODO: only show follow that is in member.json()
-//  TODO:
-//  TODO: toggle admin-button-hide
-
 
 async function getMembers(){
 	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/bot/data/aou_members.json")
@@ -248,9 +251,6 @@ async function getMembers(){
 	return data
 }
 
-
-let admins = [],
-	users = {};
 
 
 async function parseMemberData(){
@@ -275,7 +275,7 @@ function toggleAdminButtonVisibility() {
 function checkFollowMember(memberObject, user) {
 	let notFollowMembers = {}
 	for (const [key, value] of Object.entries(memberObject)){
-		if (!allFollows.includes(key) && key != user){
+		if (!(key in allFollows) && key != user){
 			notFollowMembers[key] = value
 		}
 	}
