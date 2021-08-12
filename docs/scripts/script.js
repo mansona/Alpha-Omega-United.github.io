@@ -2,7 +2,7 @@
 // Author: ItsOiK
 // Date: 06/08-2021
 
-console.log("123123123123")
+console.log("asdasdasdasdsads")
 
 
 AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
@@ -176,10 +176,10 @@ async function getTokenFromHash() {
 				console.log(response["data"][0])
 				console.log("----------------------------------")
 				console.log(memberData)
-				if (memberData.admins.includes(response["data"][0].from_name)){
+				if (memberData.admins.includes(response["data"][0].login)){
 					toggleAdminButtonVisibility()
 				}
-				let notFollowMembers = checkFollowMember(memberData.users, response["data"][0].from_name)
+				let notFollowMembers = checkFollowMember(memberData.users, response["data"][0].login)
 				console.log(notFollowMembers)
 				let followHtml = buildFollowHtml(notFollowMembers)
 				addFollowHtml(followHtml)
