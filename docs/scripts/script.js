@@ -198,9 +198,9 @@ async function getFollowsPaginated(userId, token){
 }
 
 function parseFollowData(data) {
-	for (var follow in data) {
-		allFollows[follow.to_name] = follow.to_id
-	}
+	data.forEach(follow => {
+		allFollows[follow["to_name"]] = follow["to_id"]
+	});
 }
 
 function buildFollowHtml(){
@@ -220,4 +220,4 @@ function buildFollowHtml(){
 
 
 getTokenFromHash()
-console.log("asdasdasds")
+console.log("12312321")
