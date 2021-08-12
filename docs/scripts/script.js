@@ -1,4 +1,4 @@
-console.log("lolololollolololo")
+console.log("8080080800808")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -82,7 +82,9 @@ const LOGGED_IN_HTML = {html: `<div>
 								</div>`
 						}
 
-
+let loggedInSubMenuBack = `<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">BACK</button>
+					<h1>Your points</h1>
+					<hr>`;
 
 
 
@@ -124,16 +126,12 @@ async function menuButtonHandler(buttonEvent){
 	} else if (buttonEvent == "POINTS") {
 		const members = await getMembers();
 		let userPoints = {};
-		console.log(members.users[loggedInAs.toLowerCase()])
-		console.log(members.users[loggedInAs.toLowerCase()]["points"])
-		console.log(members.users[loggedInAs.toLowerCase()].points)
-		userPoints[loggedInAs.toLowerCase()] = members.users[loggedInAs.toLowerCase()].points;
+		userPoints[loggedInAs.toLowerCase()] = members.users[loggedInAs.toLowerCase()];
 		console.log(userPoints)
-		let thisUserPoints = "<h1>Your points</h1><hr>";
-		thisUserPoints += buildUserHtml(userPoints);
+		loggedInSubMenuBack += buildUserHtml(userPoints);
 		contentContainer.innerHTML = thisUserPoints
 	} else if (buttonEvent.includes("PLACEHOLDER")) {
-		contentContainer.innerHTML = buttonEvent
+		contentContainer.innerHTML = loggedInSubMenuBack + buttonEvent
 	}
 }
 
