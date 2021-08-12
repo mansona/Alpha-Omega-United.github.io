@@ -1,4 +1,4 @@
-console.log("1231231231232123123")
+console.log("asdasdasdasds")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -297,6 +297,7 @@ function checkFollowMember(memberObject, user) {
 function userLoggedIn(user){
 	let loginLink = document.getElementById('authorize_public')
 	let loginButton = document.getElementById('login-button')
+	console.log(loginLink)
 	if (isLoggedIn) {
 		unwrap(loginLink)
 		loginButton.innerText = user
@@ -318,13 +319,13 @@ function userLoggedIn(user){
 
 // remove parent without removing childen
 function unwrap(wrapper) {
+	console.log(wrapper)
 	// place childNodes in document fragment
 	var docFrag = document.createDocumentFragment();
 	while (wrapper.firstChild) {
 		var child = wrapper.removeChild(wrapper.firstChild);
 		docFrag.appendChild(child);
 	}
-
 	// replace wrapper with document fragment
 	wrapper.parentNode.replaceChild(docFrag, wrapper);
 }
