@@ -1,4 +1,4 @@
-console.log("lalalalalalal")
+console.log("101010011001")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -131,6 +131,8 @@ async function menuButtonHandler(buttonEvent){
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 		addHtmlChild(contentContainer, buttonEvent, "buttonEvent", "buttonEvent")
 	} else if (buttonEvent == "LIVE") {
+		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
+
 		// TODO - make happen
 	}
 }
@@ -238,14 +240,20 @@ function parseFollowData(data) {
 	});
 }
 
-function buildUserHtml(membersObject){
+function buildUserHtml(membersObject, includePoints){
 	let followHtml = ""
+	let pointString
 	for (const [key, value] of Object.entries(membersObject)){
+		if (includePoints){
+			pointString = `points: ${value.points}`
+		} else {
+			pointString = ""
+		}
 		followHtml += `
 			<div class="follow">
 				<a href="https://twitch.tv/${key}" target="_blank">user: ${key}</a>
 				<br>
-				points: ${value.points}
+				${pointString}
 			</div>
 			`
 	}
