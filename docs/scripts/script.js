@@ -107,9 +107,6 @@ function menuButtonHandler(event){
 
 
 
-
-	let adminButton = document.querySelector("#admin-button")
-	adminButton.classList.remove("admin-button-hide")
 }
 
 
@@ -125,7 +122,7 @@ const USER_ENDPOINT = "https://api.twitch.tv/helix/users";
 const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id=";
 
 let allFollows = {}
-
+let memberData
 
 document.getElementById('authorize_public')
 	.setAttribute('href',
@@ -163,6 +160,10 @@ async function getTokenFromHash() {
 			window.location.hash = ""
 			await getUserId(user_token).then(async (response) => {
 				await getFollowsPaginated(response["data"][0].id, user_token)
+				memberData = await parseMemberData()
+				if (memberData.admins.includes(response["data"][0].id)){
+					toggleAdminButtonVisibility()
+				}
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
@@ -193,11 +194,10 @@ async function getFollowsPaginated(userId, token){
 		followCount += followData["data"].length
 		pageinationCursor = newData["pagination"]["cursor"]
 	}
-	buildFollowHtml()
 }
 
 function parseFollowData(data) {
-	console.log("parsing data")
+	console.log("parseFollowData()")
 	data.forEach(follow => {
 		allFollows[follow["to_name"]] = follow["to_id"]
 	});
@@ -234,17 +234,35 @@ console.log("123123213")
 //  TODO:
 //  TODO: toggle admin-button-hide
 
-let aouMemberList = {}
 
-function getMembers(){
-	let data = fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/bot/data/aou_members.json")
+async function getMembers(){
+	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/bot/data/aou_members.json")
 		.then(res => res.json())
 		.then(json => {
 			return json
-			//json vaiable contains object with data
 		})
 	return data
 }
-aouMemberList = (async () => {await getMembers().then((result) => result)})
-console.log(aouMemberList)
-console.log("aouMemberList")
+
+
+let admins = [],
+	users = {};
+
+
+async function parseMemberData(){
+	await getMembers().then((data) => {
+		for (const mod in data["MODERATORS"]){
+			admins.push(mod)
+		}
+		for (const [key, value] of Object.entries(data["users"])){
+			users[key] = value
+		}
+	})
+	return {admins, users}
+}
+
+
+function toggleAdminButtonVisibility() {
+	let adminButton = document.querySelector("#admin-button")
+	adminButton.classList.remove("admin-button-hide")
+}
