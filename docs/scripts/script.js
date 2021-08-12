@@ -227,7 +227,7 @@ function buildFollowHtml(){
 
 
 getTokenFromHash()
-console.log("asdasdasd")
+console.log("12312")
 
 //  TODO: parse member.json
 //  TODO: only show follow that is in member.json()
