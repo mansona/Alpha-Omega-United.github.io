@@ -1,10 +1,12 @@
-console.log("alallaallalalala")
+console.log("1010010101001")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
 
 if (document.cookie) {
 	console.log(document.cookie)
+	isLoggedIn = true
+
 }
 
 const AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
@@ -188,7 +190,7 @@ async function getTokenFromHash() {
 					displayName = response["data"][0].display_name,
 					loginName = response["data"][0].login;
 				userLoggedIn(displayName)
-				document.cookie = `isLoggedIn:true;loggedInAs:${displayName};`
+				document.cookie = `loggedInAs:${displayName};`
 				await getFollowsPaginated(userId, user_token)
 				memberData = await parseMemberData()
 				if (memberData.admins.includes(loginName)){
