@@ -1,4 +1,4 @@
-console.log("108230918239o123092")
+console.log("lalalasdlalsdlasldl")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -22,6 +22,9 @@ function setCookies(variable, deleteCookie = false){
 	}
 }
 
+
+
+setCookies("isLoggedIn:true", true)
 
 if (document.cookie) {
 	let cookies = {}
