@@ -1,4 +1,4 @@
-console.log("1092381273912873712937921")
+console.log("1010010101")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -110,7 +110,7 @@ async function menuButtonHandler(buttonEvent){
 		contentContainer.innerHTML = EMBEDDED_HTML
 	} else if (buttonEvent == "LOGIN") {
 		if (isLoggedIn){
-
+			contentContainer.innerHTML = ""
 			addFollowHtml(LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 			addFollowHtml(LOGGED_IN_HTML.html, "follow-container", "follow-container")
 		} else {
@@ -195,6 +195,7 @@ async function getTokenFromHash() {
 				}
 				let notFollowMembers = checkFollowMember(memberData.users, loginName)
 				LOGGED_IN_HTML["html"] = buildUserHtml(notFollowMembers)
+				contentContainer.innerHTML = ""
 				addFollowHtml(LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 				addFollowHtml(LOGGED_IN_HTML.html, "follow-container", "follow-container")
 			})
@@ -253,7 +254,6 @@ function addFollowHtml(html, htmlId, htmlClass){
 	element.id = htmlId
 	element.classList.add(htmlClass)
 	element.innerHTML = html
-	contentContainer.innerHTML = ""
 	contentContainer.appendChild(element)
 }
 
