@@ -1,4 +1,4 @@
-console.log("1747171347")
+console.log("gshoihogifhogsgho")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -236,6 +236,7 @@ async function twitchApiGet(endpoint, token) {
 	}
 	catch (err) {
 		console.log(err)
+		console.log("err")
 		setCookies(`loggedInAs=${displayName}`, true)
 		setCookies(`isLoggedIn=${isLoggedIn}`, true)
 		setCookies(`loggedInId=${userId}`, true)
