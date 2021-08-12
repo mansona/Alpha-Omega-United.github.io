@@ -1,4 +1,4 @@
-console.log("adfsjiåpoihjåpofagdwsoihåpfgeopiåuh")
+console.log("5230789+470982543")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -116,6 +116,35 @@ const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 
 
 
+
+
+
+
+function replaceParentElement(element){
+	// `element` is the element you want to wrap
+	var parent = element.parentNode;
+	var wrapper = document.createElement('a');
+	wrapper.setAttribute('href',
+	'https://id.twitch.tv/oauth2/authorize?client_id='
+		+ AOU_WEB_CLIENT_ID
+		+ '&redirect_uri='
+		+ encodeURIComponent(redirect)
+		+ '&response_type=token'
+		+ scope
+	);
+	wrapper.id = "authorize_public"
+	// set the wrapper as child (instead of the element)
+	parent.replaceChild(wrapper, element);
+	// set element as child of wrapper
+	wrapper.appendChild(element);
+}
+
+
+
+
+
+
+
 function setCookies(variable, deleteCookie = false){
 	if (deleteCookie){
 		document.cookie = variable + "; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
@@ -176,7 +205,6 @@ async function menuButtonHandler(buttonEvent){
 		addHtmlChild(contentContainer, buildUserHtml(userPoints), "follow-container", "follow-container")
 	}  else if (buttonEvent == "LIVE") {
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-
 		// TODO - make happen
 	} else if (buttonEvent.includes("PLACEHOLDER")) {
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
@@ -187,17 +215,31 @@ async function menuButtonHandler(buttonEvent){
 
 //* ---------------------- TWITCH STUFF ---------------------- *//
 async function twitchApiGet(endpoint, token) {
-	const response = await fetch(
-		endpoint,
-		{
-			"headers": {
-				"Client-ID": AOU_WEB_CLIENT_ID,
-				"Authorization": "Bearer " + token
+	let result
+	try {
+		const response = await fetch(
+			endpoint,
+			{
+				"headers": {
+					"Client-ID": AOU_WEB_CLIENT_ID,
+					"Authorization": "Bearer " + token
+				}
 			}
-		}
-	)
-	const response_json = await response.json()
-	return response_json
+		)
+		result = await response.json()
+	}
+	catch (err) {
+		console.error(err)
+		setCookies(`loggedInAs=${displayName}`, true)
+		setCookies(`isLoggedIn=${isLoggedIn}`, true)
+		setCookies(`loggedInId=${userId}`, true)
+		setCookies(`user_token=${user_token}`, true)
+		replaceParentElement(loginButton)
+		result = false
+	}
+	finally {
+		return result
+	}
 }
 
 async function getTokenFromHash() {
@@ -241,21 +283,31 @@ async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 
 async function getUserId(token) {
 	let userData = await twitchApiGet(USER_ENDPOINT, token)
-	return userData
+	if (userData){
+		return userData
+	}
 }
 
 async function getFollowsPaginated(userId, token){
 	let endpoint = FOLLOW_ENDPOINT + `${userId}` + "&first=100"
 	let followData = await twitchApiGet(endpoint, token)
-	let followCount = followData["data"].length
-	parseFollowData(followData["data"])
-	pageinationCursor = followData["pagination"]["cursor"]
-	while (followCount < parseInt(followData.total)){
-		pageEndpoint = endpoint + "&after=" + pageinationCursor
-		var newData = await twitchApiGet(pageEndpoint, token)
-		parseFollowData(newData["data"])
-		followCount += followData["data"].length
-		pageinationCursor = newData["pagination"]["cursor"]
+	if (followData){
+		let followCount = followData["data"].length
+		parseFollowData(followData["data"])
+		pageinationCursor = followData["pagination"]["cursor"]
+		while (followCount < parseInt(followData.total)){
+			pageEndpoint = endpoint + "&after=" + pageinationCursor
+			var newData = await twitchApiGet(pageEndpoint, token)
+			if (newData){
+				parseFollowData(newData["data"])
+				followCount += followData["data"].length
+				pageinationCursor = newData["pagination"]["cursor"]
+			} else {
+				logger.error("something bad happened")
+			}
+		}
+	} else {
+		logger.error("something bad happened")
 	}
 }
 
