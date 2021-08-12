@@ -1,4 +1,4 @@
-console.log("asdlkjlknhgsfdålhipfdohipugd")
+console.log("123093978145798139708")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -136,9 +136,12 @@ if (document.cookie) {
 	loggedInAs = cookies["loggedInAs"]
 	loggedInId = cookies["loggedInId"]
 	user_token = cookies["user_token"]
+	console.log(isLoggedIn)
+	console.log(loggedInAs)
+	console.log(loggedInId)
 	if (isLoggedIn) {
-		getFollowsAndAddHtml(loggedInId, user_token)
-		loginButton.innerText = loggedInAs
+		userLoggedIn(loggedInAs)
+		getFollowsAndAddHtml(loggedInId, user_token, loggedInAs)
 	}
 }
 
@@ -228,13 +231,13 @@ async function getTokenFromHash() {
 	}
 }
 
-async function getFollowsAndAddHtml(userId, user_token) {
+async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 	await getFollowsPaginated(userId, user_token)
 	memberData = await parseMemberData()
-	if (memberData.admins.includes(loginName)){
+	if (memberData.admins.includes(loggedInAs)){
 		toggleAdminButtonVisibility()
 	}
-	let notFollowMembers = checkFollowMember(memberData.users, loginName)
+	let notFollowMembers = checkFollowMember(memberData.users, loggedInAs)
 	LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers, false)
 	contentContainer.innerHTML = ""
 	addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
