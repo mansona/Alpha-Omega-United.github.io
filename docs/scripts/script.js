@@ -109,7 +109,7 @@ function menuButtonHandler(event){
 
 
 	let adminButton = document.querySelector("#admin-button")
-	adminButton.classList.toggle("admin-button-hide")
+	adminButton.classList.remove("admin-button-hide")
 }
 
 
@@ -237,14 +237,14 @@ console.log("asdasdasd")
 let aouMemberList = {}
 
 async function getMembers(){
-	fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/bot/data/aou_members.json")
-	.then(res => res.json())
-	.then(json => {
-		aouMemberList = json
-		//json vaiable contains object with data
-	})
-
+	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/bot/data/aou_members.json")
+		.then(res => res.json())
+		.then(json => {
+			return json
+			//json vaiable contains object with data
+		})
+	return data
 }
-getMembers()
+aouMemberList = await getMembers()
 console.log(aouMemberList)
 console.log("aouMemberList")
