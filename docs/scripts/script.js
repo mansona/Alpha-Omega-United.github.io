@@ -2,7 +2,7 @@
 // Author: ItsOiK
 // Date: 06/08-2021
 
-console.log("122312321")
+console.log("asdasdasdasd")
 
 
 AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz"
@@ -182,8 +182,9 @@ async function getTokenFromHash() {
 				console.log("sadas")
 				let notFollowMembers = checkFollowMember(memberData.users, response["data"][0].from_name)
 				console.log(notFollowMembers)
-				buildFollowHtml(notFollowMembers)
+				let followHtml = buildFollowHtml(notFollowMembers)
 				console.log("sadas")
+				addFollowHtml(followHtml)
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
@@ -226,7 +227,7 @@ function buildFollowHtml(membersObject){
 	console.log("buildFollowHtml")
 	console.log(membersObject)
 	let followHtml = ""
-	for (let [key, value] of Object.entries(membersObject)){
+	for (const [key, value] of Object.entries(membersObject)){
 		followHtml += `
 			<div class="follow">
 				<a href="https://twitch.tv/${key}" target="_blank">user: ${key}</a>
