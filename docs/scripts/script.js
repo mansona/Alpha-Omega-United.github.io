@@ -1,4 +1,4 @@
-console.log("asdasdasdasds")
+console.log("123123123123")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -104,10 +104,6 @@ function menuButtonHandler(event){
 	} else if (event == "ADMIN") {
 		contentContainer.innerHTML = "admin panel comes here"
 	}
-
-
-
-
 }
 
 
@@ -132,7 +128,6 @@ let pageinationCursor
 let isLoggedIn = false
 
 getTokenFromHash()
-userLoggedIn()
 
 
 
@@ -293,33 +288,27 @@ function checkFollowMember(memberObject, user) {
 	return notFollowMembers
 }
 
+let loginLink = document.getElementById('authorize_public')
+loginLink.setAttribute('href',
+'https://id.twitch.tv/oauth2/authorize?client_id='
+	+ client_id
+	+ '&redirect_uri='
+	+ encodeURIComponent(redirect)
+	+ '&response_type=token'
+	+ scope
+);
 
 function userLoggedIn(user){
-	let loginLink = document.getElementById('authorize_public')
 	let loginButton = document.getElementById('login-button')
-	console.log(loginLink)
+	console.log(user)
 	if (isLoggedIn) {
 		unwrap(loginLink)
 		loginButton.innerText = user
-	} else {
-		loginLink.setAttribute('href',
-		'https://id.twitch.tv/oauth2/authorize?client_id='
-			+ client_id
-			+ '&redirect_uri='
-			+ encodeURIComponent(redirect)
-			+ '&response_type=token'
-			+ scope
-		);
 	}
 }
 
-
-
-
-
 // remove parent without removing childen
 function unwrap(wrapper) {
-	console.log(wrapper)
 	// place childNodes in document fragment
 	var docFrag = document.createDocumentFragment();
 	while (wrapper.firstChild) {
