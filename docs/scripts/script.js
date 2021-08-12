@@ -1,4 +1,4 @@
-console.log("1010010101")
+console.log("alalallala")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -73,13 +73,13 @@ const EMBEDDED_HTML = `embed twithc player/chat here`
 const ADMIN_HTML = {html: ""}
 
 const LOGGED_IN_HTML = {html: ""}
-const LOGGED_IN_HTML_MENU = `<div>
+const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('POINTS')" value="POINTS">POINTS</button>
-								<button onclick="menuButtonHandler('PLACEHOLDER2')" value="PLACEHOLDER2">PLACEHOLDER2</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER4')" value="PLACEHOLDER4">PLACEHOLDER4</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER6')" value="PLACEHOLDER6">PLACEHOLDER6</button>
+								<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">Unfollowed AoU Members</button>
 							</div><hr>`
 
 const hamburgerMenuButton = document.querySelector("#hamburger-menu")
@@ -87,6 +87,8 @@ const sidebarMenu = document.querySelector("#menu")
 const contentContainer = document.querySelector("#content")
 
 function onLoad(){
+	console.log("document.referrer")
+	console.log(document.referrer)
 	if (document.referrer != ""){
 		contentContainer.innerHTML = INDEX_HTML
 	} else {
@@ -100,19 +102,19 @@ function hamburgerMenuHandler(event){
 }
 
 async function menuButtonHandler(buttonEvent){
+	contentContainer.innerHTML = ""
 	if (buttonEvent == "HOME"){
-		contentContainer.innerHTML = INDEX_HTML
+		addHtmlChild(contentContainer, INDEX_HTML, "INDEX_HTML", "INDEX_HTML")
 	} else if (buttonEvent == "ASSETS") {
-		contentContainer.innerHTML = ASSETS_HTML
+		addHtmlChild(contentContainer, ASSETS_HTML, "ASSETS_HTML", "ASSETS_HTML")
 	} else if (buttonEvent == "RECRUITMENT") {
-		contentContainer.innerHTML = RECRUITMENT_HTML
+		addHtmlChild(contentContainer, RECRUITMENT_HTML, "RECRUITMENT_HTML", "RECRUITMENT_HTML")
 	} else if (buttonEvent == "EMBEDDED") {
-		contentContainer.innerHTML = EMBEDDED_HTML
+		addHtmlChild(contentContainer, EMBEDDED_HTML, "EMBEDDED_HTML", "EMBEDDED_HTML")
 	} else if (buttonEvent == "LOGIN") {
 		if (isLoggedIn){
-			contentContainer.innerHTML = ""
-			addFollowHtml(LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-			addFollowHtml(LOGGED_IN_HTML.html, "follow-container", "follow-container")
+			addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
+			addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
 		} else {
 			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
 		}
@@ -126,9 +128,11 @@ async function menuButtonHandler(buttonEvent){
 		const members = await getMembers();
 		let userPoints = {};
 		userPoints[loggedInAs.toLowerCase()] = members.users[loggedInAs.toLowerCase()];
-		contentContainer.innerHTML = LOGGED_IN_HTML_MENU + buildUserHtml(userPoints);
+		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
+		addHtmlChild(contentContainer, buildUserHtml(userPoints), "follow-container", "follow-container")
 	} else if (buttonEvent.includes("PLACEHOLDER")) {
-		contentContainer.innerHTML = LOGGED_IN_HTML_MENU + buttonEvent
+		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
+		addHtmlChild(contentContainer, buttonEvent, "buttonEvent", "buttonEvent")
 	}
 }
 
@@ -196,8 +200,8 @@ async function getTokenFromHash() {
 				let notFollowMembers = checkFollowMember(memberData.users, loginName)
 				LOGGED_IN_HTML["html"] = buildUserHtml(notFollowMembers)
 				contentContainer.innerHTML = ""
-				addFollowHtml(LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-				addFollowHtml(LOGGED_IN_HTML.html, "follow-container", "follow-container")
+				addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
+				addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
 			})
 		}
 	} else if (document.location.search && document.location.search != '') {
@@ -249,12 +253,12 @@ function buildUserHtml(membersObject){
 	return followHtml
 }
 
-function addFollowHtml(html, htmlId, htmlClass){
+function addHtmlChild(parent, html, htmlId, htmlClass){
 	const element = document.createElement("div")
 	element.id = htmlId
 	element.classList.add(htmlClass)
 	element.innerHTML = html
-	contentContainer.appendChild(element)
+	parent.appendChild(element)
 }
 
 
