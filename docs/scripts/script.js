@@ -1,4 +1,4 @@
-console.log("asdasdasdascacacacacaca")
+console.log("1231541515151515")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -100,32 +100,35 @@ function hamburgerMenuHandler(event){
 	sidebarMenu.classList.toggle("menu-hide")
 }
 
-async function menuButtonHandler(event){
-	if (event == "HOME"){
+async function menuButtonHandler(buttonEvent){
+	if (buttonEvent == "HOME"){
 		contentContainer.innerHTML = INDEX_HTML
-	} else if (event == "ASSETS") {
+	} else if (buttonEvent == "ASSETS") {
 		contentContainer.innerHTML = ASSETS_HTML
-	} else if (event == "RECRUITMENT") {
+	} else if (buttonEvent == "RECRUITMENT") {
 		contentContainer.innerHTML = RECRUITMENT_HTML
-	} else if (event == "EMBEDDED") {
+	} else if (buttonEvent == "EMBEDDED") {
 		contentContainer.innerHTML = EMBEDDED_HTML
-	} else if (event == "LOGIN") {
+	} else if (buttonEvent == "LOGIN") {
 		if (isLoggedIn){
 			addFollowHtml(LOGGED_IN_HTML.html)
 		} else {
 			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
 		}
-	} else if (event == "ADMIN") {
+	} else if (buttonEvent == "ADMIN") {
 		if (ADMIN_HTML.html == ""){
 			const members = await getMembers();
 			ADMIN_HTML.html = buildUserHtml(members.users);
 		}
 		contentContainer.innerHTML = "<h1>All registered members are listed here</h1><hr>" + ADMIN_HTML.html
-	} else if (event == "POINTS") {
+	} else if (buttonEvent == "POINTS") {
 		const members = await getMembers();
-		contentContainer.innerHTML = buildUserHtml(members.users[loggedInAs]);
-	} else if ("PLACEHOLDER" in event) {
-		contentContainer.innerHTML = event
+		let userName = members.users[loggedInAs];
+		let userPoints = {};
+		userPoints[userName] = members.users[loggedInAs].points;
+		contentContainer.innerHTML = buildUserHtml(userPoints);
+	} else if ("PLACEHOLDER" in buttonEvent.value) {
+		contentContainer.innerHTML = buttonEvent
 	}
 }
 
