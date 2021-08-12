@@ -1,4 +1,4 @@
-console.log("asffadafdafsafsafsfs")
+console.log("235469782567984392586725938467")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -209,7 +209,6 @@ async function twitchApiGet(endpoint, token) {
 				return resultJson
 			}
 		});
-	console.log(result)
 	return result
 }
 
@@ -260,6 +259,7 @@ async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 	await getFollowsPaginated(userId, user_token)
 	const memberData = await parseMemberData()
 	console.log(memberData)
+	console.log(loggedInAs)
 	toggleAdminButtonVisibility(memberData, loggedInAs)
 	let notFollowMembers = checkFollowMember(memberData.users, loggedInAs)
 	LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers, false)
