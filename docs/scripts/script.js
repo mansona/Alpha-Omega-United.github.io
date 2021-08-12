@@ -115,6 +115,7 @@ let gottenUserVar, gottenFollowsVar, user_token = null;
 const USER_ENDPOINT = "https://api.twitch.tv/helix/users";
 const FOLLOW_ENDPOINT = "https://api.twitch.tv/helix/users/follows?from_id=";
 
+let allFollows = {}
 
 
 document.getElementById('authorize_public')
@@ -141,7 +142,6 @@ async function twitchApiGet(endpoint, token) {
 		}
 	)
 	const response_json = await response.json()
-	console.log(response_json)
 	return response_json
 }
 
@@ -164,7 +164,9 @@ async function getTokenFromHash() {
 		if (parsedHash.get('access_token')) {
 			user_token = parsedHash.get('access_token');
 			window.location.hash = ""
-			await getFollows(user_token)
+			await getUserId(user_token).then(async (response) => {
+				await getFollowsPaginated(response["data"][0].id)
+			})
 		}
 	} else if (document.location.search && document.location.search != '') {
 		var parsedParams = new URLSearchParams(window.location.search);
@@ -175,23 +177,29 @@ async function getTokenFromHash() {
 }
 
 
-
-
-
-async function getFollows(token) {
+async function getUserId(token) {
 	let userData = await twitchApiGet(USER_ENDPOINT, token)
-		.then(async (response) => {
-			endpoint = FOLLOW_ENDPOINT + `${response["data"][0].id}` + "&first=100"
-			let followData = await twitchApiGet(endpoint, token)
-			console.log(followData)
-			// TODO make pagination
-			return followData
-	})
-	console.log(userData)
+	return userData
 }
 
+async function getFollowsPaginated(userId){
+	endpoint = FOLLOW_ENDPOINT + `${userId}` + "&first=100"
+	let followData = await twitchApiGet(endpoint, token)
+	let followCount = followData["data"].length
+	parseFollowData(followData["data"])
+	while (followCount < followData.total){
+		let pageCursor = followData["pagination"]["cursor"]
+		endpoint += "&pagination=" + pageCursor
+		followData = await twitchApiGet(endpoint, token)
+		parseFollowData(followData["data"])
+	}
+}
 
-
+function parseFollowData(data) {
+	for (var follow in data) {
+		allFollows[follow.to_name] = follow.to_id
+	}
+}
 
 getTokenFromHash()
-console.log("123123123")
+console.log("asfsdasfasfas")
