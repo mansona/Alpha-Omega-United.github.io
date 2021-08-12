@@ -1,4 +1,4 @@
-console.log("lalalallalalla")
+console.log("10910010101")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -72,7 +72,7 @@ const EMBEDDED_HTML = `embed twithc player/chat here`
 
 const ADMIN_HTML = {html: ""}
 
-const LOGGED_IN_HTML = {html: "<h1>Members you have not followed</h1><hr>"}
+const LOGGED_IN_HTML = {html: "<div><h1>Members you have not followed</h1><hr></div>"}
 const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('POINTS')" value="POINTS">POINTS</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
@@ -264,7 +264,7 @@ function addHtmlChild(parent, html, htmlId, htmlClass){
 
 
 async function getMembers(){
-	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/bot/data/aou_members.json")
+	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/twitch_bot/data/aou_members.json")
 		.then(res => res.json())
 		.then(json => {
 			return json
