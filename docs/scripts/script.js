@@ -100,8 +100,6 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 					<hr>
 					To apply for these roles, please join the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a> and message any one in the admin team, say which role you want to be, the reason why and how you can bring the community to reach new levels. This will go on for a week and then the week after, if there are 2 or more members competing, then we will let you all vote! 😃					</div>`
 
-const EMBEDDED_HTML = `embed twithc player/chat here`
-
 const ADMIN_HTML = {html: ""}
 
 const LOGGED_IN_HTML = {html: "<div><h1>Members you have not followed</h1><hr></div>"}
@@ -114,6 +112,17 @@ const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">AoU Members</button>
 							</div><hr>`
 
+const EMBEDDED_HTML = `<script src="https://embed.twitch.tv/embed/v1.js"></script>
+						<!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
+						<script type="text/javascript">
+						new Twitch.Embed("twitch-embed", {
+							width: 854,
+							height: 480,
+							channel: "theserbian_",
+							// Only needed if this page is going to be embedded on other websites
+							parent: ["embed.example.com", "othersite.example.com"]
+						});
+						</script>`
 
 function setCookies(variable, deleteCookie = false){
 	if (deleteCookie){
@@ -148,35 +157,43 @@ async function menuButtonHandler(buttonEvent){
 	contentContainer.innerHTML = ""
 	if (buttonEvent == "HOME"){
 		addHtmlChild(contentContainer, INDEX_HTML, "INDEX_HTML", "INDEX_HTML")
-	} else if (buttonEvent == "ASSETS") {
+	}
+	if (buttonEvent == "ASSETS") {
 		addHtmlChild(contentContainer, ASSETS_HTML, "ASSETS_HTML", "ASSETS_HTML")
-	} else if (buttonEvent == "RECRUITMENT") {
+	}
+	if (buttonEvent == "RECRUITMENT") {
 		addHtmlChild(contentContainer, RECRUITMENT_HTML, "RECRUITMENT_HTML", "RECRUITMENT_HTML")
-	} else if (buttonEvent == "EMBEDDED") {
+	}
+	if (buttonEvent == "EMBEDDED") {
 		addHtmlChild(contentContainer, EMBEDDED_HTML, "EMBEDDED_HTML", "EMBEDDED_HTML")
-	} else if (buttonEvent == "LOGIN") {
+	}
+	if (buttonEvent == "LOGIN") {
 		if (isLoggedIn){
 			addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 			addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
 		} else {
 			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
 		}
-	} else if (buttonEvent == "ADMIN") {
+	}
+	if (buttonEvent == "ADMIN") {
 		if (ADMIN_HTML.html == ""){
 			const members = await getMembers();
 			ADMIN_HTML.html = buildUserHtml(members.users);
 		}
 		contentContainer.innerHTML = "<h1>All registered members are listed here</h1><hr>" + ADMIN_HTML.html
-	} else if (buttonEvent == "POINTS") {
+	}
+	if (buttonEvent == "POINTS") {
 		const members = await getMembers();
 		let userPoints = {};
 		userPoints[loggedInAs.toLowerCase()] = members.users[loggedInAs.toLowerCase()];
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 		addHtmlChild(contentContainer, buildUserHtml(userPoints), "follow-container", "follow-container")
-	}  else if (buttonEvent == "LIVE") {
+	}
+	if (buttonEvent == "LIVE") {
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 		// TODO - make happen
-	} else if (buttonEvent.includes("PLACEHOLDER")) {
+	}
+	if (buttonEvent.includes("PLACEHOLDER")) {
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 		addHtmlChild(contentContainer, buttonEvent, "buttonEvent", "buttonEvent")
 	}
