@@ -360,10 +360,11 @@ function buildUserHtml(membersObject, includePoints = true) {
 		}
 		followHtml += `
 			<div class="follow">
-				<a href="https://twitch.tv/${key}" target="_blank">user: ${key}</a>
-				${adminUserButtons}
+				<div><a href="https://twitch.tv/${key}" target="_blank">user: ${key}</a>
 				<br>
 				${pointString}
+				</div>
+				${adminUserButtons}
 			</div>
 			`
 	}
