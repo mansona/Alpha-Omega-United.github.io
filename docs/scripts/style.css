@@ -130,7 +130,6 @@ h1 {
 	min-height: 350px;
 	max-height: 550px;
 	min-width: 300px;
-	max-width: 300px;
 	left: 1%;
 	top: 25%;
 	grid-area: menu;
@@ -141,7 +140,7 @@ h1 {
 .menu-hide {
 	left: -200vh;
 }
-.hamburger-menu{
+/* .hamburger-menu{
 	height: 30px;
 	width: 30px;
 	border-radius: 15px;
@@ -151,7 +150,24 @@ h1 {
 	left: 1vw;
 	-webkit-filter: drop-shadow(1px 1px 5px rgba(255, 255, 255,0.7));
 	filter: drop-shadow(1px 1px 5px rgba(255, 255, 255,0.7));
+} */
+.hamburger-menu{
+	height: 56px;
+	padding: 10px;
+	cursor: pointer;
+	background: transparent;
+	width: 177px;
+	/* background: url(https://discord.com/assets/35d75407bd75d70e84e945c9f879bab8.svg) no-repeat center; */
+	border-radius: 15px;
+	z-index: 20;
+	position: absolute;
+	top: 20vh;
+	border-style: double;
+	left: 1vw;
+	-webkit-filter: drop-shadow(1px 1px 5px rgba(255, 255, 255,0.7));
+	filter: drop-shadow(1px 1px 5px rgba(255, 255, 255,0.7));
 }
+
 /* ------------- CONTENT ------------- */
 .content-container{
 	display: flex;
