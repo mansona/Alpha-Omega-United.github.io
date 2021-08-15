@@ -1,4 +1,4 @@
-console.log("12312312312312312312312")
+console.log("wasdfasdfasdasdas")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -185,7 +185,7 @@ async function menuButtonHandler(buttonEvent){
 			const members = await getMembers();
 			ADMIN_HTML.html = buildUserHtml(members.users);
 		}
-		contentContainer.innerHTML = "<h1>All registered members are listed here</h1><hr>" + ADMIN_HTML.html
+		contentContainer.innerHTML = `<h1>All registered members are listed here</h1><br>${ADMIN_TEST}<hr>` + ADMIN_HTML.html
 	}
 	if (buttonEvent == "POINTS") {
 		const members = await getMembers();
