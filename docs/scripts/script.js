@@ -213,7 +213,13 @@ async function test_admin(buttonEvent) {
 	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName=${loggedInAs}&userToken=${user_token}`
 	fetch(endpoint)
 		.then((response) => response.json())
-		.then((data) => console.log(data))
+		.then((data) => {
+			if (data.status == 200) {
+				console.log(data.data.json())
+
+			}
+			console.log(data)
+		})
 		.catch((err) => console.log(err))
 
 }
