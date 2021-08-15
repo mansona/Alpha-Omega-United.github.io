@@ -43,7 +43,7 @@ h1 {
 	grid-template-rows: max-content;
 	grid-template-areas:
 	"header header header header header"
-	"menu . content . discord";
+	"menu . content . .";
 }
 /* ------------- HEADER ------------- */
 .header{
@@ -278,7 +278,7 @@ h1 {
 	justify-content: space-evenly;
 }
 .follow {
-    width: 100%;
+	width: 100%;
     border-radius: 10px;
     border-style: inset;
     text-align: start;
