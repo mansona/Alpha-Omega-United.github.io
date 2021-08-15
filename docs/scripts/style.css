@@ -43,7 +43,7 @@ h1 {
 	grid-template-rows: max-content;
 	grid-template-areas:
 	"header header header header header"
-	"menu . content . .";
+	"menu . content . discord";
 }
 /* ------------- HEADER ------------- */
 .header{
@@ -118,6 +118,10 @@ h1 {
 	-webkit-filter: drop-shadow(0px 0px 8px rgba(195, 160, 70, 0.7));
 	filter: drop-shadow(0px 0px 8px rgba(195, 160, 70, 0.7));
 }
+/* ------------- DISCORD ------------- */
+.discord {
+	grid-area: discord;
+}
 /* ------------- MENU ------------- */
 .menu{
 	padding: 15px;
@@ -185,7 +189,7 @@ h1 {
 }
 /* ------------- LOGGED IN ------------- */
 .logged-in-sub-menu {
-	
+
 }
 
 
