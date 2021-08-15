@@ -5,7 +5,7 @@ console.log("asdasdasdasdasd")
 
 // const AOU_WEB_SECRET = process.env.AOU_WEB_SECRET
 
-AOU_HEROKU_ENDPOINT="https://aou-website-backend.herokuapp.com/"
+AOU_HEROKU_ENDPOINT = "https://aou-website-backend.herokuapp.com/"
 
 
 const AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz";
@@ -36,7 +36,7 @@ let gottenUserVar,
 	user_token = null;
 
 loginLink.setAttribute('href',
-'https://id.twitch.tv/oauth2/authorize?client_id='
+	'https://id.twitch.tv/oauth2/authorize?client_id='
 	+ AOU_WEB_CLIENT_ID
 	+ '&redirect_uri='
 	+ encodeURIComponent(redirect)
@@ -103,10 +103,10 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 					<hr>
 					To apply for these roles, please join the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a> and message any one in the admin team, say which role you want to be, the reason why and how you can bring the community to reach new levels. This will go on for a week and then the week after, if there are 2 or more members competing, then we will let you all vote! 😃					</div>`
 
-const ADMIN_HTML = {html: ""}
+const ADMIN_HTML = { html: "" }
 const ADMIN_TEST = `<button onclick="test_admin(this)">TEST</button>`
 
-const LOGGED_IN_HTML = {html: "<div><h1>Members you have not followed</h1><hr></div>"}
+const LOGGED_IN_HTML = { html: "<div><h1>Members you have not followed</h1><hr></div>" }
 const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('POINTS')" value="POINTS">Your Points</button>
 								<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
@@ -128,11 +128,11 @@ const EMBEDDED_HTML = `<script src="https://embed.twitch.tv/embed/v1.js"></scrip
 						});
 						</script>`
 
-function setCookies(variable, deleteCookie = false){
-	if (deleteCookie){
+function setCookies(variable, deleteCookie = false) {
+	if (deleteCookie) {
 		document.cookie = variable + "; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
 	} else {
-		let expireDateUtc = new Date(new Date().getTime()+86400000).toUTCString()
+		let expireDateUtc = new Date(new Date().getTime() + 86400000).toUTCString()
 		document.cookie = variable + `; expires=${expireDateUtc}`
 	}
 }
@@ -153,13 +153,13 @@ if (document.cookie) {
 	}
 }
 
-function hamburgerMenuHandler(event){
+function hamburgerMenuHandler(event) {
 	sidebarMenu.classList.toggle("menu-hide")
 }
 
-async function menuButtonHandler(buttonEvent){
+async function menuButtonHandler(buttonEvent) {
 	contentContainer.innerHTML = ""
-	if (buttonEvent == "HOME"){
+	if (buttonEvent == "HOME") {
 		addHtmlChild(contentContainer, INDEX_HTML, "INDEX_HTML", "INDEX_HTML")
 	}
 	if (buttonEvent == "ASSETS") {
@@ -172,7 +172,7 @@ async function menuButtonHandler(buttonEvent){
 		addHtmlChild(contentContainer, EMBEDDED_HTML, "EMBEDDED_HTML", "EMBEDDED_HTML")
 	}
 	if (buttonEvent == "LOGIN") {
-		if (isLoggedIn){
+		if (isLoggedIn) {
 			addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 			addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
 		} else {
@@ -180,7 +180,7 @@ async function menuButtonHandler(buttonEvent){
 		}
 	}
 	if (buttonEvent == "ADMIN") {
-		if (ADMIN_HTML.html == ""){
+		if (ADMIN_HTML.html == "") {
 			const members = await getMembers();
 			ADMIN_HTML.html = buildUserHtml(members.users);
 		}
@@ -208,10 +208,14 @@ async function menuButtonHandler(buttonEvent){
 // ! -------------------------------------------------------------------------------------- //
 // ! ------------------------------------- TEST AREA  ------------------------------------- //
 // ! -------------------------------------------------------------------------------------- //
-function test_admin(buttonEvent) {
+async function test_admin(buttonEvent) {
 	console.log(buttonEvent)
 	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName={loggedInAs}&userToken={userToken}`
 	fetch(AOU_HEROKU_ENDPOINT)
+		.then((resposne) => response.json())
+		.then((data) => console.log(data))
+		.catch((err) => console.log(err))
+
 }
 // ! -------------------------------------------------------------------------------------- //
 // ! ------------------------------------- TEST AREA  ------------------------------------- //
@@ -229,7 +233,7 @@ async function twitchApiGet(endpoint, token) {
 		}
 	)
 		.then(response => {
-			if(!response.ok){
+			if (!response.ok) {
 				setCookies(`loggedInAs=`, true)
 				setCookies(`isLoggedIn=`, true)
 				setCookies(`loggedInId=`, true)
@@ -246,7 +250,7 @@ async function twitchApiGet(endpoint, token) {
 	return result
 }
 
-function makeLoginButtonLink(){
+function makeLoginButtonLink() {
 	const loginButtonLink = document.createElement("a")
 	loginButtonLink.id = "authorize_public"
 	loginButtonLink.setAttribute('href',
@@ -304,22 +308,22 @@ async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 
 async function getUserId(token) {
 	let userData = await twitchApiGet(USER_ENDPOINT, token)
-	if (userData){
+	if (userData) {
 		return userData
 	}
 }
 
-async function getFollowsPaginated(userId, token){
+async function getFollowsPaginated(userId, token) {
 	let endpoint = FOLLOW_ENDPOINT + `${userId}` + "&first=100"
 	let followData = await twitchApiGet(endpoint, token)
-	if (followData){
+	if (followData) {
 		let followCount = followData["data"].length
 		parseFollowData(followData["data"])
 		pageinationCursor = followData["pagination"]["cursor"]
-		while (followCount < parseInt(followData.total)){
+		while (followCount < parseInt(followData.total)) {
 			pageEndpoint = endpoint + "&after=" + pageinationCursor
 			var newData = await twitchApiGet(pageEndpoint, token)
-			if (newData){
+			if (newData) {
 				parseFollowData(newData["data"])
 				followCount += followData["data"].length
 				pageinationCursor = newData["pagination"]["cursor"]
@@ -338,11 +342,11 @@ function parseFollowData(data) {
 	});
 }
 
-function buildUserHtml(membersObject, includePoints = true){
+function buildUserHtml(membersObject, includePoints = true) {
 	let followHtml = ""
 	let pointString
-	for (const [key, value] of Object.entries(membersObject)){
-		if (includePoints){
+	for (const [key, value] of Object.entries(membersObject)) {
+		if (includePoints) {
 			pointString = `points: ${value.points}`
 		} else {
 			pointString = ""
@@ -358,7 +362,7 @@ function buildUserHtml(membersObject, includePoints = true){
 	return followHtml
 }
 
-function addHtmlChild(parent, html, htmlId, htmlClass){
+function addHtmlChild(parent, html, htmlId, htmlClass) {
 	const element = document.createElement("div")
 	element.id = htmlId
 	element.classList.add(htmlClass)
@@ -366,7 +370,7 @@ function addHtmlChild(parent, html, htmlId, htmlClass){
 	parent.appendChild(element)
 }
 
-async function getMembers(){
+async function getMembers() {
 	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/twitch_bot/data/aou_members.json")
 		.then(res => res.json())
 		.then(json => {
@@ -375,20 +379,20 @@ async function getMembers(){
 	return data
 }
 
-async function parseMemberData(){
+async function parseMemberData() {
 	await getMembers().then((data) => {
-		for (const i in data["MODERATORS"]){
+		for (const i in data["MODERATORS"]) {
 			admins.push(data["MODERATORS"][i])
 		}
-		for (const [key, value] of Object.entries(data["users"])){
+		for (const [key, value] of Object.entries(data["users"])) {
 			users[key] = value
 		}
 	})
-	return {admins, users}
+	return { admins, users }
 }
 
 function toggleAdminButtonVisibility(memberObject, user) {
-	if (memberObject.admins.includes(user.toLowerCase())){
+	if (memberObject.admins.includes(user.toLowerCase())) {
 		let adminButton = document.querySelector("#admin-button")
 		adminButton.classList.remove("admin-button-hide")
 	}
@@ -396,15 +400,15 @@ function toggleAdminButtonVisibility(memberObject, user) {
 
 function checkFollowMember(memberObject, user) {
 	let notFollowMembers = {}
-	for (const [memberKey, memberValue] of Object.entries(memberObject)){
-		if (!(memberKey in allFollows) && memberKey.toLowerCase() != user.toLowerCase()){
+	for (const [memberKey, memberValue] of Object.entries(memberObject)) {
+		if (!(memberKey in allFollows) && memberKey.toLowerCase() != user.toLowerCase()) {
 			notFollowMembers[memberKey.toLowerCase()] = memberValue
 		}
 	}
 	return notFollowMembers
 }
 
-function userLoggedIn(user){
+function userLoggedIn(user) {
 	if (isLoggedIn) {
 		unwrap(loginLink)
 		loginButton.innerText = user
@@ -424,7 +428,7 @@ function unwrap(wrapper) {
 	wrapper.parentNode.replaceChild(docFrag, wrapper);
 }
 
-function adminPanel(){
+function adminPanel() {
 	contentContainer.innerHTML = INDEX_HTML
 }
 
@@ -466,8 +470,8 @@ function adminPanel(){
 
 //* ---------------- ON LOAD! ---------------- *//
 onLoad()
-function onLoad(){
-	if (!document.location.hash){
+function onLoad() {
+	if (!document.location.hash) {
 		contentContainer.innerHTML = INDEX_HTML
 	} else {
 		contentContainer.innerHTML = "<h1>LOADING...</h1>"
