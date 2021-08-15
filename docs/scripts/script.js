@@ -1,4 +1,4 @@
-console.log("asdasdasdasds")
+console.log("12312312312")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -206,8 +206,8 @@ async function menuButtonHandler(buttonEvent){
 
 function test_admin(buttonEvent) {
 	console.log(buttonEvent)
-	endpoint = AOU_HEROKU_ENDPOINT + `?userName={loggedInAs}&userToken={userToken}`
-	fetch(AOU_HEROKU_ENDPOINT + "twitch_test")
+	endpoint = AOU_HEROKU_ENDPOINT + "twitch_test" + `?userName={loggedInAs}&userToken={userToken}`
+	fetch(AOU_HEROKU_ENDPOINT)
 }
 
 
