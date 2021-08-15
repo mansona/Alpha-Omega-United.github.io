@@ -1,4 +1,4 @@
-console.log("12312312312")
+console.log("asdasdasdasdasd")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -104,7 +104,7 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 					To apply for these roles, please join the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a> and message any one in the admin team, say which role you want to be, the reason why and how you can bring the community to reach new levels. This will go on for a week and then the week after, if there are 2 or more members competing, then we will let you all vote! 😃					</div>`
 
 const ADMIN_HTML = { html: "" }
-const ADMIN_TEST = `<button onclick="test_admin(this)">TEST</button>`
+const ADMIN_TEST = `<button onclick="test_admin(this)">ADD USER</button>`
 
 const LOGGED_IN_HTML = { html: "<div><h1>Members you have not followed</h1><hr></div>" }
 const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
@@ -215,10 +215,9 @@ async function test_admin(buttonEvent) {
 		.then((response) => response.json())
 		.then((data) => {
 			if (data.status == 200) {
-				console.log(JSON.parse(data.data))
-
+				console.log(data)
+				return JSON.parse(data.data)
 			}
-			console.log(data)
 		})
 		.catch((err) => console.log(err))
 
@@ -360,6 +359,8 @@ function buildUserHtml(membersObject, includePoints = true) {
 		followHtml += `
 			<div class="follow">
 				<a href="https://twitch.tv/${key}" target="_blank">user: ${key}</a>
+				<button>EDIT</button>
+				<button>DELETE</button>
 				<br>
 				${pointString}
 			</div>
