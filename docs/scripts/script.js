@@ -1,4 +1,4 @@
-console.log("asdasdasdasds")
+console.log("12312312312")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -215,7 +215,7 @@ async function test_admin(buttonEvent) {
 		.then((response) => response.json())
 		.then((data) => {
 			if (data.status == 200) {
-				console.log(data.data.json())
+				console.log(JSON.parse(data.data))
 
 			}
 			console.log(data)
