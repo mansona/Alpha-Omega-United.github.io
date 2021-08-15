@@ -210,8 +210,8 @@ async function menuButtonHandler(buttonEvent) {
 // ! -------------------------------------------------------------------------------------- //
 async function test_admin(buttonEvent) {
 	console.log(buttonEvent)
-	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName={loggedInAs}&userToken={userToken}`
-	fetch(AOU_HEROKU_ENDPOINT)
+	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName=${loggedInAs}&userToken=${userToken}`
+	fetch(endpoint)
 		.then((response) => response.json())
 		.then((data) => console.log(data))
 		.catch((err) => console.log(err))
