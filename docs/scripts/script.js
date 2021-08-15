@@ -1,4 +1,4 @@
-console.log("12312312312")
+console.log("asdasdasdasdasd")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -106,7 +106,6 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 const ADMIN_HTML = {html: ""}
 const ADMIN_TEST = `<button onclick="test_admin(this)">TEST</button>`
 
-
 const LOGGED_IN_HTML = {html: "<div><h1>Members you have not followed</h1><hr></div>"}
 const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('POINTS')" value="POINTS">Your Points</button>
@@ -204,29 +203,19 @@ async function menuButtonHandler(buttonEvent){
 	}
 }
 
+
+
+// ! -------------------------------------------------------------------------------------- //
+// ! ------------------------------------- TEST AREA  ------------------------------------- //
+// ! -------------------------------------------------------------------------------------- //
 function test_admin(buttonEvent) {
 	console.log(buttonEvent)
-	endpoint = AOU_HEROKU_ENDPOINT + "twitch_test" + `?userName={loggedInAs}&userToken={userToken}`
+	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName={loggedInAs}&userToken={userToken}`
 	fetch(AOU_HEROKU_ENDPOINT)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ! -------------------------------------------------------------------------------------- //
+// ! ------------------------------------- TEST AREA  ------------------------------------- //
+// ! -------------------------------------------------------------------------------------- //
 
 //* ---------------------- TWITCH STUFF ---------------------- *//
 async function twitchApiGet(endpoint, token) {
