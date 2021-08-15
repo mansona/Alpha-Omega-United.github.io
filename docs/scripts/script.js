@@ -5,6 +5,8 @@ console.log("12312312312312312312312")
 
 // const AOU_WEB_SECRET = process.env.AOU_WEB_SECRET
 
+AOU_HEROKU_ENDPOINT="https://aou-website-backend.herokuapp.com/"
+
 
 const AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz";
 const redirect = "https://alpha-omega-united.github.io/";
@@ -102,6 +104,8 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 					To apply for these roles, please join the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a> and message any one in the admin team, say which role you want to be, the reason why and how you can bring the community to reach new levels. This will go on for a week and then the week after, if there are 2 or more members competing, then we will let you all vote! 😃					</div>`
 
 const ADMIN_HTML = {html: ""}
+const ADMIN_TEST = `<button onclick="test_admin(this)">TEST</button>`
+
 
 const LOGGED_IN_HTML = {html: "<div><h1>Members you have not followed</h1><hr></div>"}
 const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
@@ -199,6 +203,29 @@ async function menuButtonHandler(buttonEvent){
 		addHtmlChild(contentContainer, buttonEvent, "buttonEvent", "buttonEvent")
 	}
 }
+
+function test_admin(buttonEvent) {
+	console.log(buttonEvent)
+	endpoint = AOU_HEROKU_ENDPOINT + `?userName={loggedInAs}&userToken={userToken}`
+	fetch(AOU_HEROKU_ENDPOINT + "/twitch_test")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //* ---------------------- TWITCH STUFF ---------------------- *//
