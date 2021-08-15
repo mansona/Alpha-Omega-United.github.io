@@ -1,4 +1,4 @@
-console.log("asdasdasdasdasd")
+console.log("12312312")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -353,14 +353,15 @@ function buildUserHtml(membersObject, includePoints = true) {
 	for (const [key, value] of Object.entries(membersObject)) {
 		if (includePoints) {
 			pointString = `points: ${value.points}`
+			adminUserButtons = `<div class="admin-user-buttons"><button class="edit-user">EDIT</button><button class="delete-user">DELETE</button></div>`
 		} else {
 			pointString = ""
+			adminUserButtons = ""
 		}
 		followHtml += `
 			<div class="follow">
 				<a href="https://twitch.tv/${key}" target="_blank">user: ${key}</a>
-				<button>EDIT</button>
-				<button>DELETE</button>
+				${adminUserButtons}
 				<br>
 				${pointString}
 			</div>
