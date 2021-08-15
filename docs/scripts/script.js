@@ -1,9 +1,10 @@
-console.log("afoshohfauaofhbn")
+console.log("12312312312312312312312")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
 
 // const AOU_WEB_SECRET = process.env.AOU_WEB_SECRET
+
 
 const AOU_WEB_CLIENT_ID = "oijx3i1zco4074rk6vu0yxqjkbticz";
 const redirect = "https://alpha-omega-united.github.io/";
