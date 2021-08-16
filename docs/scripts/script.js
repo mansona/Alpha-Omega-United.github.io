@@ -1,4 +1,4 @@
-console.log("12312312")
+console.log("asdassdasdasd")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -105,10 +105,10 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 
 const ADMIN_HTML = { html: "" }
 const ADMIN_TEST = `
-					<button onclick="test_admin(this)">QUERY USER</button>
-					<button onclick="test_admin(this)">ADD USER</button>
-					<button onclick="test_admin(this)">EDIT USER</button>
-					<button onclick="test_admin(this)">DELETE USER</button>
+					<button value="QUERY" onclick="test_admin(this)">QUERY USER</button>
+					<button value="ADD" onclick="test_admin(this)">ADD USER</button>
+					<button value="EDIT" onclick="test_admin(this)">EDIT USER</button>
+					<button value="DELETE" onclick="test_admin(this)">DELETE USER</button>
 					`
 
 const LOGGED_IN_HTML = { html: "<div><h1>Members you have not followed</h1><hr></div>" }
@@ -215,7 +215,30 @@ async function menuButtonHandler(buttonEvent) {
 // ! -------------------------------------------------------------------------------------- //
 async function test_admin(buttonEvent) {
 	console.log(buttonEvent)
-	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName=${loggedInAs}&userToken=${user_token}`
+	let databaseQuery = "&database="
+
+	if (buttonEvent.value == "QUERY") {
+		databaseQuery += "QUERY"
+		console.log(buttonEvent.value)
+	}
+
+	if (buttonEvent.value == "ADD") {
+		databaseQuery += "ADD"
+		console.log(buttonEvent.value)
+	}
+
+	if (buttonEvent.value == "EDIT") {
+		databaseQuery += "EDIT"
+		console.log(buttonEvent.value)
+	}
+
+	if (buttonEvent.value == "DELETE") {
+		databaseQuery += "DELETE"
+		console.log(buttonEvent.value)
+	}
+
+
+	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
 	fetch(endpoint)
 		.then((response) => response.json())
 		.then((data) => {
