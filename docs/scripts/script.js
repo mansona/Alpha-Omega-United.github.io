@@ -142,42 +142,33 @@ const EMBEDDED_HTML = `<script src="https://embed.twitch.tv/embed/v1.js"></scrip
 //! POPUP HTML
 const ROLES_LIST = ["@everyone", "aou dev", "admin"]
 const MEMBER_POPUP_HTML = `<div class="edit-member-popup">
-						<div class="input-div">
-							<div>Twitch Name:</div>
-							<input type="text" class="text-input" name="twitch_name-input" id="twitch_name-input" Placeholder="Twitch Name">
-						</div>
-						<div class="input-div">
-							<div>Twitch ID:</div>
-							<input type="number" class="text-input" name="twitch_id-input" id="twitch_id-input" Placeholder="Twitch ID">
-						</div>
-						<div class="input-div">
-							<div>Discord Name:</div>
-							<input type="text" class="text-input" name="discord_name-input" id="discord_name-input" Placeholder="Discord Name">
-						</div>
-						<div class="input-div">
-							<div>Discord ID:</div>
-							<input type="number" class="text-input" name="discord_id-input" id="discord_id-input" Placeholder="Discord ID">
-						</div>
-						<div class="input-div">
-							<div>Points:</div>
-							<input type="number" class="text-input" name="points-input" id="points-input" Placeholder="Points" value="0">
-						</div>
-						<div class="input-div">
-							<div>
-								<input id="isAdmin" type="checkbox" disabled>
-								<label for="isAdmin">is Admin</label>
+							<div class="input-div">
+								<div>Twitch Name:</div>
+								<input type="text" class="text-input" name="twitch_name-input" id="twitch_name-input" Placeholder="Twitch Name">
 							</div>
-						</div>
-						<!-- <div class="input-div">
-							<div>Member Roles:</div>
-							<select id="roles-listbox" class="text-input" name="roles-listbox" size="1">
-								<option value="" selected disabled>Select Role</option>
-								<option value="${ROLES_LIST[0]}">${ROLES_LIST[0]}</option>
-								<option value="${ROLES_LIST[1]}">${ROLES_LIST[1]}</option>
-								<option value="${ROLES_LIST[2]}">${ROLES_LIST[2]}</option>
-							</select>
-						</div> -->
-					</div>`;
+							<div class="input-div">
+								<div>Twitch ID:</div>
+								<input type="number" class="text-input" name="twitch_id-input" id="twitch_id-input" Placeholder="Twitch ID">
+							</div>
+							<div class="input-div">
+								<div>Discord Name:</div>
+								<input type="text" class="text-input" name="discord_name-input" id="discord_name-input" Placeholder="Discord Name">
+							</div>
+							<div class="input-div">
+								<div>Discord ID:</div>
+								<input type="number" class="text-input" name="discord_id-input" id="discord_id-input" Placeholder="Discord ID">
+							</div>
+							<div class="input-div">
+								<div>Points:</div>
+								<input type="number" class="text-input" name="points-input" id="points-input" Placeholder="Points" value="0">
+							</div>
+							<div class="input-div">
+								<div>
+									<input id="isAdmin" type="checkbox" disabled>
+									<label for="isAdmin">is Admin</label>
+								</div>
+							</div>
+						</div>`;
 const DELETE_MEMBER_POPUP_HTML = `<div>Are you sure you want to delete</div>
 								<div class="popup-delete-content" id="popup-delete-content">DELETE PLACEHOLDER</div>`;
 //! /HTML
@@ -238,17 +229,16 @@ function clearPopupInputField(action) {
 		document.querySelector("#discord_name-input").value = ""
 		document.querySelector("#discord_id-input").value = ""
 		document.querySelector("#points-input").value = ""
-		document.querySelector("#roles-listbox").value = ""
+		// document.querySelector("#roles-listbox").value = ""
 	}
 }
 function getPopupInputValues() {
 	const twitchName = document.querySelector("#twitch_name-input").value
-	const twitchId = document.querySelector("#twitch_id-input").value
+	const twitchId = parseInt(document.querySelector("#twitch_id-input").value)
 	const discordName = document.querySelector("#discord_name-input").value
-	const discordId = (document.querySelector("#discord_id-input").value.length > 0 ? document.querySelector("#discord_id-input").value : null)
-	const points = document.querySelector("#points-input").value
-	const roles = document.querySelector("#roles-listbox").value
-	return { twitchName, twitchId, discordName, discordId, points, roles }
+	const discordId = (document.querySelector("#discord_id-input").value.length > 0 ? parseInt(document.querySelector("#discord_id-input").value) : null)
+	const points = parseInt(document.querySelector("#points-input").value)
+	return { twitchName, twitchId, discordName, discordId, points }
 }
 function openPopup(title, html, button1, button2, action) {
 	setPopupButtonText(button1, button2, action)
@@ -268,7 +258,6 @@ function modifyUserButtonHandler(buttonEvent) {
 		document.querySelector("#discord_name-input").value = "DiscordNameOfSomeone" //! PLACEHOLDERS
 		document.querySelector("#discord_id-input").value = 7623414912 //! PLACEHOLDERS
 		document.querySelector("#points-input").value = 091214248190 //! PLACEHOLDERS
-		document.querySelector("#roles-listbox").value = "Admin" //! PLACEHOLDERS
 	} else if (buttonEvent.id == "delete-user") {
 		openPopup("Delete member", DELETE_MEMBER_POPUP_HTML, "OK", "Cancel", "delete")
 		const deleteMember = document.querySelector("#popup-delete-content")
