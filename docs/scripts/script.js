@@ -1,4 +1,4 @@
-console.log("asdasdasdas")
+console.log("123123213")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -72,7 +72,7 @@ const ASSETS_HTML = `<h3>Click on an image to save it</h3>
 							<div>Twitch Panel</div>
 							<a href="assets/Panel.png" target="_blank"><img src="assets/Panel.png"></a>
 						</div>
-					</div>`
+					</div>`;
 
 const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is currently under development and we are improving this as we speak. You would have seen some changes being made on some channels or that they are removed on the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a>.
 					We are organising our team and we would like some more people to join our admin team. This will help us greatly so we can get the community up and running as soon as possible.
@@ -101,15 +101,20 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 					<br>
 					<br>
 					<hr>
-					To apply for these roles, please join the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a> and message any one in the admin team, say which role you want to be, the reason why and how you can bring the community to reach new levels. This will go on for a week and then the week after, if there are 2 or more members competing, then we will let you all vote! 😃					</div>`
+					To apply for these roles, please join the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a> and message any one in the admin team, say which role you want to be, the reason why and how you can bring the community to reach new levels. This will go on for a week and then the week after, if there are 2 or more members competing, then we will let you all vote! 😃					</div>`;
 
-const ADMIN_HTML = { html: "" }
-const ADMIN_TEST = `
-					<button value="QUERY" onclick="test_admin(this)">QUERY USER</button>
-					<button value="ADD" onclick="test_admin(this)">ADD USER</button>
-					<button value="EDIT" onclick="test_admin(this)">EDIT USER</button>
-					<button value="DELETE" onclick="test_admin(this)">DELETE USER</button>
-					`
+const ADMIN_HTML = { html: "" };
+const ADMIN_TEST = `<div>
+						<div>
+							<button value="ADD" onclick="test_admin(this)">TEST DB</button>
+							<button value="ADD" onclick="modifyUserButtonHandler(this)">ADD USER</button>
+						</div>
+						<div class="input-div search-input">
+							<div>Search:</div>
+							<input type="text" class="text-input" oninput="onSearchInput(this)" name="search-input-field" id="search-input-field" Placeholder="Search Name/Id">
+						</div>
+					</div>
+					`;
 
 const LOGGED_IN_HTML = { html: "<div><h1>Members you have not followed</h1><hr></div>" }
 const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
@@ -119,7 +124,8 @@ const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
 								<button onclick="menuButtonHandler('LIVE')" value="LIVE">Live Now</button>
 								<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">AoU Members</button>
-							</div><hr>`
+							</div><hr>
+							`;
 
 const EMBEDDED_HTML = `<script src="https://embed.twitch.tv/embed/v1.js"></script>
 						<!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
@@ -129,9 +135,171 @@ const EMBEDDED_HTML = `<script src="https://embed.twitch.tv/embed/v1.js"></scrip
 							height: 480,
 							channel: "theserbian_",
 							// Only needed if this page is going to be embedded on other websites
-							parent: ["embed.example.com", "othersite.example.com"]
+							parent: ["https://alpha-omega-united.github.io/", "github.io", "github.com"]
 						});
-						</script>`
+						</script>`;
+
+
+
+//! ADMIN PANEL
+const ROLES_LIST = ["Admin", "User"]
+
+const MEMBER_POPUP_HTML = `<div class="edit-member-popup">
+						<div class="input-div">
+							<div>Twitch Name:</div>
+							<input type="text" class="text-input" name="twitch_name-input" id="twitch_name-input" Placeholder="Twitch Name">
+						</div>
+						<div class="input-div">
+							<div>Twitch ID:</div>
+							<input type="number" class="text-input" name="twitch_id-input" id="twitch_id-input" Placeholder="Twitch ID">
+						</div>
+						<div class="input-div">
+							<div>Discord Name:</div>
+							<input type="text" class="text-input" name="discord_name-input" id="discord_name-input" Placeholder="Discord Name">
+						</div>
+						<div class="input-div">
+							<div>Discord ID:</div>
+							<input type="number" class="text-input" name="discord_id-input" id="discord_id-input" Placeholder="Discord ID">
+						</div>
+						<div class="input-div">
+							<div>Points:</div>
+							<input type="number" class="text-input" name="points-input" id="points-input" Placeholder="Points" value="0">
+						</div>
+						<div class="input-div">
+							<div>Member Role:</div>
+							<select id="roles-listbox" class="text-input" name="roles-listbox" size="1">
+								<option value="" selected disabled>Select Role</option>
+								<option value="${ROLES_LIST[0]}">${ROLES_LIST[0]}</option>
+								<option value="${ROLES_LIST[1]}">${ROLES_LIST[1]}</option>
+							</select>
+						</div>
+					</div>
+					`;
+
+const DELETE_MEMBER_POPUP_HTML = `<div>Are you sure you want to delete</div>
+								<div class="popup-delete-content" id="popup-delete-content">DELETE PLACEHOLDER</div>
+								`
+
+
+const popupTitle = document.querySelector("#popup-title")
+const popupContent = document.querySelector("#popup-content")
+const popup = document.querySelector("#popup")
+
+
+
+//! SEARCH INPUT PARSE
+let memberObject1 = ""
+let filledList = ""
+
+async function populateSearchArrays() {
+	memberObject1 = await getMembers()
+	filledList = fillList(memberObject1.users)
+}
+
+
+function onSearchInput(e) {
+	console.log(e.value)
+	parse_module_results(e, document.querySelector("#follow-container"), filledList, memberObject1.users)
+}
+//! SEARCH INPUT PARSE
+
+
+
+
+//! POPUP
+function popupButtonHandler(buttonEvent, action) {
+	if (buttonEvent.id.includes("cancel")) {
+		//TODO ---- this
+	}
+	if (buttonEvent.id.includes("ok")) {
+		// TODO add ok/save func
+		const data = getPopupInputValues()
+		console.log(data)
+	}
+	clearPopupInputField(action) // TODO add cancel func
+	popup.classList.add("overlay-hide")
+}
+
+
+function setPopupButtonText(button1, button2, action) {
+	const popupButtonOk = document.querySelector("#popup-button-ok")
+	const popupButtonCancel = document.querySelector("#popup-button-cancel")
+	popupButtonOk.innerText = button1
+	popupButtonOk.value = action
+	popupButtonCancel.innerText = button2
+	popupButtonCancel.value = action
+}
+
+
+function clearPopupInputField(action) {
+	if (action == "delete") {
+		//TODO idk
+	}
+	if (action == "add" || action == "edit") {
+		document.querySelector("#twitch_name-input").value = ""
+		document.querySelector("#twitch_id-input").value = ""
+		document.querySelector("#discord_name-input").value = ""
+		document.querySelector("#discord_id-input").value = ""
+		document.querySelector("#points-input").value = ""
+		document.querySelector("#roles-listbox").value = ""
+	}
+}
+
+function getPopupInputValues() {
+	const twitchName = document.querySelector("#twitch_name-input").value
+	const twitchId = document.querySelector("#twitch_id-input").value
+	const discordName = document.querySelector("#discord_name-input").value
+	const discordId = document.querySelector("#discord_id-input").value
+	const points = document.querySelector("#points-input").value
+	const roles = document.querySelector("#roles-listbox").value
+	return { twitchName, twitchId, discordName, discordId, points, roles }
+}
+//! POPUP
+
+
+
+
+
+
+
+
+
+menuButtonHandler("ADMIN") //! REMOVE WHEN NOT TESTING
+
+function modifyUserButtonHandler(buttonEvent) {
+	// console.log(buttonEvent)
+	if (buttonEvent.id == "edit-user") {
+		openPopup("Edit member", MEMBER_POPUP_HTML, "SAVE", "Cancel", "edit")
+
+		//TODO grab data from DB populate fields
+		document.querySelector("#twitch_name-input").value = "UserNameOfSomeone" //! PLACEHOLDERS
+		document.querySelector("#twitch_id-input").value = 981251231237 //! PLACEHOLDERS
+		document.querySelector("#discord_name-input").value = "DiscordNameOfSomeone" //! PLACEHOLDERS
+		document.querySelector("#discord_id-input").value = 7623414912 //! PLACEHOLDERS
+		document.querySelector("#points-input").value = 091214248190 //! PLACEHOLDERS
+		document.querySelector("#roles-listbox").value = "Admin" //! PLACEHOLDERS
+
+
+	} else if (buttonEvent.id == "delete-user") {
+		openPopup("Delete member", DELETE_MEMBER_POPUP_HTML, "OK", "Cancel", "delete")
+		const deleteMember = document.querySelector("#popup-delete-content")
+
+		//TODO grab data from DB populate fields
+		deleteMember.innerHTML = "MEMBER NAME" //! PLACEHOLDER
+
+	} else if (buttonEvent.value == "ADD") {
+		openPopup("add new member", MEMBER_POPUP_HTML, "SAVE", "Cancel", "add")
+	}
+}
+
+function openPopup(title, html, button1, button2, action) {
+	setPopupButtonText(button1, button2, action)
+	popup.classList.remove("overlay-hide")
+	popupTitle.innerHTML = title.toUpperCase()
+	popupContent.innerHTML = html
+}
+
+
 
 function setCookies(variable, deleteCookie = false) {
 	if (deleteCookie) {
@@ -179,7 +347,7 @@ async function menuButtonHandler(buttonEvent) {
 	if (buttonEvent == "LOGIN") {
 		if (isLoggedIn) {
 			addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-			addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
+			addHtmlChild(document.querySelector("#follow-container"), LOGGED_IN_HTML.html, "follow-container", "follow-container")
 		} else {
 			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
 		}
@@ -189,14 +357,20 @@ async function menuButtonHandler(buttonEvent) {
 			const members = await getMembers();
 			ADMIN_HTML.html = buildUserHtml(members.users);
 		}
-		contentContainer.innerHTML = `<h1>All registered members are listed here</h1><br>${ADMIN_TEST}<hr>` + ADMIN_HTML.html
+		const thisHTML = `<h1>All registered members are listed here</h1><br>${ADMIN_TEST}<hr>`
+		contentContainer.innerHTML = ""
+		addHtmlChild(contentContainer, thisHTML, "logged-in-sub-menu", "logged-in-sub-menu")
+		addHtmlChild(contentContainer, ADMIN_HTML.html, "follow-container", "follow-container")
+		// contentContainer.innerHTML = `<h1>All registered members are listed here</h1><br>${ADMIN_TEST}<hr><div id="follow-container"></div>`
+		// + ADMIN_HTML.html
+
 	}
 	if (buttonEvent == "POINTS") {
 		const members = await getMembers();
 		let userPoints = {};
 		userPoints[loggedInAs.toLowerCase()] = members.users[loggedInAs.toLowerCase()];
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-		addHtmlChild(contentContainer, buildUserHtml(userPoints), "follow-container", "follow-container")
+		addHtmlChild(document.querySelector("#follow-container"), buildUserHtml(userPoints), "follow-container", "follow-container")
 	}
 	if (buttonEvent == "LIVE") {
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
@@ -204,7 +378,7 @@ async function menuButtonHandler(buttonEvent) {
 	}
 	if (buttonEvent.includes("PLACEHOLDER")) {
 		addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-		addHtmlChild(contentContainer, buttonEvent, "buttonEvent", "buttonEvent")
+		addHtmlChild(document.querySelector("#follow-container"), buttonEvent, "buttonEvent", "buttonEvent")
 	}
 }
 
@@ -217,26 +391,11 @@ async function test_admin(buttonEvent) {
 	console.log(buttonEvent)
 	let databaseQuery = "&database="
 
-	if (buttonEvent.value == "QUERY") {
-		databaseQuery += "QUERY"
-		console.log(buttonEvent.value)
-	}
 
 	if (buttonEvent.value == "ADD") {
 		databaseQuery += "ADD"
 		console.log(buttonEvent.value)
 	}
-
-	if (buttonEvent.value == "EDIT") {
-		databaseQuery += "EDIT"
-		console.log(buttonEvent.value)
-	}
-
-	if (buttonEvent.value == "DELETE") {
-		databaseQuery += "DELETE"
-		console.log(buttonEvent.value)
-	}
-
 
 	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
 	fetch(endpoint)
@@ -336,7 +495,7 @@ async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 	LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers, false)
 	contentContainer.innerHTML = ""
 	addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-	addHtmlChild(contentContainer, LOGGED_IN_HTML.html, "follow-container", "follow-container")
+	addHtmlChild(document.querySelector("#follow-container"), LOGGED_IN_HTML.html, "follow-container", "follow-container")
 }
 
 async function getUserId(token) {
@@ -378,18 +537,19 @@ function parseFollowData(data) {
 
 function buildUserHtml(membersObject, includePoints = true) {
 	let followHtml = ""
-	let pointString
+	let pointString = ""
+	let adminUserButtons = ""
 	for (const [key, value] of Object.entries(membersObject)) {
 		if (includePoints) {
 			pointString = `points: ${value.points}`
-			adminUserButtons = `<div class="admin-user-buttons"><button class="edit-user">EDIT</button><button class="delete-user">DELETE</button></div>`
-		} else {
-			pointString = ""
-			adminUserButtons = ""
+			adminUserButtons = `<div class="admin-user-buttons">
+									<button onclick="modifyUserButtonHandler(this)" class="edit-user" value="${key}" id="edit-user">EDIT</button>
+									<button onclick="modifyUserButtonHandler(this)" class="delete-user" value="${key}" id="delete-user">DELETE</button>
+								</div>`
 		}
 		followHtml += `
 			<div class="follow">
-				<div><a href="https://twitch.tv/${key}" target="_blank">user: ${key}</a>
+				<div><a href="https://twitch.tv/${key}" target="_blank">${key}</a>
 				<br>
 				${pointString}
 				</div>
@@ -515,4 +675,6 @@ function onLoad() {
 		contentContainer.innerHTML = "<h1>LOADING...</h1>"
 	}
 	getTokenFromHash()
+	populateSearchArrays()
+
 }

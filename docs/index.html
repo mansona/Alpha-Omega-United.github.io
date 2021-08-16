@@ -18,7 +18,18 @@
 		<!-- ☰ -->
 		<img src="https://discord.com/assets/35d75407bd75d70e84e945c9f879bab8.svg" style="background: transparent;">
 	</button>
-	<div class="overlay overlay-hide">
+	<div class="overlay overlay-hide" id="popup">
+		<div class="popup">
+			<div class="popup-title" id="popup-title">POPUP TITLE PLACEHOLDER</div>
+			<div class="popup-content" id="popup-content">POPUP CONTENT PLACEHOLDER</div>
+			<div class="popup-buttons" id="popup-buttons">
+				<button class="popup-button" id="popup-button-ok" value="true"
+					onclick="popupButtonHandler(this)"></button>
+				<button class="popup-button" id="popup-button-cancel" value="false"
+					onclick="popupButtonHandler(this)"></button>
+			</div>
+
+		</div>
 		<div id="overlay"></div>
 	</div>
 	<div id="main" class="main">
@@ -71,6 +82,7 @@
 			<a href="https://discord.itsoik.com">OiK's Paradise Discord</a> )
 		</div>
 	</div>
+	<script src="scripts/searchParse.js" type="text/javascript"></script>
 	<script src="scripts/script.js" type="text/javascript"></script>
 
 </body>

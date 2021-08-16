@@ -36,6 +36,12 @@ h1 {
 	text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5);
 	-webkit-text-stroke: 0.5px  rgba(141, 141, 141, 0.25);
 }
+input {
+	background: #363636;
+	color: white;
+}
+
+
 /* ------------- CLASSES ------------- */
 .main {
 	height: 98.2vh;
@@ -124,6 +130,7 @@ h1 {
 }
 /* ------------- MENU ------------- */
 .menu{
+	z-index: 2;
 	padding: 15px;
 	border-radius: 15px;
 	position: absolute;
@@ -323,6 +330,63 @@ h1 {
 
 /* ------------- POPUP ------------- */
 
+.popup {
+	text-align: center;
+	border-radius: 15px;
+	position: absolute;
+	min-height: fit-content;
+	max-height: 1000px;
+	min-width: fit-content;
+	max-width: 1000px;
+    top: 50%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+	transform: translate(-50%, -50%); /* This is a shorthand of translateX(-50%) and translateY(-50%) */
+	background-color: #555555;
+	transition-duration: 0.5s;
+	-webkit-box-shadow:0px 0px 5px #fff inset,5px 5px 15px #333 inset;
+}
+
+.popup-title{
+    width: 350px;
+    height: 25px;
+    background: rgb(186 186 186);
+    border-radius: 15px 15px 0px 0px;
+	-webkit-box-shadow: 0px 0px 5px #fff inset,5px 5px 15px #333 inset;
+}
+.popup-content{
+	padding: 0 10px 10px 10px;
+	min-height: 50px;
+	border-radius: 0 0 15px 15px;
+}
+
+
+.input-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-input{
+
+	justify-content: center;
+}
+
+.text-input {
+	border-radius: 5px;
+	margin-left: 15px;
+}
+
+.popup-buttons{
+	padding: 10px;
+}
+
+
+.popup-delete-content{
+	color: rgb(255, 109, 109);
+}
+
+
+
+/* ------------- OVERLAY ------------- */
 .overlay{
 	position: fixed; /* Sit on top of the page content */
 	width: 100%; /* Full width (cover the whole page) */
@@ -339,4 +403,22 @@ h1 {
 
 .overlay-hide {
 	display: none;
+}
+
+
+
+
+
+
+/* DISABLE SCROLL ARROWS IN NUMBER INPUT */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+	-moz-appearance: textfield;
 }
