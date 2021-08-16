@@ -1,4 +1,4 @@
-console.log("12312312312")
+console.log("asdasdasdasds")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -105,12 +105,17 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 const ADMIN_HTML = { html: "" };
 const ADMIN_TEST = `<div>
 						<div>
-							<button value="ADD" onclick="test_admin(this)">TEST DB</button>
+							<button value="DELETE" onclick="test_admin(this)">TEST DB</button>
+							<button value="QUERYONE" onclick="test_admin(this)">TEST DB</button>
+							<button value="QUERYMANY" onclick="test_admin(this)">TEST DB</button>
+							<button value="EDIT" onclick="test_admin(this)">TEST DB</button>
+							<hr>
 							<button value="ADD" onclick="modifyUserButtonHandler(this)">ADD USER</button>
-						</div>
-						<div class="input-div search-input">
+							</div>
+							<div class="input-div search-input">
 							<div>Search:</div>
 							<input type="text" class="text-input" oninput="onSearchInput(this)" name="search-input-field" id="search-input-field" Placeholder="Search Name/Id">
+							<button value="clear" onclick="modifyUserButtonHandler(this)">x</button>
 						</div>
 					</div>`;
 
@@ -135,7 +140,7 @@ const EMBEDDED_HTML = `<script src="https://embed.twitch.tv/embed/v1.js"></scrip
 						</script>`;
 
 //! POPUP HTML
-const ROLES_LIST = ["Admin", "User"]
+const ROLES_LIST = ["@everyone", "aou dev", "admin"]
 const MEMBER_POPUP_HTML = `<div class="edit-member-popup">
 						<div class="input-div">
 							<div>Twitch Name:</div>
@@ -158,13 +163,20 @@ const MEMBER_POPUP_HTML = `<div class="edit-member-popup">
 							<input type="number" class="text-input" name="points-input" id="points-input" Placeholder="Points" value="0">
 						</div>
 						<div class="input-div">
-							<div>Member Role:</div>
+							<div>
+								<input id="isAdmin" type="checkbox" disabled>
+								<label for="isAdmin">is Admin</label>
+							</div>
+						</div>
+						<!-- <div class="input-div">
+							<div>Member Roles:</div>
 							<select id="roles-listbox" class="text-input" name="roles-listbox" size="1">
 								<option value="" selected disabled>Select Role</option>
 								<option value="${ROLES_LIST[0]}">${ROLES_LIST[0]}</option>
 								<option value="${ROLES_LIST[1]}">${ROLES_LIST[1]}</option>
+								<option value="${ROLES_LIST[2]}">${ROLES_LIST[2]}</option>
 							</select>
-						</div>
+						</div> -->
 					</div>`;
 const DELETE_MEMBER_POPUP_HTML = `<div>Are you sure you want to delete</div>
 								<div class="popup-delete-content" id="popup-delete-content">DELETE PLACEHOLDER</div>`;
@@ -264,6 +276,10 @@ function modifyUserButtonHandler(buttonEvent) {
 		deleteMember.innerHTML = "MEMBER NAME" //! PLACEHOLDER
 	} else if (buttonEvent.value == "ADD") {
 		openPopup("add new member", MEMBER_POPUP_HTML, "SAVE", "Cancel", "add")
+	} else if (buttonEvent.value == "clear") {
+		const searchInput = document.querySelector("#search-input-field");
+		searchInput.value = ''
+		parse_module_results(searchInput, document.querySelector("#follow-container"), filledList, memberObject1.users)
 	}
 }
 //! /POPUP
@@ -276,7 +292,7 @@ function modifyUserButtonHandler(buttonEvent) {
 // ! -------------------------------------------------------------------------------------- //
 // ! ------------------------------------- TEST AREA  ------------------------------------- //
 // ! -------------------------------------------------------------------------------------- //
-menuButtonHandler("ADMIN") //! REMOVE WHEN NOT TESTING
+// menuButtonHandler("ADMIN") //! REMOVE WHEN NOT TESTING
 
 async function test_admin(buttonEvent) {
 	console.log(buttonEvent)

@@ -384,7 +384,12 @@ input {
 	color: rgb(255, 109, 109);
 }
 
+.role-checkbox-container {
+	display: flex;
+}
 
+.role-checkbox {
+}
 
 /* ------------- OVERLAY ------------- */
 .overlay{
