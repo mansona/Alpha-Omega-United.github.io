@@ -1,4 +1,4 @@
-console.log("123123213")
+console.log("asdasdasdas")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -116,14 +116,12 @@ const ADMIN_TEST = `<div>
 
 //! LOGGED IN HTML
 const LOGGED_IN_HTML = { html: "<div><h1>Members you have not followed</h1><hr></div>" }
-const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
-								<button onclick="menuButtonHandler('POINTS')" value="POINTS">Your Points</button>
-								<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
-								<button onclick="menuButtonHandler('PLACEHOLDER4')" value="PLACEHOLDER4">PLACEHOLDER4</button>
-								<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
-								<button onclick="menuButtonHandler('LIVE')" value="LIVE">Live Now</button>
-								<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">AoU Members</button>
-							</div><hr><div class="follow-container"></div>`;
+const LOGGED_IN_HTML_MENU = `<button onclick="menuButtonHandler('POINTS')" value="POINTS">Your Points</button>
+							<button onclick="menuButtonHandler('PLACEHOLDER3')" value="PLACEHOLDER3">PLACEHOLDER3</button>
+							<button onclick="menuButtonHandler('PLACEHOLDER4')" value="PLACEHOLDER4">PLACEHOLDER4</button>
+							<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
+							<button onclick="menuButtonHandler('LIVE')" value="LIVE">Live Now</button>
+							<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">AoU Members</button>`;
 const EMBEDDED_HTML = `<script src="https://embed.twitch.tv/embed/v1.js"></script>
 						<!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
 						<script type="text/javascript">
@@ -235,7 +233,7 @@ function getPopupInputValues() {
 	const twitchName = document.querySelector("#twitch_name-input").value
 	const twitchId = document.querySelector("#twitch_id-input").value
 	const discordName = document.querySelector("#discord_name-input").value
-	const discordId = document.querySelector("#discord_id-input").value
+	const discordId = (document.querySelector("#discord_id-input").value.length > 0 ? document.querySelector("#discord_id-input").value : null)
 	const points = document.querySelector("#points-input").value
 	const roles = document.querySelector("#roles-listbox").value
 	return { twitchName, twitchId, discordName, discordId, points, roles }
@@ -363,7 +361,9 @@ async function menuButtonHandler(buttonEvent) {
 	if (buttonEvent == "LOGIN") {
 		if (isLoggedIn) {
 			addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-			addHtmlChild(document.querySelector("#follow-container"), LOGGED_IN_HTML.html, "follow-container", "follow-container")
+			addHtmlChild(contentContainer, "", "", "", "hr")
+			addHtmlChild(contentContainer, "", "follow-container", "follow-container")
+			addHtmlChild(document.querySelector("#follow-container"), LOGGED_IN_HTML.html, "", "")
 		} else {
 			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
 		}
@@ -547,8 +547,8 @@ function buildUserHtml(membersObject, includePoints = true) {
 	return followHtml
 }
 
-function addHtmlChild(parent, html, htmlId, htmlClass) {
-	const element = document.createElement("div")
+function addHtmlChild(parent, html, htmlId, htmlClass, elementType = "div") {
+	const element = document.createElement(elementType)
 	element.id = htmlId
 	element.classList.add(htmlClass)
 	element.innerHTML = html
