@@ -1,4 +1,4 @@
-console.log("1231231231232")
+console.log("asdasdasdas")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
