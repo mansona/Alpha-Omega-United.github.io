@@ -339,8 +339,8 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 		// jQuery get example:
 		await $.ajax({
 			url: endpoint + path,
-			success: resolve(response),
-			error: error(request, status, error)
+			success: (response) => resolve(response),
+			error: (request, status, error) => error(request, status, error)
 		});
 	} else if (method == "POST" || method == "PUT") {
 		// jQuery post/put example:
@@ -350,8 +350,8 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 			dataType: 'json',
 			contentType: 'application/json',
 			data: JSON.stringify(data),
-			success: resolve(response),
-			error: error(request, status, error)
+			success: (response) => resolve(response),
+			error: (request, status, error) => error(request, status, error)
 		});
 	}
 	function resolve(response) {
