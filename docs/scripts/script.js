@@ -301,9 +301,19 @@ async function test_admin(buttonEvent) {
 
 	if (buttonEvent.value == "ADD") {
 		databaseQuery += "ADD"
-		console.log(buttonEvent.value)
 	}
-
+	if (buttonEvent.value == "DELETE") {
+		databaseQuery += "DELETE"
+	}
+	if (buttonEvent.value == "QUERYONE") {
+		databaseQuery += "QUERYONE"
+	}
+	if (buttonEvent.value == "QUERYMANY") {
+		databaseQuery += "QUERYMANY"
+	}
+	if (buttonEvent.value == "EDIT") {
+		databaseQuery += "EDIT"
+	}
 	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
 	fetch(endpoint)
 		.then((response) => response.json())
