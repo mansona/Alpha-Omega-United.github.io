@@ -294,6 +294,8 @@ h1 {
 	justify-content: space-evenly;
 }
 .follow {
+	display: flex;
+	justify-content: space-between;
 	width: 100%;
     border-radius: 10px;
     border-style: inset;
