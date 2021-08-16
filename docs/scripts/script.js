@@ -482,7 +482,9 @@ async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 	LOGGED_IN_HTML["html"] += buildUserHtml(notFollowMembers, false)
 	contentContainer.innerHTML = ""
 	addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
-	addHtmlChild(document.querySelector("#follow-container"), LOGGED_IN_HTML.html, "follow-container", "follow-container")
+	addHtmlChild(contentContainer, "", "", "", "hr")
+	addHtmlChild(contentContainer, "", "follow-container", "follow-container")
+	addHtmlChild(document.querySelector("#follow-container"), LOGGED_IN_HTML.html, "", "")
 }
 
 async function getUserId(token) {
