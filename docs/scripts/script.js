@@ -105,10 +105,10 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 const ADMIN_HTML = { html: "" };
 const ADMIN_TEST = `<div>
 						<div>
-							<button value="DELETE" onclick="test_admin(this)">TEST DB</button>
-							<button value="QUERYONE" onclick="test_admin(this)">TEST DB</button>
-							<button value="QUERYMANY" onclick="test_admin(this)">TEST DB</button>
-							<button value="EDIT" onclick="test_admin(this)">TEST DB</button>
+							<button value="DELETE" onclick="test_admin(this)">DELETE</button>
+							<button value="QUERYONE" onclick="test_admin(this)">QUERYONE</button>
+							<button value="QUERYMANY" onclick="test_admin(this)">QUERYMANY</button>
+							<button value="EDIT" onclick="test_admin(this)">EDIT</button>
 							<hr>
 							<button value="ADD" onclick="modifyUserButtonHandler(this)">ADD USER</button>
 							</div>
