@@ -1,4 +1,4 @@
-console.log("12312312312")
+console.log("asdasdasdasdasd")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -318,10 +318,16 @@ async function test_admin(buttonEvent) {
 	// 	})
 	// 	.catch((err) => console.log(err))
 
-
+	a = {
+		twitchName: "UserNameOfSomeone",
+		twitchId: 981251231237,
+		discordName: "DiscordNameOfSomeone",
+		discordId: 7623414912,
+		points: 91214248190
+	}
 	const endpoint = AOU_HEROKU_ENDPOINT
 	const path = "database"
-	const data = { userName: loggedInAs, userToken: user_token, databaseQuery }
+	const data = { userName: loggedInAs, userToken: user_token, databaseQuery, a }
 
 	ajaxApi(endpoint, path, "PUT", data)
 
@@ -359,13 +365,7 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 }
 
 
-a = {
-	twitchName: "UserNameOfSomeone",
-	twitchId: 981251231237,
-	discordName: "DiscordNameOfSomeone",
-	discordId: 7623414912,
-	points: 91214248190
-}
+
 
 
 
