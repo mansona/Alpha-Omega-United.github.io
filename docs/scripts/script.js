@@ -1,4 +1,4 @@
-console.log("asdasdasds")
+console.log("12312312312")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -363,7 +363,7 @@ async function menuButtonHandler(buttonEvent) {
 			addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 			addHtmlChild(contentContainer, "", "", "", "hr")
 			addHtmlChild(contentContainer, "", "follow-container", "follow-container")
-			addHtmlChild(document.querySelector("#follow-container"), LOGGED_IN_HTML.html, "", "")
+			document.querySelector("#follow-container").innerHTML = LOGGED_IN_HTML.html
 		} else {
 			contentContainer.innerHTML = "You will be sent to twitch for login and returned here upon completion"
 		}
@@ -484,7 +484,7 @@ async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 	addHtmlChild(contentContainer, LOGGED_IN_HTML_MENU, "logged-in-sub-menu", "logged-in-sub-menu")
 	addHtmlChild(contentContainer, "", "", "", "hr")
 	addHtmlChild(contentContainer, "", "follow-container", "follow-container")
-	addHtmlChild(document.querySelector("#follow-container"), LOGGED_IN_HTML.html, "", "")
+	document.querySelector("#follow-container").innerHTML = LOGGED_IN_HTML.html
 }
 
 async function getUserId(token) {
