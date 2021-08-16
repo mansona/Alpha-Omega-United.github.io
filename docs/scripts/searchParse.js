@@ -22,7 +22,6 @@ function parse_module_results(textcontroller, parentDiv, listOfContent, contentO
 	parentDiv.innerHTML = "";
 	if (textcontroller.value.length > 0) {
 		var data = textcontroller.value;
-		console.log(listOfContent)
 		var otherData = listOfContent.filter((str) => str.toLowerCase().includes(data.toLowerCase()));
 		if (otherData.length > 0) {
 			textcontroller.style.background = "#363636"

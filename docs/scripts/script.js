@@ -45,7 +45,7 @@ loginLink.setAttribute('href',
 );
 
 
-
+//!* ---------------------- HTML ---------------------- *//
 const INDEX_HTML = `<h1>Welcome to Alpha Omega United's homepage</h1>
 					<hr>
 					<ul>
@@ -57,7 +57,6 @@ const INDEX_HTML = `<h1>Welcome to Alpha Omega United's homepage</h1>
 						<li>this site is very much under development :D<br>
 							-itsOiK 06/08/20</li>
 					</ul>`;
-
 const ASSETS_HTML = `<h3>Click on an image to save it</h3>
 					<div class="assets-container">
 						<div class="assets-img-container">
@@ -73,7 +72,6 @@ const ASSETS_HTML = `<h3>Click on an image to save it</h3>
 							<a href="assets/Panel.png" target="_blank"><img src="assets/Panel.png"></a>
 						</div>
 					</div>`;
-
 const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is currently under development and we are improving this as we speak. You would have seen some changes being made on some channels or that they are removed on the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a>.
 					We are organising our team and we would like some more people to join our admin team. This will help us greatly so we can get the community up and running as soon as possible.
 					Below are the roles that we are looking for and the description of each of the roles:
@@ -103,6 +101,7 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 					<hr>
 					To apply for these roles, please join the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a> and message any one in the admin team, say which role you want to be, the reason why and how you can bring the community to reach new levels. This will go on for a week and then the week after, if there are 2 or more members competing, then we will let you all vote! 😃					</div>`;
 
+//! ADMIN PANEL HTML
 const ADMIN_HTML = { html: "" };
 const ADMIN_TEST = `<div>
 						<div>
@@ -113,9 +112,9 @@ const ADMIN_TEST = `<div>
 							<div>Search:</div>
 							<input type="text" class="text-input" oninput="onSearchInput(this)" name="search-input-field" id="search-input-field" Placeholder="Search Name/Id">
 						</div>
-					</div>
-					`;
+					</div>`;
 
+//! LOGGED IN HTML
 const LOGGED_IN_HTML = { html: "<div><h1>Members you have not followed</h1><hr></div>" }
 const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('POINTS')" value="POINTS">Your Points</button>
@@ -124,9 +123,7 @@ const LOGGED_IN_HTML_MENU = `<div class="logged-in-sub-menu">
 								<button onclick="menuButtonHandler('PLACEHOLDER5')" value="PLACEHOLDER5">PLACEHOLDER5</button>
 								<button onclick="menuButtonHandler('LIVE')" value="LIVE">Live Now</button>
 								<button onclick="menuButtonHandler('LOGIN')" value="LOGIN">AoU Members</button>
-							</div><hr>
-							`;
-
+							</div><hr><div class="follow-container"></div>`;
 const EMBEDDED_HTML = `<script src="https://embed.twitch.tv/embed/v1.js"></script>
 						<!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
 						<script type="text/javascript">
@@ -139,11 +136,8 @@ const EMBEDDED_HTML = `<script src="https://embed.twitch.tv/embed/v1.js"></scrip
 						});
 						</script>`;
 
-
-
-//! ADMIN PANEL
+//! POPUP HTML
 const ROLES_LIST = ["Admin", "User"]
-
 const MEMBER_POPUP_HTML = `<div class="edit-member-popup">
 						<div class="input-div">
 							<div>Twitch Name:</div>
@@ -173,40 +167,37 @@ const MEMBER_POPUP_HTML = `<div class="edit-member-popup">
 								<option value="${ROLES_LIST[1]}">${ROLES_LIST[1]}</option>
 							</select>
 						</div>
-					</div>
-					`;
-
+					</div>`;
 const DELETE_MEMBER_POPUP_HTML = `<div>Are you sure you want to delete</div>
-								<div class="popup-delete-content" id="popup-delete-content">DELETE PLACEHOLDER</div>
-								`
+								<div class="popup-delete-content" id="popup-delete-content">DELETE PLACEHOLDER</div>`;
+//! /HTML
 
 
+
+//!* ---------------------- SELECTORS ---------------------- *//
 const popupTitle = document.querySelector("#popup-title")
 const popupContent = document.querySelector("#popup-content")
 const popup = document.querySelector("#popup")
+//! /SELECTORS
 
 
 
-//! SEARCH INPUT PARSE
+//!* ---------------------- SEARCH INPUT PARSE ---------------------- *//
 let memberObject1 = ""
 let filledList = ""
-
 async function populateSearchArrays() {
 	memberObject1 = await getMembers()
 	filledList = fillList(memberObject1.users)
 }
-
-
 function onSearchInput(e) {
-	console.log(e.value)
 	parse_module_results(e, document.querySelector("#follow-container"), filledList, memberObject1.users)
 }
-//! SEARCH INPUT PARSE
+//! /SEARCH INPUT PARSE
 
 
 
 
-//! POPUP
+//!* ---------------------- POPUP ---------------------- *//
 function popupButtonHandler(buttonEvent, action) {
 	if (buttonEvent.id.includes("cancel")) {
 		//TODO ---- this
@@ -219,8 +210,6 @@ function popupButtonHandler(buttonEvent, action) {
 	clearPopupInputField(action) // TODO add cancel func
 	popup.classList.add("overlay-hide")
 }
-
-
 function setPopupButtonText(button1, button2, action) {
 	const popupButtonOk = document.querySelector("#popup-button-ok")
 	const popupButtonCancel = document.querySelector("#popup-button-cancel")
@@ -229,8 +218,6 @@ function setPopupButtonText(button1, button2, action) {
 	popupButtonCancel.innerText = button2
 	popupButtonCancel.value = action
 }
-
-
 function clearPopupInputField(action) {
 	if (action == "delete") {
 		//TODO idk
@@ -244,7 +231,6 @@ function clearPopupInputField(action) {
 		document.querySelector("#roles-listbox").value = ""
 	}
 }
-
 function getPopupInputValues() {
 	const twitchName = document.querySelector("#twitch_name-input").value
 	const twitchId = document.querySelector("#twitch_id-input").value
@@ -254,18 +240,13 @@ function getPopupInputValues() {
 	const roles = document.querySelector("#roles-listbox").value
 	return { twitchName, twitchId, discordName, discordId, points, roles }
 }
-//! POPUP
-
-
-
-
-
-
-
-
-
-menuButtonHandler("ADMIN") //! REMOVE WHEN NOT TESTING
-
+function openPopup(title, html, button1, button2, action) {
+	setPopupButtonText(button1, button2, action)
+	popup.classList.remove("overlay-hide")
+	popupTitle.innerHTML = title.toUpperCase()
+	popupContent.innerHTML = html
+}
+//! ADMIN POPUP BUTTONS
 function modifyUserButtonHandler(buttonEvent) {
 	// console.log(buttonEvent)
 	if (buttonEvent.id == "edit-user") {
@@ -278,39 +259,70 @@ function modifyUserButtonHandler(buttonEvent) {
 		document.querySelector("#discord_id-input").value = 7623414912 //! PLACEHOLDERS
 		document.querySelector("#points-input").value = 091214248190 //! PLACEHOLDERS
 		document.querySelector("#roles-listbox").value = "Admin" //! PLACEHOLDERS
-
-
 	} else if (buttonEvent.id == "delete-user") {
 		openPopup("Delete member", DELETE_MEMBER_POPUP_HTML, "OK", "Cancel", "delete")
 		const deleteMember = document.querySelector("#popup-delete-content")
-
 		//TODO grab data from DB populate fields
 		deleteMember.innerHTML = "MEMBER NAME" //! PLACEHOLDER
-
 	} else if (buttonEvent.value == "ADD") {
 		openPopup("add new member", MEMBER_POPUP_HTML, "SAVE", "Cancel", "add")
 	}
 }
+//! /POPUP
 
-function openPopup(title, html, button1, button2, action) {
-	setPopupButtonText(button1, button2, action)
-	popup.classList.remove("overlay-hide")
-	popupTitle.innerHTML = title.toUpperCase()
-	popupContent.innerHTML = html
+
+
+
+
+
+// ! -------------------------------------------------------------------------------------- //
+// ! ------------------------------------- TEST AREA  ------------------------------------- //
+// ! -------------------------------------------------------------------------------------- //
+menuButtonHandler("ADMIN") //! REMOVE WHEN NOT TESTING
+
+async function test_admin(buttonEvent) {
+	console.log(buttonEvent)
+	let databaseQuery = "&database="
+
+
+	if (buttonEvent.value == "ADD") {
+		databaseQuery += "ADD"
+		console.log(buttonEvent.value)
+	}
+
+	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
+	fetch(endpoint)
+		.then((response) => response.json())
+		.then((data) => {
+			if (data.status == 200) {
+				console.log(data)
+				return JSON.parse(data.data)
+			}
+		})
+		.catch((err) => console.log(err))
+
 }
+// ! -------------------------------------------------------------------------------------- //
+// ! ------------------------------------- TEST AREA  ------------------------------------- //
+// ! -------------------------------------------------------------------------------------- //
 
 
 
+
+
+
+
+
+
+//!* ---------------------- COOKIES ---------------------- *//
 function setCookies(variable, deleteCookie = false) {
 	if (deleteCookie) {
 		document.cookie = variable + "; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
 	} else {
 		let expireDateUtc = new Date(new Date().getTime() + 86400000).toUTCString()
-		document.cookie = variable + `; expires=${expireDateUtc}`
+		document.cookie = variable + `; expires=${expireDateUtc}; samesite=strict`
 	}
 }
-
-
 if (document.cookie) {
 	let cookies = {}
 	document.cookie.split("; ").forEach((element) => {
@@ -325,11 +337,15 @@ if (document.cookie) {
 		getFollowsAndAddHtml(loggedInId, user_token, loggedInAs)
 	}
 }
+//! /COOKIES
 
+
+
+
+//!* ---------------------- MENU ---------------------- *//
 function hamburgerMenuHandler(event) {
 	sidebarMenu.classList.toggle("menu-hide")
 }
-
 async function menuButtonHandler(buttonEvent) {
 	contentContainer.innerHTML = ""
 	if (buttonEvent == "HOME") {
@@ -381,37 +397,8 @@ async function menuButtonHandler(buttonEvent) {
 		addHtmlChild(document.querySelector("#follow-container"), buttonEvent, "buttonEvent", "buttonEvent")
 	}
 }
+//! /MENU
 
-
-
-// ! -------------------------------------------------------------------------------------- //
-// ! ------------------------------------- TEST AREA  ------------------------------------- //
-// ! -------------------------------------------------------------------------------------- //
-async function test_admin(buttonEvent) {
-	console.log(buttonEvent)
-	let databaseQuery = "&database="
-
-
-	if (buttonEvent.value == "ADD") {
-		databaseQuery += "ADD"
-		console.log(buttonEvent.value)
-	}
-
-	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
-	fetch(endpoint)
-		.then((response) => response.json())
-		.then((data) => {
-			if (data.status == 200) {
-				console.log(data)
-				return JSON.parse(data.data)
-			}
-		})
-		.catch((err) => console.log(err))
-
-}
-// ! -------------------------------------------------------------------------------------- //
-// ! ------------------------------------- TEST AREA  ------------------------------------- //
-// ! -------------------------------------------------------------------------------------- //
 
 //* ---------------------- TWITCH STUFF ---------------------- *//
 async function twitchApiGet(endpoint, token) {
@@ -634,33 +621,6 @@ function adminPanel() {
 
 
 
-
-
-
-
-//* ---------------- TODO WHEN GH ENV ---------------- *//
-
-
-
-
-// function checkLive(user){
-// 	// need token
-// 	endpoint = "https://api.twitch.tv/helix/search/channels?query=" + user.toLowerCase()
-// 	fetch(endpoint)
-
-// }
-
-
-// getAppToken()
-// async function getAppToken(){
-// 	const endpoint = "https://id.twitch.tv/oauth2/token?client_id="
-// 					+ AOU_WEB_CLIENT_ID
-// 					+ "&client_secret="
-// 					+ AOU_WEB_SECRET
-// 					+ "&grant_type=client_credentials";
-// 	const result = await fetch(endpoint, {method: "POST"});
-// 	console.log(result.expires_in)
-// }
 
 
 
