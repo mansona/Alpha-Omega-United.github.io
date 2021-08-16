@@ -348,7 +348,7 @@ async function test_admin(buttonEvent) {
 	const path = "database";
 	const data = { userName: loggedInAs, userToken: user_token, databaseQuery, a };
 
-	ajaxApi(endpoint, path, "PUT", data);
+	ajaxApi(endpoint, path, "POST", data);
 	//! --------------------------------------------------
 
 }
