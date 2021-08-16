@@ -1,4 +1,4 @@
-console.log("asdasdasdas")
+console.log("12312312312")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -551,9 +551,9 @@ function buildUserHtml(membersObject, includePoints = true) {
 
 function addHtmlChild(parent, html, htmlId, htmlClass, elementType = "div") {
 	const element = document.createElement(elementType)
-	element.id = htmlId
-	element.classList.add(htmlClass)
-	element.innerHTML = html
+		(htmlId.length > 0 ? element.id = htmlId : null)
+		(htmlClass.length > 0 ? element.classList.add(htmlClass) : null)
+		(html.length > 0 ? element.innerHTML = html : null)
 	parent.appendChild(element)
 }
 
