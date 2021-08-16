@@ -203,7 +203,9 @@ function popupButtonHandler(buttonEvent, action) {
 	if (buttonEvent.id.includes("cancel")) {
 		//TODO ---- this
 	} else if (buttonEvent.id.includes("ok")) {
-		// TODO add ok/save func
+		if (buttonEvent.value == "add") {
+			test_admin({ value: "ADD" })
+		}
 		const data = getPopupInputValues()
 		console.log(data)
 	}
@@ -284,20 +286,21 @@ function modifyUserButtonHandler(buttonEvent) {
 
 async function test_admin(buttonEvent) {
 	console.log(buttonEvent)
-	let databaseQuery = "&database="
+	// let databaseQuery = "&database="
 
 
-	if (buttonEvent.value == "ADD") {
-		databaseQuery += "ADD"
-	} else if (buttonEvent.value == "DELETE") {
-		databaseQuery += "DELETE"
-	} else if (buttonEvent.value == "QUERYONE") {
-		databaseQuery += "QUERYONE"
-	} else if (buttonEvent.value == "QUERYMANY") {
-		databaseQuery += "QUERYMANY"
-	} else if (buttonEvent.value == "EDIT") {
-		databaseQuery += "EDIT"
-	}
+	// if (buttonEvent.value == "ADD") {
+	// 	databaseQuery += "ADD";
+	// } else if (buttonEvent.value == "DELETE") {
+	// 	databaseQuery += "DELETE";
+	// } else if (buttonEvent.value == "QUERYONE") {
+	// 	databaseQuery += "QUERYONE";
+	// } else if (buttonEvent.value == "QUERYMANY") {
+	// 	databaseQuery += "QUERYMANY";
+	// } else if (buttonEvent.value == "EDIT") {
+	// 	databaseQuery += "EDIT";
+	// };
+
 	// endpoint = AOU_HEROKU_ENDPOINT + "database" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
 	// fetch(endpoint, {
 	// 	method: "POST", // or 'PUT'
@@ -318,18 +321,35 @@ async function test_admin(buttonEvent) {
 	// 	})
 	// 	.catch((err) => console.log(err))
 
+
+	//! --------------------------------------------------
+	let databaseQuery = { database: null }
+	if (buttonEvent.value == "ADD") {
+		databaseQuery.database = "ADD";
+	} else if (buttonEvent.value == "DELETE") {
+		databaseQuery.database = "DELETE";
+	} else if (buttonEvent.value == "QUERYONE") {
+		databaseQuery.database = "QUERYONE";
+	} else if (buttonEvent.value == "QUERYMANY") {
+		databaseQuery.database = "QUERYMANY";
+	} else if (buttonEvent.value == "EDIT") {
+		databaseQuery.database = "EDIT";
+	};
+
 	a = {
 		twitchName: "UserNameOfSomeone",
 		twitchId: 981251231237,
 		discordName: "DiscordNameOfSomeone",
 		discordId: 7623414912,
 		points: 91214248190
-	}
-	const endpoint = AOU_HEROKU_ENDPOINT
-	const path = "database"
-	const data = { userName: loggedInAs, userToken: user_token, databaseQuery, a }
+	};
 
-	ajaxApi(endpoint, path, "PUT", data)
+	const endpoint = AOU_HEROKU_ENDPOINT;
+	const path = "database";
+	const data = { userName: loggedInAs, userToken: user_token, databaseQuery, a };
+
+	ajaxApi(endpoint, path, "PUT", data);
+	//! --------------------------------------------------
 
 }
 
