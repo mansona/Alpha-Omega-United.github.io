@@ -1,4 +1,4 @@
-console.log("asdasdasdasdasd")
+console.log("12312312312321")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -340,7 +340,11 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 		await $.ajax({
 			url: endpoint + path,
 			success: (response) => resolve(response),
-			error: (request, status, error) => error(request, status, error)
+			error: function (request, status, error) {
+				console.log(request)
+				console.log(status)
+				console.log(error)
+			}
 		});
 	} else if (method == "POST" || method == "PUT") {
 		// jQuery post/put example:
@@ -351,16 +355,10 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 			contentType: 'application/json',
 			data: JSON.stringify(data),
 			success: (response) => resolve(response),
-			error: (request, status, error) => error(request, status, error)
 		});
 	}
 	function resolve(response) {
 		console.log(response)
-	}
-	function error(request, status, error) {
-		console.log(request)
-		console.log(status)
-		console.log(error)
 	}
 }
 
