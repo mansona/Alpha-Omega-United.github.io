@@ -105,10 +105,10 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 const ADMIN_HTML = { html: "" };
 const ADMIN_TEST = `<div>
 						<div>
-							<button value="DELETE" onclick="test_admin(this)">DELETE</button>
-							<button value="QUERYONE" onclick="test_admin(this)">QUERYONE</button>
-							<button value="QUERYMANY" onclick="test_admin(this)">QUERYMANY</button>
-							<button value="EDIT" onclick="test_admin(this)">EDIT</button>
+							<button value="DELETE" onclick="queryDb(this)">DELETE</button>
+							<button value="QUERYONE" onclick="queryDb(this)">QUERYONE</button>
+							<button value="QUERYMANY" onclick="queryDb(this)">QUERYMANY</button>
+							<button value="EDIT" onclick="queryDb(this)">EDIT</button>
 							<hr>
 							<button value="ADD" onclick="modifyUserButtonHandler(this)">ADD USER</button>
 							</div>
@@ -203,10 +203,10 @@ function popupButtonHandler(buttonEvent, action) {
 	if (buttonEvent.id.includes("cancel")) {
 		//TODO ---- this
 	} else if (buttonEvent.id.includes("ok")) {
-		if (buttonEvent.value == "add") {
-			test_admin({ value: "ADD" })
-		}
 		const data = getPopupInputValues()
+		if (buttonEvent.value == "add") {
+			queryDb({ value: "ADD" })
+		}
 		console.log(data)
 	}
 	clearPopupInputField(action) // TODO add cancel func
@@ -284,73 +284,14 @@ function modifyUserButtonHandler(buttonEvent) {
 // ! -------------------------------------------------------------------------------------- //
 // menuButtonHandler("ADMIN") //! REMOVE WHEN NOT TESTING
 
-async function test_admin(buttonEvent) {
+async function queryDb(buttonEvent) {
 	console.log(buttonEvent)
-	// let databaseQuery = "&database="
-
-
-	// if (buttonEvent.value == "ADD") {
-	// 	databaseQuery += "ADD";
-	// } else if (buttonEvent.value == "DELETE") {
-	// 	databaseQuery += "DELETE";
-	// } else if (buttonEvent.value == "QUERYONE") {
-	// 	databaseQuery += "QUERYONE";
-	// } else if (buttonEvent.value == "QUERYMANY") {
-	// 	databaseQuery += "QUERYMANY";
-	// } else if (buttonEvent.value == "EDIT") {
-	// 	databaseQuery += "EDIT";
-	// };
-
-	// endpoint = AOU_HEROKU_ENDPOINT + "database" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
-	// fetch(endpoint, {
-	// 	method: "POST", // or 'PUT'
-	// 	headers: {
-	// 		"Content-Type": "application/json",
-	// 		"Access-Control-Allow-Origin": "*",
-	// 		"Access-Control-Allow-Credentials": true,
-	// 		"userName": loggedInAs,
-	// 		"userToken": user_token
-	// 	}
-	// })
-	// 	.then((response) => response.json())
-	// 	.then((data) => {
-	// 		if (data.status == 200) {
-	// 			console.log(data)
-	// 			return JSON.parse(data.data)
-	// 		}
-	// 	})
-	// 	.catch((err) => console.log(err))
-
-
-	//! --------------------------------------------------
-	let databaseQuery = { database: null }
-	if (buttonEvent.value == "ADD") {
-		databaseQuery.database = "ADD";
-	} else if (buttonEvent.value == "DELETE") {
-		databaseQuery.database = "DELETE";
-	} else if (buttonEvent.value == "QUERYONE") {
-		databaseQuery.database = "QUERYONE";
-	} else if (buttonEvent.value == "QUERYMANY") {
-		databaseQuery.database = "QUERYMANY";
-	} else if (buttonEvent.value == "EDIT") {
-		databaseQuery.database = "EDIT";
-	};
-
-	a = {
-		twitchName: "UserNameOfSomeone",
-		twitchId: 981251231237,
-		discordName: "DiscordNameOfSomeone",
-		discordId: 7623414912,
-		points: 91214248190
-	};
-
+	let databaseQuery = { query: buttonEvent.value }
+	databaseQuery.userData = getPopupInputValues()
 	const endpoint = AOU_HEROKU_ENDPOINT;
 	const path = "database";
-	const data = { userName: loggedInAs, userToken: user_token, databaseQuery, a };
-
+	const data = { userName: loggedInAs, userToken: user_token, databaseQuery };
 	ajaxApi(endpoint, path, "POST", data);
-	//! --------------------------------------------------
-
 }
 
 
