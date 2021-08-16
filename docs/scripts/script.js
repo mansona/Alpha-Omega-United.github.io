@@ -1,4 +1,4 @@
-console.log("asdasdasdasds")
+console.log("12312312312")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -202,8 +202,7 @@ function onSearchInput(e) {
 function popupButtonHandler(buttonEvent, action) {
 	if (buttonEvent.id.includes("cancel")) {
 		//TODO ---- this
-	}
-	if (buttonEvent.id.includes("ok")) {
+	} else if (buttonEvent.id.includes("ok")) {
 		// TODO add ok/save func
 		const data = getPopupInputValues()
 		console.log(data)
@@ -290,40 +289,89 @@ async function test_admin(buttonEvent) {
 
 	if (buttonEvent.value == "ADD") {
 		databaseQuery += "ADD"
-	}
-	if (buttonEvent.value == "DELETE") {
+	} else if (buttonEvent.value == "DELETE") {
 		databaseQuery += "DELETE"
-	}
-	if (buttonEvent.value == "QUERYONE") {
+	} else if (buttonEvent.value == "QUERYONE") {
 		databaseQuery += "QUERYONE"
-	}
-	if (buttonEvent.value == "QUERYMANY") {
+	} else if (buttonEvent.value == "QUERYMANY") {
 		databaseQuery += "QUERYMANY"
-	}
-	if (buttonEvent.value == "EDIT") {
+	} else if (buttonEvent.value == "EDIT") {
 		databaseQuery += "EDIT"
 	}
-	endpoint = AOU_HEROKU_ENDPOINT + "database" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
-	fetch(endpoint)
-		.then((response) => response.json())
-		.then((data) => {
-			if (data.status == 200) {
-				console.log(data)
-				return JSON.parse(data.data)
-			}
-		})
-		.catch((err) => console.log(err))
+	// endpoint = AOU_HEROKU_ENDPOINT + "database" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
+	// fetch(endpoint, {
+	// 	method: "POST", // or 'PUT'
+	// 	headers: {
+	// 		"Content-Type": "application/json",
+	// 		"Access-Control-Allow-Origin": "*",
+	// 		"Access-Control-Allow-Credentials": true,
+	// 		"userName": loggedInAs,
+	// 		"userToken": user_token
+	// 	}
+	// })
+	// 	.then((response) => response.json())
+	// 	.then((data) => {
+	// 		if (data.status == 200) {
+	// 			console.log(data)
+	// 			return JSON.parse(data.data)
+	// 		}
+	// 	})
+	// 	.catch((err) => console.log(err))
+
+
+	const endpoint = AOU_HEROKU_ENDPOINT
+	const path = "database"
+	const data = { userName: loggedInAs, userToken: user_token, databaseQuery }
+
+	ajaxApi(endpoint, path, "PUT", data)
 
 }
+
+
+async function ajaxApi(endpoint, path, method = "GET", data = null) {
+	if (method == "GET") {
+		// jQuery get example:
+		await $.ajax({
+			url: endpoint + path,
+			success: resolve(response),
+			error: error(request, status, error)
+		});
+	} else if (method == "POST" || method == "PUT") {
+		// jQuery post/put example:
+		await $.ajax({
+			url: endpoint + path,
+			type: method,
+			dataType: 'json',
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+			success: resolve(response),
+			error: error(request, status, error)
+		});
+	}
+	function resolve(response) {
+		console.log(response)
+	}
+	function error(request, status, error) {
+		console.log(request)
+		console.log(status)
+		console.log(error)
+	}
+}
+
+
+a = {
+	twitchName: "UserNameOfSomeone",
+	twitchId: 981251231237,
+	discordName: "DiscordNameOfSomeone",
+	discordId: 7623414912,
+	points: 91214248190
+}
+
+
+
 // ! -------------------------------------------------------------------------------------- //
 // ! ------------------------------------- TEST AREA  ------------------------------------- //
 // ! -------------------------------------------------------------------------------------- //
-
-
-
-
-
-
 
 
 
@@ -660,4 +708,4 @@ function onLoad() {
 	getTokenFromHash()
 	populateSearchArrays()
 
-}
+};
