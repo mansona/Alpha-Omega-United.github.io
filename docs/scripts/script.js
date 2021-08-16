@@ -314,7 +314,7 @@ async function test_admin(buttonEvent) {
 	if (buttonEvent.value == "EDIT") {
 		databaseQuery += "EDIT"
 	}
-	endpoint = AOU_HEROKU_ENDPOINT + "twitch_auth" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
+	endpoint = AOU_HEROKU_ENDPOINT + "database" + `?userName=${loggedInAs}&userToken=${user_token}` + databaseQuery
 	fetch(endpoint)
 		.then((response) => response.json())
 		.then((data) => {
