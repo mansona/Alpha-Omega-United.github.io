@@ -290,6 +290,8 @@ async function queryDb(QueryType) {
 	return await ajaxApi(endpoint, path, "POST", data);
 }
 
+
+
 async function ajaxApi(endpoint, path, method = "GET", data = null) {
 	if (method == "GET") {
 		// jQuery get example:
