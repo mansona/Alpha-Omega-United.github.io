@@ -1,4 +1,3 @@
-console.log("123123123123")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -690,11 +689,9 @@ function onLoad() {
 
 
 //* ---------------- LAST UPDATED! ---------------- *//
-async function getLastUpdated(){
-	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/twitch_bot/data/aou_members.json")
-		.then(res => res.json())
-		.then(json => {
-			return json
-		})
-	return data
+getLastUpdated()
+async function getLastUpdated() {
+	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/Alpha-Omega-United.github.io/main/docs/last_updated.txt")
+		.then(res => res.text())
+	console.log(data)
 }
