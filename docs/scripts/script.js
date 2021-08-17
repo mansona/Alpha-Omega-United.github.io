@@ -312,7 +312,7 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 			success: (response) => resolve(response),
 		});
 	}
-	return function resolve(response) {
+	function resolve(response) {
 		console.log(response)
 		console.log(response.data.json())
 		return response
@@ -581,7 +581,7 @@ menuButtonHandler("ADMIN")
 async function getMembers_DEV() {
 	const result = await queryDb("QUERYGETALL")
 	console.log(result)
-	console.log(result)
+	console.log(result.data[0].json())
 }
 
 
