@@ -105,10 +105,12 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 const ADMIN_HTML = { html: "" };
 const ADMIN_TEST = `<div>
 						<div>
-							<button value="DELETE" onclick="queryDb(this)">DELETE</button>
-							<button value="QUERYONE" onclick="queryDb(this)">QUERYONE</button>
-							<button value="QUERYMANY" onclick="queryDb(this)">QUERYMANY</button>
-							<button value="EDIT" onclick="queryDb(this)">EDIT</button>
+							<button value="DELETE" onclick="queryDb_DEV("DEV")">DEV</button>
+							<!--
+							<button value="QUERYONE" onclick="queryDb("QUERYONE")">QUERYONE</button>
+							<button value="QUERYMANY" onclick="queryDb("QUERYMANY")">QUERYMANY</button>
+							<button value="EDIT" onclick="queryDb("EDIT")">EDIT</button>
+							-->
 							<hr>
 							<button value="ADD" onclick="modifyUserButtonHandler(this)">ADD USER</button>
 							</div>
@@ -205,7 +207,7 @@ function popupButtonHandler(buttonEvent, action) {
 	} else if (buttonEvent.id.includes("ok")) {
 		const data = getPopupInputValues()
 		if (buttonEvent.value == "add") {
-			queryDb({ value: "ADD" })
+			queryDb("ADD")
 		}
 		console.log(data)
 	}
@@ -276,24 +278,18 @@ function modifyUserButtonHandler(buttonEvent) {
 
 
 
-
-
-
-// ! -------------------------------------------------------------------------------------- //
-// ! ------------------------------------- TEST AREA  ------------------------------------- //
-// ! -------------------------------------------------------------------------------------- //
-// menuButtonHandler("ADMIN") //! REMOVE WHEN NOT TESTING
-
-async function queryDb(buttonEvent) {
-	console.log(buttonEvent)
-	let databaseQuery = { query: buttonEvent.value }
-	databaseQuery.userData = getPopupInputValues()
+//!* ---------------------- DB QUERY ---------------------- *//
+async function queryDb(QueryType) {
+	console.log(QueryType)
+	let databaseQuery = { query: QueryType }
+	if (["ADD", "EDIT", "DELETE"].includes(QueryType)) {
+		databaseQuery.userData = getPopupInputValues()
+	};
 	const endpoint = AOU_HEROKU_ENDPOINT;
 	const path = "database";
 	const data = { userName: loggedInAs, userToken: user_token, databaseQuery };
 	ajaxApi(endpoint, path, "POST", data);
 }
-
 
 async function ajaxApi(endpoint, path, method = "GET", data = null) {
 	if (method == "GET") {
@@ -322,16 +318,7 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 		console.log(response)
 	}
 }
-
-
-
-
-
-
-// ! -------------------------------------------------------------------------------------- //
-// ! ------------------------------------- TEST AREA  ------------------------------------- //
-// ! -------------------------------------------------------------------------------------- //
-
+//! /DB QUERY
 
 
 //!* ---------------------- COOKIES ---------------------- *//
@@ -399,9 +386,6 @@ async function menuButtonHandler(buttonEvent) {
 		contentContainer.innerHTML = ""
 		addHtmlChild(contentContainer, thisHTML, "logged-in-sub-menu", "logged-in-sub-menu")
 		addHtmlChild(contentContainer, ADMIN_HTML.html, "follow-container", "follow-container")
-		// contentContainer.innerHTML = `<h1>All registered members are listed here</h1><br>${ADMIN_TEST}<hr><div id="follow-container"></div>`
-		// + ADMIN_HTML.html
-
 	}
 	if (buttonEvent == "POINTS") {
 		const members = await getMembers();
@@ -493,6 +477,12 @@ async function getTokenFromHash() {
 		}
 	}
 }
+async function getUserId(token) {
+	let userData = await twitchApiGet(USER_ENDPOINT, token)
+	if (userData) {
+		return userData
+	}
+}
 
 async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 	await getFollowsPaginated(userId, user_token)
@@ -509,12 +499,6 @@ async function getFollowsAndAddHtml(userId, user_token, loggedInAs) {
 	document.querySelector("#follow-container").innerHTML = LOGGED_IN_HTML.html
 }
 
-async function getUserId(token) {
-	let userData = await twitchApiGet(USER_ENDPOINT, token)
-	if (userData) {
-		return userData
-	}
-}
 
 async function getFollowsPaginated(userId, token) {
 	let endpoint = FOLLOW_ENDPOINT + `${userId}` + "&first=100"
@@ -584,8 +568,24 @@ function addHtmlChild(parent, html, htmlId, htmlClass, elementType = "div") {
 	}
 	parent.appendChild(element);
 }
+//! -----------------------------------------------------
+//! --------------------- TEST AREA ---------------------
+//! -----------------------------------------------------
+//TODO get data from DB
+//TODO parse data
+//TODO
+//TODO
+
+// menuButtonHandler("ADMIN")
+
+async function getMembers_DEV() {
+	const result = await queryDb("QUERYGETALL")
+	console.log(result)
+}
+
 
 async function getMembers() {
+	//TODO get DB data here
 	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/twitch_bot/data/aou_members.json")
 		.then(res => res.json())
 		.then(json => {
@@ -605,6 +605,14 @@ async function parseMemberData() {
 	})
 	return { admins, users }
 }
+
+
+//! -----------------------------------------------------
+//! --------------------- TEST AREA ---------------------
+//! -----------------------------------------------------
+
+
+
 
 function toggleAdminButtonVisibility(memberObject, user) {
 	if (memberObject.admins.includes(user.toLowerCase())) {
