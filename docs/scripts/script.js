@@ -313,8 +313,6 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 		});
 	}
 	function resolve(response) {
-		console.log(response)
-		console.log(response.data.json())
 		return response
 	}
 }
@@ -581,7 +579,8 @@ menuButtonHandler("ADMIN")
 async function getMembers_DEV() {
 	const result = await queryDb("QUERYGETALL")
 	console.log(result)
-	console.log(result.data[0].json())
+	console.log(json.parse(result.data[0]))
+
 }
 
 
