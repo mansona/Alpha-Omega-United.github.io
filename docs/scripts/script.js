@@ -579,7 +579,7 @@ menuButtonHandler("ADMIN")
 async function getMembers_DEV() {
 	const result = await queryDb("QUERYGETALL")
 	console.log(result)
-	console.log(json.parse(result.data[0]))
+	console.log(JSON.parse(result.data[0]))
 
 }
 
