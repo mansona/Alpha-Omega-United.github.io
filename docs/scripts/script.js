@@ -676,3 +676,25 @@ function onLoad() {
 	populateSearchArrays()
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+//* ---------------- LAST UPDATED! ---------------- *//
+async function getLastUpdated(){
+	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/AoU-Community/main/twitch_bot/data/aou_members.json")
+		.then(res => res.json())
+		.then(json => {
+			return json
+		})
+	return data
+}
