@@ -1,4 +1,4 @@
-console.log("asdasdasdasdasd")
+console.log("123123123123")
 // obsManager.js - OBS-StreamDeck Thingy
 // Author: ItsOiK
 // Date: 06/08-2021
@@ -105,7 +105,7 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 const ADMIN_HTML = { html: "" };
 const ADMIN_TEST = `<div>
 						<div>
-							<button value="DELETE" onclick="queryDb_DEV("DEV")">DEV</button>
+							<button value="DELETE" onclick="getMembers_DEV("DEV")">DEV</button>
 							<!--
 							<button value="QUERYONE" onclick="queryDb("QUERYONE")">QUERYONE</button>
 							<button value="QUERYMANY" onclick="queryDb("QUERYMANY")">QUERYMANY</button>
