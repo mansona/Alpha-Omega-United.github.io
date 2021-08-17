@@ -287,7 +287,7 @@ async function queryDb(QueryType) {
 	const endpoint = AOU_HEROKU_ENDPOINT;
 	const path = "database";
 	const data = { userName: loggedInAs, userToken: user_token, databaseQuery };
-	ajaxApi(endpoint, path, "POST", data);
+	return await ajaxApi(endpoint, path, "POST", data);
 }
 
 async function ajaxApi(endpoint, path, method = "GET", data = null) {
@@ -315,6 +315,7 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 	}
 	function resolve(response) {
 		console.log(response)
+		return response
 	}
 }
 //! /DB QUERY
