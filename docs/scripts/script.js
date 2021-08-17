@@ -104,7 +104,7 @@ const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is current
 const ADMIN_HTML = { html: "" };
 const ADMIN_TEST = `<div>
 						<div>
-							<button value="DELETE" onclick="getMembers_DEV("DEV")">DEV</button>
+							<button value="DELETE" onclick="getMembers_DEV()">DEV</button>
 							<!--
 							<button value="QUERYONE" onclick="queryDb("QUERYONE")">QUERYONE</button>
 							<button value="QUERYMANY" onclick="queryDb("QUERYMANY")">QUERYMANY</button>
@@ -279,7 +279,7 @@ function modifyUserButtonHandler(buttonEvent) {
 
 //!* ---------------------- DB QUERY ---------------------- *//
 async function queryDb(QueryType) {
-	console.log(QueryType)
+	// console.log(QueryType)
 	let databaseQuery = { query: QueryType }
 	if (["ADD", "EDIT", "DELETE"].includes(QueryType)) {
 		databaseQuery.userData = getPopupInputValues()
@@ -575,7 +575,7 @@ function addHtmlChild(parent, html, htmlId, htmlClass, elementType = "div") {
 //TODO
 //TODO
 
-// menuButtonHandler("ADMIN")
+menuButtonHandler("ADMIN")
 
 async function getMembers_DEV() {
 	const result = await queryDb("QUERYGETALL")
@@ -689,5 +689,5 @@ getLastUpdated()
 async function getLastUpdated() {
 	let data = await fetch("https://raw.githubusercontent.com/Alpha-Omega-United/Alpha-Omega-United.github.io/main/docs/last_updated.txt")
 		.then(res => res.text())
-	console.log(data)
+	console.log("Last update: " + data)
 }
