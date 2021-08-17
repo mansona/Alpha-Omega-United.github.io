@@ -74,7 +74,6 @@ const ASSETS_HTML = `<h3>Click on an image to save it</h3>
 const RECRUITMENT_HTML = `<div><h2>Hey @ everyone,</h2> AOU currently is currently under development and we are improving this as we speak. You would have seen some changes being made on some channels or that they are removed on the <a href="https://discord.gg/P5qnher4kV">AoU Discord</a>.
 					We are organising our team and we would like some more people to join our admin team. This will help us greatly so we can get the community up and running as soon as possible.
 					Below are the roles that we are looking for and the description of each of the roles:
-
 					<h3>Social Secretary:</h3>
 					<li>
 						Responsible for planning and running community events, provide a diverse range of events which meet the needs and interests of the community members. Make sure that all events are inclusive, safe and fun for all community members. Be friendly and approachable.
@@ -290,15 +289,10 @@ async function queryDb(QueryType) {
 	return await ajaxApi(endpoint, path, "POST", data);
 }
 
-
-
-
-
-
 async function ajaxApi(endpoint, path, method = "GET", data = null) {
 	if (method == "GET") {
 		// jQuery get example:
-		await $.ajax({
+		return await $.ajax({
 			url: endpoint + path,
 			success: (response) => resolve(response),
 			error: function (request, status, error) {
@@ -309,7 +303,7 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 		});
 	} else if (method == "POST" || method == "PUT") {
 		// jQuery post/put example:
-		await $.ajax({
+		return await $.ajax({
 			url: endpoint + path,
 			type: method,
 			dataType: 'json',
@@ -318,8 +312,9 @@ async function ajaxApi(endpoint, path, method = "GET", data = null) {
 			success: (response) => resolve(response),
 		});
 	}
-	function resolve(response) {
+	return function resolve(response) {
 		console.log(response)
+		console.log(response.data.json())
 		return response
 	}
 }
@@ -586,6 +581,7 @@ menuButtonHandler("ADMIN")
 async function getMembers_DEV() {
 	const result = await queryDb("QUERYGETALL")
 	console.log(result)
+	console.log(result)
 }
 
 
@@ -613,7 +609,7 @@ async function parseMemberData() {
 
 
 //! -----------------------------------------------------
-//! --------------------- TEST AREA ---------------------
+//! --------------------- /TEST AREA --------------------
 //! -----------------------------------------------------
 
 
@@ -661,14 +657,6 @@ function adminPanel() {
 }
 
 
-
-
-
-
-
-
-
-
 //* ---------------- ON LOAD! ---------------- *//
 onLoad()
 function onLoad() {
@@ -681,13 +669,6 @@ function onLoad() {
 	populateSearchArrays()
 
 };
-
-
-
-
-
-
-
 
 
 //* ---------------- LAST UPDATED! ---------------- *//
